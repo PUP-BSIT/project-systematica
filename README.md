@@ -1,1 +1,1 @@
-This is Systematica
+This is the Systematica team
