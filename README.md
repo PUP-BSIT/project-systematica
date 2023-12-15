@@ -1,2 +1,3 @@
-This is the Systematica team
+Postify | Social Media Project by Team Systematica
 
+> https://postify.tech/
