@@ -1,58 +1,53 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['likha-username'];
-    $password = $_POST['likha-password'];
+// $apiUrl = 'https://app.hypehive.cloud/api.php';
+$api_url = 'https://likha.website/api.php';
+$apiKey = 'J7hP2fR1dVgQ9sX4tY0aL6mB3nZ8cO5'; // Replace with your actual API key
 
-    // Send a request to the external system's API to authenticate the user
-    // and obtain the authorization token. Replace the following lines with actual API call logic.
-    $authorization_token = authenticateUser($username, $password);
 
-    if ($authorization_token) {
-        // Authentication successful, store the authorization token in a session or database
-        session_start();
-        $_SESSION['authorization_token'] = $authorization_token;
+if ($_POST['action'] === 'login') {
+    $postData = array(
+        'email' => $_POST['email'],
+        'password' => $_POST['password'],
+        'action' => $_POST['action'],
 
-        // Redirect to a protected page or perform other actions
-        header('Location: ../home/home_page.html');
-        exit();
-    } else {
-        // Authentication failed, redirect back to the login page
-        header('Location: login-likha.html');
-        exit();
-    }
+    );
+} elseif ($_POST['action'] === 'get-token') {
+    $postData = array(
+        'email' => $_POST['email'],
+        'action' => $_POST['action'],
+        'appname' => $_POST['appname'],
+    );
+}elseif ($_POST['action'] === 'get-user') {
+    $postData = array(
+        'auth_token' => $_POST['authorization_token'], // Updated parameter name
+        'action' => $_POST['action'],
+        'appname' => $_POST['appname'],
+    );
+}
+ else {
+    // Handle other actions if needed
+    echo json_encode(['error' => 'Invalid action']);
+    exit; // Stop further execution
 }
 
-// Function to authenticate the user with the external system
-function authenticateUser($username, $password) {
-    // API configuration
-    $api_key = 'J7hP2fR1dVgQ9sX4tY0aL6mB3nZ8cO5';
-    $api_url = 'https://likha.website';
+$ch = curl_init($apiUrl);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Authorization: Bearer ' . $apiKey,
+    'Content-Type: application/x-www-form-urlencoded',
+));
 
-    // Make an API request to authenticate the user and obtain the authorization token
-    // Replace this with actual API call logic using cURL, Guzzle, or another library.
-    // Example using cURL:
-    $url = $api_url . '/authenticate'; // Adjust the endpoint accordingly
-    $data = ['username' => $username, 'password' => $password, 'api_key' => $api_key];
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+$response = curl_exec($ch);
 
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    // Parse the API response and handle success or failure
-    $api_response = json_decode($response, true);
-
-    if (isset($api_response['authorization_token'])) {
-        // Authentication successful
-        return $api_response['authorization_token'];
-    } else {
-        // Authentication failed
-        // Redirect with error message
-        $error_message = urlencode(isset($api_response['error_message']) ? $api_response['error_message'] : 'Unknown error');
-        header("Location: https://likha.website?error_message={$error_message}");
-        exit();
-    }
+if (curl_errno($ch)) {
+    echo json_encode(['error' => curl_error($ch)]);
+} else {
+    echo $response; // Remove json_encode here if the response is already in JSON format
 }
+
+curl_close($ch);
+
+?>

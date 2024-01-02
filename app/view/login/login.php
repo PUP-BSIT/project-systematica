@@ -1,21 +1,21 @@
 <?php
 session_start();
-include "../../include/dbconn.php";
+include "../../include/db_conn.php";
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
     function validate($data)
-	{
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
-	}
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
     $input_username = validate($_POST['username']);
-	$input_password = validate($_POST['password']);
+    $input_password = validate($_POST['password']);
 
     // Use prepared statements to prevent SQL injection
-	$sql = "SELECT * FROM user_profile WHERE username=? AND password=?";
+    $sql = "SELECT * FROM user_profile WHERE user_name=$input_username AND user_password='$input_password'";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $input_username, $input_password);
     mysqli_stmt_execute($stmt);
