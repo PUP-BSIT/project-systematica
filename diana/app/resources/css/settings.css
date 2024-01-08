@@ -1,0 +1,53 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: arial, sans-serif;
+}
+
+.frame-48 {
+	position: absolute;
+	width: 360px;
+	height: 1000px;
+	left: 240px;
+	top: 2px;
+	background: #F9F9F9;
+}
+
+.section {
+	position: absolute;
+	width: 350px;
+	height: 50px;
+	background: #D9D9D9;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	margin-left: 5px;
+}
+
+
+.title {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 25px;
+	line-height: 30px;
+	color: #000000;
+	margin-left: 5px;
+}
+
+.terms {
+	top: 76px;
+	background: none;
+}
+
+.privacy {
+	top: 137px;
+	background: none;
+	
+}
+
+.community {
+	top: 198px;
+	background: none;
+}
