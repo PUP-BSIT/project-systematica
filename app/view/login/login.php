@@ -15,7 +15,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $input_password = validate($_POST['password']);
 
     // Use prepared statements to prevent SQL injection
-    $sql = "SELECT * FROM user_profile WHERE user_name=$input_username AND user_password='$input_password'";
+    $sql = "SELECT * FROM user_profile_test WHERE user_name=$input_username AND user_password='$input_password'";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $input_username, $input_password);
     mysqli_stmt_execute($stmt);

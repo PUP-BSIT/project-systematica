@@ -1,7 +1,7 @@
 <?php
-// $apiUrl = 'https://app.hypehive.cloud/api.php';
-$api_url = 'https://likha.website/api.php';
-$apiKey = 'J7hP2fR1dVgQ9sX4tY0aL6mB3nZ8cO5'; // Replace with your actual API key
+
+$apiUrl = 'https://likha.website/api.php';
+$apiKey = 'J7hP2fR1dVgQ9sX4tY0aL6mB3nZ8cO5';
 
 
 if ($_POST['action'] === 'login') {
@@ -45,7 +45,7 @@ $response = curl_exec($ch);
 if (curl_errno($ch)) {
     echo json_encode(['error' => curl_error($ch)]);
 } else {
-    echo $response; // Remove json_encode here if the response is already in JSON format
+    echo $response;
 }
 
 curl_close($ch);

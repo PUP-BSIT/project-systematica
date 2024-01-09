@@ -13,15 +13,16 @@
 <body>
     <div class="login-container">
         <h2>Login as Likha</h2>
-        <form id="likha_login_form" class="form-container" action="login-likha.js">
+        <form id="likha_login_form" class="form-container" action="login-likha.php" method="post">
             <label for="likha_email"><b>Email</b></label>
-            <input type="text" id="likha_email" />
+            <input type="text" id="likha_email" name="email" />
 
             <label for="likha_password"><b>Password</b></label>
-            <input type="password" id="likha_password" />
+            <input type="password" id="likha_password" name="password" />
 
-            <button type="button" onclick="loginWithLikha()" class="btn">Login</button>
+            <button type="submit" name="action" value="login" class="btn">Login</button>
         </form>
+
     </div>
 </body>
 
