@@ -18,6 +18,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $sql = "SELECT * FROM user_profile_test WHERE (user_name = '$input_username' OR email = '$input_username')";
 
     $result = mysqli_query($conn, $sql);
+    
 	if (mysqli_num_rows($result) === 0) {
 		$_SESSION['login_error'] = true;
 		header("Location: login.html?error=1");

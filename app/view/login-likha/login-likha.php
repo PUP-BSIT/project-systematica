@@ -1,7 +1,11 @@
 <?php
 
-$apiUrl = 'https://likha.website/api.php';
-$apiKey = 'J7hP2fR1dVgQ9sX4tY0aL6mB3nZ8cO5';
+//$apiUrl = 'https://likha.website/api.php';
+//$apiKey = 'J7hP2fR1dVgQ9sX4tY0aL6mB3nZ8cO5';
+
+$apiUrl = 'https://postify.tech/api.php';
+$apiKey = 'fed67c1e9057bb9a3d75fcff87096662'; // Replace with your actual API key
+
 
 
 if ($_POST['action'] === 'login') {
