@@ -13,7 +13,7 @@ try {
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
-    echo "Connected successfully";
+    //echo "Connected successfully";
 
 } catch (Exception $e) {
     die("Connection failed: " . $e->getMessage());
@@ -27,6 +27,5 @@ try {
 $apiToken = "fed67c1e9057bb9a3d75fcff87096662";
 
 // Output the API token in HTML
-echo "<p>Generated API Token: $apiToken</p>";
-
+//echo "<p>Generated API Token: $apiToken</p>";
 ?>
