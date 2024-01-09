@@ -20,7 +20,7 @@ https://dev.postify.tech/
 
 ### SAMPLE CREDENTIAL:
 
-Email: test@gmail.com                      
+Email: user_test@gmail.com                     
 
 Password: test123
 
