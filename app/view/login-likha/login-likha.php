@@ -1,19 +1,13 @@
 <?php
 
-//$apiUrl = 'https://likha.website/api.php';
-//$apiKey = 'J7hP2fR1dVgQ9sX4tY0aL6mB3nZ8cO5';
-
-$apiUrl = 'https://postify.tech/api.php';
-$apiKey = 'fed67c1e9057bb9a3d75fcff87096662'; // Replace with your actual API key
-
-
+$apiUrl = 'https://likha.website/api.php';
+$apiKey = 'J7hP2fR1dVgQ9sX4tY0aL6mB3nZ8cO5';
 
 if ($_POST['action'] === 'login') {
     $postData = array(
         'email' => $_POST['email'],
         'password' => $_POST['password'],
         'action' => $_POST['action'],
-
     );
 } elseif ($_POST['action'] === 'get-token') {
     $postData = array(
@@ -21,17 +15,16 @@ if ($_POST['action'] === 'login') {
         'action' => $_POST['action'],
         'appname' => $_POST['appname'],
     );
-}elseif ($_POST['action'] === 'get-user') {
+} elseif ($_POST['action'] === 'get-user') {
     $postData = array(
-        'auth_token' => $_POST['authorization_token'], // Updated parameter name
+        'auth_token' => $_POST['authorization_token'],
         'action' => $_POST['action'],
         'appname' => $_POST['appname'],
     );
-}
- else {
+} else {
     // Handle other actions if needed
     echo json_encode(['error' => 'Invalid action']);
-    exit; // Stop further execution
+    exit;
 }
 
 $ch = curl_init($apiUrl);
@@ -49,9 +42,16 @@ $response = curl_exec($ch);
 if (curl_errno($ch)) {
     echo json_encode(['error' => curl_error($ch)]);
 } else {
-    echo $response;
+    $responseData = json_decode($response, true);
+
+    // Check if the API response contains an 'error' key
+    if (isset($responseData['error'])) {
+        echo $response;
+    } else {
+        // The user is successfully authorized, and $responseData may contain user information
+        echo json_encode(['success' => 'User authorized', 'user_data' => $responseData]);
+    }
 }
 
 curl_close($ch);
-
 ?>
