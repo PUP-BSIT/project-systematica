@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const usernameInput = document.querySelector('.input-container.username input');
     const passwordInput = document.querySelector('.input-container.password input');
 
-    handleInputFocusAndBlur(usernameInput, 'username-label');
-    handleInputFocusAndBlur(passwordInput, 'password-label');
+    handleInputFocusAndBlur(usernameInput, 'usernameLabel'); // Corrected label ID
+    handleInputFocusAndBlur(passwordInput, 'passwordLabel'); // Corrected label ID
 
     document.querySelector('.login-button').addEventListener('click', login);
     document.querySelector('.likha-button').addEventListener('click', likha);
