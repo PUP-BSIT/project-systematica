@@ -9,3 +9,7 @@ function navigateToPrivacy() {
 function navigateToCommunity() {
 	window.location.href ='community_guidelines.html';
 }
+
+function navigateToAccount() {
+	window.location.href ='account.html';
+}
