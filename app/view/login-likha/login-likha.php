@@ -1,6 +1,39 @@
 <?php
 session_start();
 
+backend-development
+$apiUrl = 'https://likha.website/api.php';
+$apiKey = 'J7hP2fR1dVgQ9sX4tY0aL6mB3nZ8cO5';
+
+//$apiUrl = 'https://postify.tech/api.php';
+//$apiKey = 'fed67c1e9057bb9a3d75fcff87096662';
+
+
+
+if ($_POST['action'] === 'login') {
+    $postData = array(
+        'email' => $_POST['email'],
+        'password' => $_POST['password'],
+        'action' => $_POST['action'],
+
+    );
+} elseif ($_POST['action'] === 'get-token') {
+    $postData = array(
+        'email' => $_POST['email'],
+        'action' => $_POST['action'],
+        'appname' => $_POST['appname'],
+    );
+}elseif ($_POST['action'] === 'get-user') {
+    $postData = array(
+        'auth_token' => $_POST['authorization_token'], // Updated parameter name
+        'action' => $_POST['action'],
+        'appname' => $_POST['appname'],
+    );
+}
+ else {
+    // Handle other actions if needed
+    echo json_encode(['error' => 'Invalid action']);
+    exit; // Stop further execution
 $servername = "127.0.0.1:3306";
 $username = "u722605549_admin";
 $password = "VUbu4Zhkp7=o";
@@ -18,6 +51,7 @@ try {
 } catch (Exception $e) {
     error_log("Connection failed: " . $e->getMessage());
     die("Connection failed: " . $e->getMessage());
+  main
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_POST['password'])) {
@@ -62,7 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
     }
 }
 ?>
-<!-- The rest of your HTML code remains unchanged -->
 process-authorization.php:
 php
 Copy code
@@ -87,7 +120,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+backend-development
+?>
 // Redirect the user to the login page if the request is not a POST request
 header("Location: get-token.php");
 exit();
 ?>
+ main
