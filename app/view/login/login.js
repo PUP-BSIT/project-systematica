@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const usernameInput = document.querySelector('.input-container.username input');
     const passwordInput = document.querySelector('.input-container.password input');
 
-    handleInputFocusAndBlur(usernameInput, 'username-label');
-    handleInputFocusAndBlur(passwordInput, 'password-label');
+    handleInputFocusAndBlur(usernameInput, 'usernameLabel'); // Corrected label ID
+    handleInputFocusAndBlur(passwordInput, 'passwordLabel'); // Corrected label ID
 
     document.querySelector('.login-button').addEventListener('click', login);
     document.querySelector('.likha-button').addEventListener('click', likha);
@@ -40,7 +40,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function login() {
+<<<<<<< HEAD:mingo_design/login_page.js
+    const usernameValue = document.getElementById('username').value;
+    const passwordValue = document.getElementById('password').value;
+
+    if (usernameValue && passwordValue) {
+        window.location.href = "home_page.html";
+    } else {
+        alert('Please fill in both username and password.');
+    }
+=======
     window.location.href = "../home/home_page.html";
+>>>>>>> main:app/view/login/login.js
 }
 
 function likha(event) {
