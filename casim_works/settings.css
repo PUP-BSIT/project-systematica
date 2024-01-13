@@ -5,11 +5,10 @@ body {
 }
 
 .frame-48 {
-    margin-left: 300px;
     position: relative;
     background-color: #f9f9f9;
     width: 360px;
-    height: 762px;
+    height: 100vh;
     overflow: hidden;
     text-align: left;
     font-size: 25px;
