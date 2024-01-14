@@ -1,40 +1,40 @@
 <?php
+include 'api.php';
 include('../../include/db_conn.php');
 
 header("Access-Control-Allow-Origin: https://hypehive.cloud, https://likha.website, http://localhost");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
+
 session_start();
 
-// Check if the token exists in the session
-if (isset($_SESSION['token'])) {
-    $token = $_SESSION['token'];
-    
-    $userDetails = getUserDetailsByToken($token);
+function get_user_data($token) {
+    if (isset($_SESSION['authorization_token']) && $_SESSION['authorization_token'] === $token) {
+        $user_data = array(
+            "username" => "johndee",
+            "first_name" => "John",
+            "middle_name" => "Dee",
+            "last_name" => "Cruz",
+            "email" => "john_cruz@sample.com",
+            "birthday" => "12/01/1997",
+        );
 
-    if ($userDetails) {
-        // Return user details as JSON response
-        echo json_encode($userDetails);
+        return json_encode($user_data);
     } else {
-        // If user details are not found, return an error response
-        echo json_encode(['error' => 'User details not found']);
+        header("HTTP/1.1 401 Unauthorized");
+        return "Unsuccessful Authorization!";
     }
-} else {
-    // If the token is not set in the session, return an error response
-    echo json_encode(['error' => 'Token not found in session']);
 }
 
-// Sample function to fetch user details based on the token (replace with your actual logic)
-function getUserDetailsByToken($token) {
-    
-    $query = "SELECT users.*, tokens.token FROM users
-              JOIN tokens ON users.user_id = tokens.user_id
-              WHERE tokens.token = :token";
-    // ... (execute query and fetch user details)
-    // Return user details as an associative array
-    // return $userDetails;
-    return ['user_id' => 1, 'username' => 'sample_user', 'email' => 'sample@example.com', 'token' => 'your_token'];
+if (isset($_GET['action']) && $_GET['action'] === 'get-user-data') {
+    $token = $_GET['token'] ?? '';
+    $user_data_response = get_user_data($token);
+    echo $user_data_response;
+} else {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid action']);
 }
 
 ?>
+
