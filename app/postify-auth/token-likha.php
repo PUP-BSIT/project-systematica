@@ -6,4 +6,4 @@ $apiUrl = 'https://likha.website/get-token.php?redirect_url=' . urlencode($redir
 
 header('Location:' . $apiUrl);
 exit();
-?> 
+?>
