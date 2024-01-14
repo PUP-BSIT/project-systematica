@@ -56,7 +56,7 @@ function login() {
 
 function likha(event) {
     event.preventDefault();
-    window.location.href = "../login-likha/login-likha.html";
+    window.location.href = "../login-likha/token-likha.html";
 }
 
 function hypefive(event) {
