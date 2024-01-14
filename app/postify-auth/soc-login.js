@@ -15,7 +15,7 @@ function loginAccount() {
         application_name: applicationName,
     };
 
-    fetch("socmed.php", {
+    fetch("socmed_conn.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -37,7 +37,7 @@ function loginAccount() {
                     application_name: applicationName,
                 }).toString();
 
-                window.location.href = `authpage.php?${redirectParams}`;
+                window.location.href = `authorization-page.php?${redirectParams}`;
             } else {
                 throw new Error("Login failed");
             }

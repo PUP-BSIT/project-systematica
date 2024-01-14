@@ -6,7 +6,7 @@ $password = "VUbu4Zhkp7=o";
 $database = "u722605549_postify_db";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $database);
 
 // Check connection
 if ($conn->connect_error) {
@@ -19,8 +19,6 @@ $requestData = json_decode(file_get_contents("php://input"), true);
 $email = $requestData['email'];
 $password = $requestData['password'];
 
-// Perform the login check (validate against your user database)
-// Replace the following with your actual login logic
 $sql = "SELECT * FROM user_profile_test WHERE email = '$email' AND user_password = '$password'";
 $result = $conn->query($sql);
 
