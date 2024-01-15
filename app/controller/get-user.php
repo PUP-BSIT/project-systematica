@@ -1,4 +1,5 @@
 <?php
+include 'api.php';
 include('../../include/db_conn.php');
 
 header("Access-Control-Allow-Origin: https://hypehive.cloud, https://likha.website, http://localhost");
@@ -7,34 +8,36 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 session_start();
 
-// Check if the token exists in the session
-if (isset($_SESSION['token'])) {
-    $token = $_SESSION['token'];
-    
-    $userDetails = getUserDetailsByToken($token);
+if (isset($_GET['authorization_token'])){
+    $authToken = $_GET['authorization_token'];
 
-    if ($userDetails) {
-        // Return user details as JSON response
-        echo json_encode($userDetails);
+    // Use a prepared statement to prevent SQL injection
+    $query = "SELECT user_name, first_name, middle_name, last_name, email, birthday FROM your_table_name WHERE authorization_token = ?";
+    
+    // Using MySQL for Database Interactions
+    $stmt = $conn->prepare($query);
+
+    // Bind the Parameters
+    $stmt->bind_param('s', $authToken);
+
+    // Execute the Query
+    $stmt->execute();
+    
+    // Get the Result
+    $result = $stmt->get_result();
+
+    if($result->num_rows > 0){
+        header('Content-Type: application/json'); // Corrected typo in "application"
+        echo json_encode($result->fetch_assoc()); // Using fetch_assoc() instead of fetch_all()
     } else {
-        // If user details are not found, return an error response
-        echo json_encode(['error' => 'User details not found']);
+        http_response_code(401); // Set HTTP response code to 401 for unauthorized
+        echo json_encode(array('error_message' => 'Unsuccessful Authorization!'));
     }
+
+    $stmt->close();
+
+    $conn->close();
 } else {
-    // If the token is not set in the session, return an error response
-    echo json_encode(['error' => 'Token not found in session']);
+    echo "Auth not found in the URL";
 }
-
-// Sample function to fetch user details based on the token (replace with your actual logic)
-function getUserDetailsByToken($token) {
-    
-    $query = "SELECT users.*, tokens.token FROM users
-              JOIN tokens ON users.user_id = tokens.user_id
-              WHERE tokens.token = :token";
-    // ... (execute query and fetch user details)
-    // Return user details as an associative array
-    // return $userDetails;
-    return ['user_id' => 1, 'username' => 'sample_user', 'email' => 'sample@example.com', 'token' => 'your_token'];
-}
-
 ?>
