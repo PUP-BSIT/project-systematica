@@ -6,35 +6,38 @@ header("Access-Control-Allow-Origin: https://hypehive.cloud, https://likha.websi
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-
 session_start();
 
-function get_user_data($token) {
-    if (isset($_SESSION['authorization_token']) && $_SESSION['authorization_token'] === $token) {
-        $user_data = array(
-            "username" => "johndee",
-            "first_name" => "John",
-            "middle_name" => "Dee",
-            "last_name" => "Cruz",
-            "email" => "john_cruz@sample.com",
-            "birthday" => "12/01/1997",
-        );
+if (isset($_GET['authorization_token'])){
+    $authToken = $_GET['authorization_token'];
 
-        return json_encode($user_data);
+    // Use a prepared statement to prevent SQL injection
+    $query = "SELECT user_name, first_name, middle_name, last_name, email, birthday FROM your_table_name WHERE authorization_token = ?";
+    
+    // Using MySQL for Database Interactions
+    $stmt = $conn->prepare($query);
+
+    // Bind the Parameters
+    $stmt->bind_param('s', $authToken);
+
+    // Execute the Query
+    $stmt->execute();
+    
+    // Get the Result
+    $result = $stmt->get_result();
+
+    if($result->num_rows > 0){
+        header('Content-Type: application/json'); // Corrected typo in "application"
+        echo json_encode($result->fetch_assoc()); // Using fetch_assoc() instead of fetch_all()
     } else {
-        header("HTTP/1.1 401 Unauthorized");
-        return "Unsuccessful Authorization!";
+        http_response_code(401); // Set HTTP response code to 401 for unauthorized
+        echo json_encode(array('error_message' => 'Unsuccessful Authorization!'));
     }
-}
 
-if (isset($_GET['action']) && $_GET['action'] === 'get-user-data') {
-    $token = $_GET['token'] ?? '';
-    $user_data_response = get_user_data($token);
-    echo $user_data_response;
+    $stmt->close();
+
+    $conn->close();
 } else {
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid action']);
+    echo "Auth not found in the URL";
 }
-
 ?>
-

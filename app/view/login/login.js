@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function login() {
-<<<<<<< HEAD:mingo_design/login_page.js
     const usernameValue = document.getElementById('username').value;
     const passwordValue = document.getElementById('password').value;
 
@@ -49,9 +48,6 @@ function login() {
     } else {
         alert('Please fill in both username and password.');
     }
-=======
-    window.location.href = "../home/home_page.html";
->>>>>>> main:app/view/login/login.js
 }
 
 function likha(event) {
