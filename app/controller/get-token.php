@@ -51,8 +51,7 @@ function get_token_api() {
         http_response_code(400);
         echo json_encode(['error' => 'Missing required parameters']);
         exit();
-    }
-    
+    }  
 
     // Generate a more realistic authorization token
     $authorizationToken = generateToken();
@@ -63,11 +62,4 @@ function get_token_api() {
     exit();
     
 }
-
-// function authenticateUser(){
-    
-    
-//       return true;
-// }
-
 ?>

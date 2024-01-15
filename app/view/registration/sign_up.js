@@ -11,7 +11,12 @@ const showError = (field, errorText) => {
     errorElement.classList.add("error-text");
     errorElement.innerText = errorText;
     field.closest(".form-group").appendChild(errorElement);
-}
+};
+
+// Function to toggle password visibility
+const togglePasswordVisibility = (inputField) => {
+    inputField.type = inputField.type === "password" ? "text" : "password";
+};
 
 // Function to handle form submission
 const handleFormData = (e) => {
@@ -35,8 +40,12 @@ const handleFormData = (e) => {
     const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 
     // Clearing previous error messages
-    document.querySelectorAll(".form-group .error").forEach(field => field.classList.remove("error"));
-    document.querySelectorAll(".error-text").forEach(errorText => errorText.remove());
+    document.querySelectorAll(".form-group .error").forEach((field) =>
+        field.classList.remove("error")
+    );
+    document.querySelectorAll(".error-text").forEach((errorText) =>
+        errorText.remove()
+    );
 
     // Performing validation checks
     if (fullname === "") {
@@ -63,12 +72,18 @@ const handleFormData = (e) => {
 
     // Submitting the form
     form.submit();
-}
+};
 
-// Toggling password visibility
-passToggleBtn.addEventListener('click', () => {
-    passToggleBtn.className = passwordInput.type === "password" ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
-    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+// Toggling password visibility for both password and confirm password
+passToggleBtn.addEventListener("click", () => {
+    togglePasswordVisibility(passwordInput);
+    togglePasswordVisibility(confirmPassInput);
+
+    // Toggling icon based on the password input field type
+    passToggleBtn.className =
+        passwordInput.type === "password" ?
+        "fa-solid fa-eye-slash" :
+        "fa-solid fa-eye";
 });
 
 // Handling form submission event

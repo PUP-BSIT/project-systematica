@@ -4,13 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
-
-    <link rel="stylesheet" href="../style/css/globals.css">
+    <title>Postify Login</title>
+    <link rel="stylesheet" href="../style/css/globals.css" />
     <link rel="stylesheet" href="login.css" />
-    <script src="login.js"></script>
+    <script src="login-function.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open Sans:wght@400;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular One:wght@400&display=swap" />
+
 </head>
 
 <body>
@@ -24,16 +25,16 @@
                     <div class="jnt-stack">
                         <div class="jnt-input">
                             <div class="input-container username">
-                                <input type="text" id="username" name="username" onfocus="showLabel('usernameLabel')" onblur="hideLabel('usernameLabel')">
+                                <input type="text" id="username" name="username" required>
                                 <label for="username" id="usernameLabel">
-                                    <img src="../../assets/images/email.png" alt="Icon">
-                                    <span>Email | Username</span>
-                                </label>
+                            <img src="../../assets/images/email.png" alt="Icon">
+                                <span>Email / Username</span>
+                            </label>
                             </div>
                         </div>
                         <div class="jnt-input">
                             <div class="input-container password">
-                                <input type="password" id="password" name="password" onfocus="showLabel('passwordLabel')" onblur="hideLabel('passwordLabel')">
+                                <input type="password" id="password" name="password" required>
                                 <label for="password" id="passwordLabel">
                                     <img src="../../assets/images/password.png" alt="Icon">
                                     <span>Password</span>
@@ -56,15 +57,18 @@
                                     </div>
                                     <div class="button-wrapper">
                                         <button class="likha-button" onclick="likha()">
-                                            <div class="content14">
-                                                Likha
-                                            </div>
-                                        </button>
-                                        <button class="hypefive-button">
-                                            <div class="content14">
-                                                HypeHive
-                                            </div>
-                                        </button>
+                            <div class="content14">
+                                <img class="likha-logo" alt="" src="../../assets/images/likha.png" />
+                                Likha
+                            </div>
+                        </button>
+
+                                        <button class="hypefive-button" onclick="hypefive()">
+                            <div class="content14">
+                                <img class="hypefive-logo" alt="" src="../../assets/images/hypehive.png" />
+                                HypeHive
+                            </div>
+                        </button>
                                     </div>
                                 </div>
                                 <div class="have-no-account-yet-parent">
@@ -87,7 +91,6 @@
                 <div class="welcome-aboard-my">Welcome aboard my friend!</div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>
