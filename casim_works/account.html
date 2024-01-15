@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Account</title>
+</head>
+
+<body>
+	<div class="frame_48">
+		<div class="account">
+			<div class="title">Account</div>
+		</div>
+		
+		<div class="profile">
+			<img class="ed_judah" src="ed.png" alt="Ed Judah">
+			<div class="profile_name" id="profile_name">Ed Judah Mingo</div>
+		</div>
+
+		<div class="section_full_name">
+			<label class="input_label" for="full_name">Full Name</label>
+			<div class="input-container">
+				<input type="text" id="full_name" name="full name" class="full_name_input" placeholder="Enter your full name">
+				<button class="edit-button" onclick="toggleEdit()">Edit</button>
+			</div>
+		</div>
+
+		<div class="frame_52">
+			<label class="input_label" for="email">Email</label>
+			<div class="input-container">
+				<input type="text" id="email" name="email" class="email_input" placeholder="Enter your email address">
+				<button class="edit-button" onclick="toggleEdit()">Edit</button>
+			</div>
+		</div>
+
+		<div class="frame_53">
+			<label for="password" class="new-password-label">New Password</label>
+			<div class="password-container">
+				<input type="password" id="password" name="password" class="password-input" placeholder="Enter your new password">
+				<button id="password-toggle-btn" class="see-password-btn">See Password</button>
+			</div>
+		</div>
+
+		<div class="frame_54">
+			<label class="input-label" for="confirm-password">Confirm Password</label>
+			<div class="password-container">
+				<input type="password" id="confirm-password" name="confirm-password" class="password-input" placeholder="Enter your confirm password">
+				<button id="confirm-password-toggle-btn" class="see-password-btn">See Password</button>
+			</div>
+		</div>
+
+  
+		<div class="save_button">
+			<button class="button save-button" type="button" onclick="saveData()">Save</button>
+		</div>
+	</div>
+
+<script src="account.js"></script>
+</body>
+
+</html>
