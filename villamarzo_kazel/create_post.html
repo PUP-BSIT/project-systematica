@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./create_post.css">
+    <title>Create Post Example</title>
+</head>
+<body>
+
+<div id="container">
+    <!-- Overlay -->
+    <div id="overlay">
+        <div id="overlayContent">
+            <!-- Close button image -->
+            <div id="overlayHeader">
+                <span>Create Post</span>
+                <div id="closeButton" onclick="toggleOverlay()">
+                    <img src="./images/cancel_button.svg" alt="Close">
+                </div>
+            </div>
+            <!-- Line under the header -->
+            <div id="lineUnderHeader"></div>
+            <!-- Post Container inside the Overlay -->
+            <div id="postContainer">
+                <input type="text" id="postText" placeholder="Enter your post text">
+                <div id="chooseFileContainer">
+                    <input type="file" id="fileInput" accept="image/*" onchange="displayFilePreview()">
+                    <img id="filePreview" alt="File Preview">
+                    <span id="fileName">Choose File</span>
+                </div>
+                <button onclick="createPost()">Create Post</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- "What's on your mind?" container -->
+    <div id="whatsOnYourMindContainer" onclick="toggleOverlay()">
+        <div id="whatsOnYourMind">What's on your mind?</div>
+    </div>
+
+    <div id="postsContainer">
+        <!-- Existing posts and new posts will be displayed here -->
+    </div>
+</div>
+
+<script src="./create_post.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        #container {
+            text-align: center;
+            position: relative;
+        }
+
+        #whatsOnYourMindContainer {
+            width: 500px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 20px auto 10px;
+            padding: 20px;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        #whatsOnYourMind {
+            font-weight: bold;
+            color: #333;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 3;
+        }
+
+        #overlayContent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 500px;
+            height: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 4;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #overlayHeader {
+            position: relative;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #closeButton {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        #closeButton img {
+            width: 30px;
+            height: 30px;
+        }
+
+        #lineUnderHeader {
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px; /* Increased margin-bottom */
+        }
+
+        #chooseFileContainer {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        #fileInput {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            border: none; /* Make the border invisible */
+        }
+
+        #filePreview {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        #fileName {
+            position: absolute;
+            bottom: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        #postsContainer {
+            position: relative;
+            width: 540px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            z-index: 1;
+            margin: 0 auto;
+        }
+
+        .post-container {
+            width: 100%;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .post {
+            padding: 20px;
+            border: 1px solid #eee;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .post img {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
+            margin-top: 10px;
+        }
+
+        .post-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px; /* Adjusted margin */
+            gap: 100px;
+        }
+
+        .post-buttons img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            margin-right: 5px; /* Adjusted margin */
+        }
+
+        input, button {
+            margin-bottom: 15px; /* Increased margin for the input and button */
+            padding: 15px; /* Increased padding for the input and button */
+            width: calc(100%);
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #postText {
+            border: none; /* Make the border invisible */
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
