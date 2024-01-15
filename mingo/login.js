@@ -1,14 +1,14 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     function handleInputFocusAndBlur(input, labelId) {
         const label = document.getElementById(labelId);
 
-        input.addEventListener('focus', function() {
+        input.addEventListener('focus', function () {
             if (label && input.value === '') {
                 label.querySelector('span').style.opacity = '0';
             }
         });
 
-        input.addEventListener('blur', function() {
+        input.addEventListener('blur', function () {
             if (label) {
                 if (input.value === '') {
                     label.querySelector('span').style.opacity = '1';
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        input.addEventListener('input', function() {
+        input.addEventListener('input', function () {
             if (label && input.value === '') {
                 label.querySelector('span').style.opacity = '1';
             } else {
@@ -40,23 +40,19 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function login() {
-<<<<<<< HEAD:mingo_design/login_page.js
     const usernameValue = document.getElementById('username').value;
     const passwordValue = document.getElementById('password').value;
 
     if (usernameValue && passwordValue) {
-        window.location.href = "home_page.html";
+        window.location.href = "homepage.html";
     } else {
         alert('Please fill in both username and password.');
     }
-=======
-    window.location.href = "../home/home_page.html";
->>>>>>> main:app/view/login/login.js
 }
 
 function likha(event) {
     event.preventDefault();
-    window.location.href = "../login-likha/login-likha.html";
+    alert('Likha button clicked!');
 }
 
 function hypefive(event) {

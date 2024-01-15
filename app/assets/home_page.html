@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="home_page.css" />
+    <link rel="stylesheet" href="home_page_global.css" />
+	<script src="home_page.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Secular One:wght@400&display=swap"
+    />
+  </head>
+  <body>
+    <div class="home-page">
+      <div class="left-sidebar">
+        <div class="frame-parent">
+          <div class="frame-group">
+            <img class="frame-child" alt="" src="./images/logo.png" />
+
+            <div class="postify">POSTIFY</div>
+          </div>
+          <div class="frame-container">
+            <div class="overview-wrapper">
+              <div class="overview">DASHBOARD</div>
+            </div>
+            <div class="btn-parent">
+              <div class="home-button">
+			  <button onclick="home()">
+				<img class="vuesaxlinearhome-icon" alt="" src="data:image/svg+xml,%3Csvg width='16' 
+				  height='17' viewBox='0 0 16 17' fill='none' 
+				  xmlns='http://www.w3.org/2000/svg'%3E%3Cpath 
+				  d='M8 12.5V10.5' stroke='%23202020' stroke-width='1.5' 
+				  stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath 
+				  d='M6.71331 2.37998L2.09331 6.07998C1.57331 6.49331 1.23997 
+				  7.36665 1.35331 8.01998L2.23997 13.3266C2.39997 14.2733 3.30664 
+				  15.04 4.26664 15.04H11.7333C12.6866 15.04 13.6 14.2666 13.76 
+				  13.3266L14.6466 8.01998C14.7533 7.36665 14.42 6.49331 13.9066 
+				  6.07998L9.28664 2.38665C8.57331 1.81331 7.41997 1.81331 6.71331 
+				  2.37998Z' stroke='%23202020' stroke-width='1.5' 
+				  stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+				<div class="dashboard">Home</div>
+			  </button>
+			</div>
+			<div class="create-button">
+			  <button onclick="create()">
+				<img class="vuesaxlinearhome-icon" 
+				alt="" 
+				src="data:image/svg+xml,%3Csvg width='16' height='17' viewBox='0 0 16 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='16' height='16' transform='translate(0 0.5)' fill='white'/%3E%3Cpath d='M9.66665 7.59998H6.33331' stroke='black' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8 5.97333V9.30666' stroke='black' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M11.2133 1.83331H4.78665C3.36665 1.83331 2.21332 2.99331 2.21332 4.40665V13.8C2.21332 15 3.07332 15.5066 4.12665 14.9266L7.37998 13.12C7.72665 12.9266 8.28665 12.9266 8.62665 13.12L11.88 14.9266C12.9333 15.5133 13.7933 15.0066 13.7933 13.8V4.40665C13.7867 2.99331 12.6333 1.83331 11.2133 1.83331Z' stroke='%23292D32' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+				<div class="dashboard">Create</div>
+			  </button>
+			</div>
+			<div class="notification-button">
+			  <button onclick="notif()">
+				<img class="vuesaxlinearhome-icon" 
+				alt="" 
+				src="data:image/svg+xml,%3Csvg width='16' height='17' viewBox='0 0 16 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 4.79333V7.01334' stroke='black' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round'/%3E%3Cpath d='M8.01333 1.83331C5.55999 1.83331 3.57333 3.81998 3.57333 6.27331V7.67331C3.57333 8.12665 3.38666 8.80665 3.15333 9.19331L2.30666 10.6066C1.78666 11.48 2.14666 12.4533 3.10666 12.7733C6.29333 13.8333 9.73999 13.8333 12.9267 12.7733C13.8267 12.4733 14.2133 11.42 13.7267 10.6066L12.88 9.19331C12.6467 8.80665 12.46 8.11998 12.46 7.67331V6.27331C12.4533 3.83331 10.4533 1.83331 8.01333 1.83331Z' stroke='black' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round'/%3E%3Cpath d='M10.22 13.0467C10.22 14.2667 9.22003 15.2667 8.00003 15.2667C7.39336 15.2667 6.83336 15.0134 6.43336 14.6134C6.03336 14.2134 5.78003 13.6534 5.78003 13.0467' stroke='%23292D32' stroke-width='1.5' stroke-miterlimit='10'/%3E%3C/svg%3E"/>
+				<div class="dashboard">Notifications</div>
+			  </button>
+			</div>
+			<div class="account-button">
+			  <button onclick="account()">
+				<img class="vuesaxlinearhome-icon" 
+				alt="" 
+				src="data:image/svg+xml,%3Csvg width='16' height='17' viewBox='0 0 16 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.10664 7.74665C8.03998 7.73998 7.95998 7.73998 7.88664 7.74665C6.29998 7.69331 5.03998 6.39331 5.03998 4.79331C5.03998 3.15998 6.35998 1.83331 7.99998 1.83331C9.63331 1.83331 10.96 3.15998 10.96 4.79331C10.9533 6.39331 9.69331 7.69331 8.10664 7.74665Z' stroke='%23202020' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4.77335 10.2067C3.16002 11.2867 3.16002 13.0467 4.77335 14.12C6.60669 15.3467 9.61335 15.3467 11.4467 14.12C13.06 13.04 13.06 11.28 11.4467 10.2067C9.62002 8.98669 6.61335 8.98669 4.77335 10.2067Z' stroke='%23202020' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+				<div class="dashboard">Account</div>
+			  </button>
+			</div>
+			<div class="profile-button">
+			  <button onclick="profile()">
+				<img class="vuesaxlinearhome-icon" 
+				alt="" 
+				src="data:image/svg+xml,%3Csvg width='16' height='17' viewBox='0 0 16 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.08002 9.01999C8.03335 9.01332 7.97335 9.01332 7.92002 9.01999C6.74669 8.97999 5.81335 8.01999 5.81335 6.83999C5.81335 5.63332 6.78669 4.65332 8.00002 4.65332C9.20669 4.65332 10.1867 5.63332 10.1867 6.83999C10.18 8.01999 9.25335 8.97999 8.08002 9.01999Z' stroke='%23202020' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M12.4933 13.42C11.3067 14.5066 9.73332 15.1666 7.99999 15.1666C6.26665 15.1666 4.69332 14.5066 3.50665 13.42C3.57332 12.7933 3.97332 12.18 4.68665 11.7C6.51332 10.4866 9.49999 10.4866 11.3133 11.7C12.0267 12.18 12.4267 12.7933 12.4933 13.42Z' stroke='%23202020' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.99998 15.1666C11.6819 15.1666 14.6666 12.1819 14.6666 8.49998C14.6666 4.81808 11.6819 1.83331 7.99998 1.83331C4.31808 1.83331 1.33331 4.81808 1.33331 8.49998C1.33331 12.1819 4.31808 15.1666 7.99998 15.1666Z' stroke='%23202020' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+				<div class="dashboard">Profile</div>
+			  </button>
+			</div>
+            </div>
+          </div>
+        </div>
+        <div class="frame-div">
+          <div class="overview-wrapper">
+            <div class="overview">SETTINGS</div>
+          </div>
+          <div class="settings-button">
+			  <button onclick="settings()">
+				<img
+				  class="vuesaxlinearhome-icon"
+				  alt=""
+				  src="data:image/svg+xml,%3Csvg width='16' height='17' viewBox='0 0 16 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 10.5C9.10457 10.5 10 9.60457 10 8.5C10 7.39543 9.10457 6.5 8 6.5C6.89543 6.5 6 7.39543 6 8.5C6 9.60457 6.89543 10.5 8 10.5Z' stroke='%23202020' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1.33331 9.08667V7.91333C1.33331 7.22 1.89998 6.64667 2.59998 6.64667C3.80665 6.64667 4.29998 5.79333 3.69331 4.74667C3.34665 4.14667 3.55331 3.36667 4.15998 3.02L5.31331 2.36C5.83998 2.04666 6.51998 2.23333 6.83331 2.76L6.90665 2.88666C7.50665 3.93333 8.49331 3.93333 9.09998 2.88666L9.17331 2.76C9.48665 2.23333 10.1666 2.04666 10.6933 2.36L11.8466 3.02C12.4533 3.36667 12.66 4.14667 12.3133 4.74667C11.7066 5.79333 12.2 6.64667 13.4066 6.64667C14.1 6.64667 14.6733 7.21333 14.6733 7.91333V9.08667C14.6733 9.78 14.1066 10.3533 13.4066 10.3533C12.2 10.3533 11.7066 11.2067 12.3133 12.2533C12.66 12.86 12.4533 13.6333 11.8466 13.98L10.6933 14.64C10.1666 14.9533 9.48665 14.7667 9.17331 14.24L9.09998 14.1133C8.49998 13.0667 7.51331 13.0667 6.90665 14.1133L6.83331 14.24C6.51998 14.7667 5.83998 14.9533 5.31331 14.64L4.15998 13.98C3.55331 13.6333 3.34665 12.8533 3.69331 12.2533C4.29998 11.2067 3.80665 10.3533 2.59998 10.3533C1.89998 10.3533 1.33331 9.78 1.33331 9.08667Z' stroke='%23202020' stroke-width='1.5' stroke-miterlimit='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+				<div class="dashboard">Settings</div>
+			  </button>
+			</div>
+          <div class="logout-button">
+			  <button onclick="logout()">
+				<img
+				  class="vuesaxlinearhome-icon"
+				  alt=""
+				  src="data:image/svg+xml,%3Csvg width='16' height='17' viewBox='0 0 16 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.93335 5.54003C6.14002 3.14003 7.37335 2.16003 10.0733 2.16003H10.16C13.14 2.16003 14.3333 3.35337 14.3333 6.33337V10.68C14.3333 13.66 13.14 14.8534 10.16 14.8534H10.0733C7.39335 14.8534 6.16002 13.8867 5.94002 11.5267' stroke='%23F13E3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10 8.5H2.41333' stroke='%23F13E3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M3.90002 6.26672L1.66669 8.50006L3.90002 10.7334' stroke='%23F13E3E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+				<div class="dashboard">Logout</div>
+			  </button>
+			</div>
+        </div>
+      </div>
+      <div class="right-sidebar">
+        <div class="your-profile-wrapper">
+          <div class="your-profile">Your Profile</div>
+        </div>
+        <img class="frame-item" alt="" src="./images/icon-placeholder.png" />
+
+        <div class="good-morning-ed-judah-wrapper">
+          <div class="good-morning-ed">good Morning Ed Judah!</div>
+        </div>
+      </div>
+      <div class="frame-parent2">
+        <div class="input-wrapper">
+          <div class="input">
+            <img
+              class="vuesaxlinearhome-icon"
+              alt=""
+              src="data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M7.66668%2014C11.1645%2014%2014%2011.1644%2014%207.66665C14%204.16884%2011.1645%201.33331%207.66668%201.33331C4.16887%201.33331%201.33334%204.16884%201.33334%207.66665C1.33334%2011.1644%204.16887%2014%207.66668%2014Z%22%20stroke%3D%22%239E9E9E%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M14.6667%2014.6666L13.3333%2013.3333%22%20stroke%3D%22%239E9E9E%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E" alt="Stylized Circle with Diagonal Line">
+
+            <div class="type-here">Search people...</div>
+          </div>
+        </div>
+        <div class="posts">Posts</div>
+        <div class="ed-judah-mingo-parent">
+          <div class="ed-judah-mingo">Ed Judah Mingo</div>
+          <img class="frame-inner" alt="" src="./images/icon-placeholder.png" />
+
+          <img
+            class="rectangle-icon"
+            alt=""
+            src="./images/post-placeholder.png"
+          />
+
+          <div class="taguig-city">Taguig City</div>
+          <div class="forward-arrow-parent">
+            <button class="forward-arrow-icon">
+				<img src="images/Forward_Arrow.svg" alt="Forward Arrow" width="58" height="39">
+			  </button>
+
+            <button class="heart-icon">
+				<img src="images/Heart.svg" alt="Heart" width="58" height="39">
+			  </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

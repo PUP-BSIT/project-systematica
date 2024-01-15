@@ -1,0 +1,63 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: arial, sans-serif;
+}
+
+.frame-48 {
+    margin-left: 300px;
+    position: relative;
+    background-color: #f9f9f9;
+    width: 360px;
+    height: 762px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 25px;
+    font-family: Inter;
+}
+
+.section terms, privacy, community {
+	position: absolute;
+	width: 350px;
+	height: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	margin-left: 5px;
+}
+
+.section {
+    position: absolute;
+    left: 0;
+    background-color: #d9d9d9;
+    width: 360px;
+    height: 61px;
+}
+
+
+.title {
+    position: absolute;
+    top: 15px;
+    left: 19px;
+    font-weight: 500;
+    display: inline-block;
+    width: 323px;
+    height: 29px;
+}
+
+.terms {
+	top: 76px;
+	background: none;
+}
+
+.privacy {
+	top: 137px;
+	background: none;
+	
+}
+
+.community {
+	top: 198px;
+	background: none;
+}
