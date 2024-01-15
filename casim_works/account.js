@@ -1,38 +1,37 @@
 const PASSWORD_INPUT_ID = 'password';
-const CONFIRM_PASSWORD_INPUT_ID = 'confirm-password';
+const CONFIRM_PASSWORD_INPUT_ID = 'confirm_password';
 
-function togglePasswordVisibility(inputId) {
-  const passwordInput = document.getElementById(inputId);
-  const isPasswordVisible = passwordInput.getAttribute('type') === 'text';
+function toggle_password_visibility(input_id) {
+	const password_input = document.getElementById(input_id);
+	const is_password_visible = password_input.getAttribute('type') === 'text';
 
-  passwordInput.setAttribute('type', isPasswordVisible ? 'password' : 'text');
+	password_input.setAttribute('type', is_password_visible ? 'password' : 'text');
 }
 
-document.getElementById('password-toggle-btn').addEventListener('click', function() {
-  togglePasswordVisibility(PASSWORD_INPUT_ID);
+document.getElementById('password_toggle_btn').addEventListener('click', function() {
+	toggle_password_visibility(PASSWORD_INPUT_ID);
 });
 
-document.getElementById('confirm-password-toggle-btn').addEventListener('click', function() {
-  togglePasswordVisibility(CONFIRM_PASSWORD_INPUT_ID);
+document.getElementById('confirm_password_toggle_btn').addEventListener('click', function() {
+	toggle_password_visibility(CONFIRM_PASSWORD_INPUT_ID);
 });
-
 
 document.getElementById('profile_name').textContent = 'Ed Judah Mingo';
 
-function toggleEdit() {
-  const fullNameInput = document.getElementById('full_name');
-  const profileName = document.getElementById('profile_name');
+function toggle_edit() {
+	const full_name_input = document.getElementById('full_name');
+	const profile_name = document.getElementById('profile_name');
 
-  if (fullNameInput.value.trim() !== '') {
-    profileName.textContent = fullNameInput.value;
-  }
+	if (full_name_input.value.trim() !== '') {
+		profile_name.textContent = full_name_input.value;
+	}
 }
 
-function saveData() {
-  const fullNameInput = document.getElementById('full_name');
-  const profileName = document.getElementById('profile_name');
+function save_data() {
+	const full_name_input = document.getElementById('full_name');
+	const profile_name = document.getElementById('profile_name');
 
-  if (fullNameInput.value.trim() !== '') {
-    profileName.textContent = fullNameInput.value;
-  }
+	if (full_name_input.value.trim() !== '') {
+		profile_name.textContent = full_name_input.value;
+	}
 }
