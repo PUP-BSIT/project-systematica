@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="stylesheet.css" />
+    <link rel="stylesheet" href="SharePage.css" />
   </head>
   <body>
     <div class="SHARE-BUTTON-PAGE">
@@ -37,30 +37,35 @@
 		6cS/Tazh+3P5ndCCCGEEEIIIYQQgvbmN1MuhJyW9JhjAAAAAElFTkSuQmCC"/>
 		</defs>
 		</svg>
-	</div>
-			<div id="modal-overlay" class="modal-overlay">
+   </div>
+		<div id="modal-overlay" class="modal-overlay">
 			<div class="modal">
-            <div class="frame-16">
+			<div class="frame-16">
             <div class="overlap-2" id="cancelButton">
-				<div class="text-wrapper-9">Cancel</div></div>
-            <div class="overlap-3">
-              <div class="text-wrapper-9">Share to HypeHive</div>
-              <img class="share" src="img/buzz.png" />
+            <div class="text-wrapper-9">Cancel</div>
+         </div>
+         <div class="overlap-3">
+          <label>
+			<input type="checkbox" name="shareTo" value="hypehive">
+			<img class="share-logo" src="img/buzz.png" 
+			alt="HypeHive Logo"> Share to HypeHive
+          </label>
+          </div>
+             <div class="overlap-4">
+           <label>
+             <input type="checkbox" name="shareTo" value="likha">
+             <img class="share-logo" src="img/likha.png" 
+			 alt="Likha Logo"> Share to Likha
+            </label>
             </div>
-            <div class="overlap-4">
-              <div class="text-wrapper-9">Share to Likha</div>
-              <img class="share" src="img/likha.png" />
+              <div class="overlap-5">
+               <div class="text-wrapper-10">
+                Share to other social media...
+              </div>
             </div>
-            <div class="overlap-5">
-              <div class="text-wrapper-10">
-				Share to other social media...</div>
-            </div>
-			</div>
-			</div>
           </div>
         </div>
-      </div>
     </div>
-	<script src="SharePage.js"></script>
-  </body>
+    <script src="SharePage.js"></script>
+</body>
 </html>

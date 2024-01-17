@@ -58,5 +58,3 @@ document.addEventListener('DOMContentLoaded', function () {
   likhaBtn.addEventListener('click', function() {
     console.log('Share to Likha clicked');
   });
- 
- 
