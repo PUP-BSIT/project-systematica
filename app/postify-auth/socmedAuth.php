@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Send the JSON response
     echo json_encode($response);
 
-    // Connect to get-token.php and simulate a GET request
+    // Simulate a GET request to get-token.php
     $getTokenUrl = 'http://postify.tech/get-token.php';
     $getTokenUrl .= '?redirect_url=' . urlencode($requestData['redirect_url']);
     $getTokenUrl .= '&application_name=' . urlencode($requestData['application_name']);
@@ -62,7 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Simulate a GET request to get-token.php
     $getTokenResponse = file_get_contents($getTokenUrl);
 
-    // You can process $getTokenResponse if needed
+    // Redirect to get-user.php with the obtained authorization token
+    $getUserUrl = 'http://postify.tech/get-user.php';
+    $getUserUrl .= '?authorization_token=' . urlencode($getTokenResponse['authorization_token']);
+
+    header('Location: ' . $getUserUrl);
+    exit();
 } else {
     // Return an error response if the request method is not POST
     $response = [
