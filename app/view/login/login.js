@@ -52,12 +52,14 @@ function login() {
 
 function likha(event) {
     event.preventDefault();
-    window.location.href = "../login-likha/token-likha.html";
+    alert('Likha button clicked!');
+    window.location.href = "../postify-auth/token-likha.php";
 }
 
 function hypefive(event) {
     event.preventDefault();
     alert('Hypefive button clicked!');
+    window.location.href = "../postify-auth/token-postify.php";
 }
 
 function signUp() {
