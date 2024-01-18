@@ -23,15 +23,25 @@ $sql = "SELECT * FROM user_profile_test WHERE email = '$email' AND user_password
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Login successful
+    $user = $result->fetch_assoc();
+
+    // Generate authorization token
+    $authorizationToken = bin2hex(random_bytes(16));
+
+    // Update auth_token in the database
+    $updateTokenSql = "UPDATE user_profile_test SET auth_token = '$authorizationToken' WHERE email = '$email'";
+    $conn->query($updateTokenSql);
+
+    // Prepare the response
     $response = [
         'status' => 'Login Successful',
         'redirect_url' => $requestData['redirect_url'],
         'application_name' => $requestData['application_name'],
+        'authorization_token' => $authorizationToken,
     ];
 } else {
     // Login failed
-    $response = ['status' => 'Login Failed'];
+    $response = ['status' => 'Login Failed', 'error' => 'Invalid email or password'];
 }
 
 // Close the database connection
