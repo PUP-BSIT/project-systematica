@@ -1,9 +1,13 @@
 <?php
-include 'api.php';
+// get-user.php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-header("Access-Control-Allow-Origin: https://hypehive.cloud, https://likha.website, http://localhost");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Content-Type: application/json");
 
 $servername = "127.0.0.1:3306";
 $username = "u722605549_admin";
@@ -16,66 +20,62 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-session_start();
-
 if (isset($_GET['authorization_token'])) {
+    // Get the auth_token from the URL
     $authToken = $_GET['authorization_token'];
 
-    // Use a prepared statement to prevent SQL injection
-    $query = "SELECT user_name, first_name, middle_name, last_name, email, birthday FROM user_profile_test WHERE auth_token = $authToken";
-
-    // Using MySQLi for Database Interactions
+    // Query to validate token in the users table
+    $query = "SELECT user_name FROM user_register WHERE authorization_token = '$authToken'";
     $stmt = $conn->prepare($query);
-
-    // Check if the statement preparation was successful
-    if ($stmt === false) {
-        die('Error in preparing the statement.');
-    }
-
-    // Bind the Parameters
     $stmt->bind_param('s', $authToken);
-
-    // Execute the Query
     $stmt->execute();
-
-    // Check for errors during execution
-    if ($stmt->error) {
-        die('Error in executing the statement: ' . $stmt->error);
-    }
-
-    // Get the Result
     $result = $stmt->get_result();
 
-    // Check if any rows were returned
     if ($result->num_rows > 0) {
-        // Fetch the result as an associative array
-        $row = $result->fetch_assoc();
+        // Token is valid, retrieve additional details from user_details table
+        $userRow = $result->fetch_assoc();
+        $userName = $userRow['user_name'];
 
-        // Prepare the JSON response
-        $response = array(
-            'username' => $row['user_name'],
-            'first_name' => $row['first_name'],
-            'middle_name' => $row['middle_name'],
-            'last_name' => $row['last_name'],
-            'email' => $row['email'],
-            'birthday' => $row['birthday']
-        );
+        // Query to get user details from user_details table using user_name
+        $detailsQuery = "SELECT first_name, middle_name, last_name, email, birthday FROM user_register WHERE user_name = '$userName'";
+        $detailsStmt = $conn->prepare($detailsQuery);
+        $detailsStmt->bind_param('s', $userName);
+        $detailsStmt->execute();
+        $detailsResult = $detailsStmt->get_result();
 
-        // Send the JSON response
-        header('Content-Type: application/json');
-        echo json_encode($response);
+        if ($detailsResult->num_rows > 0) {
+            // Fetch user details
+            $userDetails = $detailsResult->fetch_assoc();
+
+            // Create the response array in the desired format
+            $response = [
+                'username' => $userName,
+                'first_name' => $userDetails['first_name'],
+                'middle_name' => $userDetails['middle_name'],
+                'last_name' => $userDetails['last_name'],
+                'email' => $userDetails['email'],
+                'birthday' => $userDetails['birthday'],
+            ];
+
+            // Return user details as JSON
+            echo json_encode($response);
+        } else {
+            // No details found in user_details table
+            echo json_encode(['error_message' => 'User details not found.']);
+        }
+
+        // Close the details statement
+        $detailsStmt->close();
     } else {
-        http_response_code(401); // Set HTTP response code to 401 for unauthorized
-        echo json_encode(array('error_message' => 'Unsuccessful Authorization!'));
+        // Token not found in the users table
+        echo json_encode(['error_message' => 'Auth token not found or invalid.']);
     }
-
-    // Close the statement
-    $stmt->close();
 } else {
-    http_response_code(400); // Set HTTP response code to 400 for bad request
-    echo json_encode(array('error_message' => 'Authorization token not found in the URL.'));
+    // If authorization token is not found
+    echo json_encode(['error_message' => 'Auth token not found in the URL.']);
 }
 
-// Close the database connection
+// Close the statement and the database connection
+$stmt->close();
 $conn->close();
 ?>

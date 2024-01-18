@@ -19,7 +19,7 @@ $requestData = json_decode(file_get_contents("php://input"), true);
 $email = $requestData['email'];
 $password = $requestData['password'];
 
-$sql = "SELECT * FROM user_profile_test WHERE email = '$email' AND user_password = '$password'";
+$sql = "SELECT * FROM user_register WHERE email = '$email' AND password_hash = '$password'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
     $authorizationToken = bin2hex(random_bytes(16));
 
     // Update auth_token in the database
-    $updateTokenSql = "UPDATE user_profile_test SET auth_token = '$authorizationToken' WHERE email = '$email'";
+    $updateTokenSql = "UPDATE user_register SET authorization_token = '$authorizationToken' WHERE email = '$email'";
     $conn->query($updateTokenSql);
 
     // Prepare the response
@@ -37,7 +37,6 @@ if ($result->num_rows > 0) {
         'status' => 'Login Successful',
         'redirect_url' => $requestData['redirect_url'],
         'application_name' => $requestData['application_name'],
-        'authorization_token' => $authorizationToken,
     ];
 } else {
     // Login failed

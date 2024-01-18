@@ -20,15 +20,4 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-function generateToken() {
-    $tokenLength = 32;
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    return substr(str_shuffle($characters), 0, $tokenLength);
-}
-
-function authenticateUser(){
-    header('Location: login-auth.php');
-    exit();
-}
-
 ?>
