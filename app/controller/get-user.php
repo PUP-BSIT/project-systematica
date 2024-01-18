@@ -67,12 +67,13 @@ if (isset($_GET['authorization_token'])) {
         // Close the details statement
         $detailsStmt->close();
     } else {
-        // Token not found in the users table
-        echo json_encode(['error_message' => 'Auth token not found or invalid.']);
+        http_response_code(401); // Set HTTP response code to 401 for unauthorized
+        echo json_encode(['error_message' => 'Unsuccessful Authorization!']);
     }
 } else {
     // If authorization token is not found
-    echo json_encode(['error_message' => 'Auth token not found in the URL.']);
+    http_response_code(400); // Set HTTP response code to 400 for bad request
+    echo json_encode(array('error_message' => 'Authorization token not found in the URL.'));
 }
 
 // Close the statement and the database connection
