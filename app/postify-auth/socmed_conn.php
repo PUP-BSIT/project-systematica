@@ -37,6 +37,7 @@ if ($result->num_rows > 0) {
         'status' => 'Login Successful',
         'redirect_url' => $requestData['redirect_url'],
         'application_name' => $requestData['application_name'],
+        'authorization_token' => $authorizationToken, // This is the generated token
     ];
 } else {
     // Login failed

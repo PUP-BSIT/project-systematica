@@ -37,7 +37,7 @@ if (isset($_GET['authorization_token'])) {
         $userName = $userRow['user_name'];
 
         // Query to get user details from user_details table using user_name
-        $detailsQuery = "SELECT first_name, middle_name, last_name, email, birthday FROM user_register WHERE user_name = '$userName'";
+        $detailsQuery = "SELECT first_name, middle_name, last_name, email, birthday FROM user_details WHERE user_name = '$userName'";
         $detailsStmt = $conn->prepare($detailsQuery);
         $detailsStmt->bind_param('s', $userName);
         $detailsStmt->execute();
@@ -73,7 +73,7 @@ if (isset($_GET['authorization_token'])) {
 } else {
     // If authorization token is not found
     http_response_code(400); // Set HTTP response code to 400 for bad request
-    echo json_encode(array('error_message' => 'Authorization token not found in the URL.'));
+    echo json_encode(['error_message' => 'Authorization token not found in the URL.']);
 }
 
 // Close the statement and the database connection
