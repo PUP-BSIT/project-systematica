@@ -1,68 +1,47 @@
 <?php
-// socmedAuth.php
+session_start();
+$servername = "127.0.0.1:3306";
+$username = "u722605549_admin";
+$password = "VUbu4Zhkp7=o";
+$database = "u722605549_postify_db";
 
-function isValidApplicationName($appName) {
-    return preg_match('/^[a-zA-Z0-9]+$/', $appName) === 1;
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-function isValidRedirectUrl($redirectUrl) {
-    return filter_var($redirectUrl, FILTER_VALIDATE_URL) !== false;
-}
+// Retrieve the POST data
+$requestData = json_decode(file_get_contents("php://input"), true);
 
-function generateToken() {
-    $tokenLength = 32;
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    return substr(str_shuffle($characters), 0, $tokenLength);
-}
+$email = $requestData['email'];
+$password = $requestData['password'];
 
-function get_token_api($redirectUrl, $applicationName) {
-    // Check if the required parameters are present
-    if (empty($redirectUrl) || empty($applicationName)) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Missing required parameters']);
-        exit();
-    }
-    
-    $authorizationToken = generateToken();
-    
+$_SESSION['email'] = $email;
+$sql = "SELECT * FROM user_register WHERE email = '$email' AND password_hash = '$password'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+
     // Prepare the response
     $response = [
-        'authorization_token' => $authorizationToken,
-        'redirect_url' => $redirectUrl,
+        'status' => 'Login Successful',
+        'redirect_url' => $requestData['redirect_url'],
+        'application_name' => $requestData['application_name'],
     ];
-
-    header('Content-Type: application/json');
-    // Send the JSON response
-    echo json_encode($response);
-    exit();
-}
-
-// Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $redirectUrl = $data['redirect_url'];
-    $applicationName = $data['application_name'];
-    
-    if (empty($redirectUrl) || empty($applicationName)) {
-        // Return an error response if parameters are missing or invalid
-        $response = [
-            'error' => 'Invalid or missing parameters',
-        ];
-        echo json_encode($response);
-        http_response_code(400); // Bad Request
-        exit;
-    }
-    get_token_api($redirectUrl, $applicationName);
-    // Your authentication logic goes here
-    // You may want to validate the application_name, redirect_url, and generate an authorization token
-    // For demonstration purposes, let's generate a simple authorization token
 } else {
-    // Return an error response if the request method is not POST
-    $response = [
-        'error' => 'Invalid request method',
-    ];
-    echo json_encode($response);
-    http_response_code(405); // Method Not Allowed
-    exit;
+    // Login failed
+    $response = ['status' => 'Login Failed', 'error' => 'Invalid email or password'];
 }
+
+// Close the database connection
+$conn->close();
+
+// Send the JSON response
+header('Content-Type: application/json');
+echo json_encode($response);
+
 ?>
