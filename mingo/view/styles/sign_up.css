@@ -11,30 +11,60 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 10px; /* Added spacing on top and bottom */
-  min-height: 100vh;
-  background: #1BB295;
+  height: 100vh;
+  background: #02151e; /* Dark blue background color */
+  overflow: hidden; /* Prevent scrolling */
+}
+
+.random-images-container {
+  position: fixed; /* Use fixed position to cover the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.random-image {
+  position: absolute;
+  transform-origin: center center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 95%;
 }
 
 form {
-  margin: 20px 0; /* Added spacing on top and bottom */
   padding: 25px;
   background: #fff;
-  max-width: 500px;
-  width: 100%;
+  width: 60%;
+  max-width: 1200px;
   border-radius: 7px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  z-index: 2;
 }
 
 form h2 {
   font-size: 27px;
-  text-align: center;
   margin: 0px 0 30px;
 }
 
-form .form-group {
-  margin-bottom: 15px;
-  position: relative;
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-group {
+  flex-basis: calc(50% - 10px);
+  margin-bottom: 20px;
 }
 
 form label {
@@ -45,9 +75,9 @@ form label {
 
 form input,
 form select {
-  height: 45px;
-  padding: 10px;
-  width: 100%;
+  height: 50px;
+  padding: 12px;
+  width: calc(100% - 24px);
   font-size: 15px;
   outline: none;
   background: #fff;
@@ -73,27 +103,20 @@ form small {
   color: #f91919;
 }
 
-form .password i {
-  position: absolute;
-  right: 0px;
-  height: 45px;
-  top: 28px;
-  font-size: 13px;
-  line-height: 45px;
-  width: 45px;
-  cursor: pointer;
-  color: #939393;
-  text-align: center;
+.password-container {
+  position: relative;
 }
 
+form .password i,
 form .confirm-password i {
   position: absolute;
-  right: 0px;
-  height: 45px;
-  top: 28px;
+  right: 10px;
+  height: 50px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 13px;
-  line-height: 45px;
-  width: 45px;
+  line-height: 50px;
+  width: 50px;
   cursor: pointer;
   color: #939393;
   text-align: center;
@@ -108,17 +131,20 @@ form .confirm-password i {
   border: none;
   height: auto;
   font-size: 16px;
-  padding: 13px 0;
+  width: 400px;
+  padding: 10px;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 500;
   text-align: center;
-  background: #1BB295;
+  background: #3949ab;
   transition: 0.2s ease;
 }
 
 .submit-btn input:hover {
-  background: #179b81;
+  background: #333B91;
+  transform: scale(1.05);
+  transition: 0.2s ease;
 }
 
 .sign-in-text {
@@ -129,11 +155,33 @@ form .confirm-password i {
 }
 
 .sign-in-text a {
-  color: #1BB295;
+  color: #3949ab;
   text-decoration: none;
   font-weight: bold;
 }
 
 .sign-in-text a:hover {
   text-decoration: underline;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  form {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .form-group {
+    flex-basis: 100%;
+  }
+  
+  form input,
+  form select {
+    width: calc(100% - 16px);
+  }
+  
+  .submit-btn input {
+    width: 100%;
+  }
 }
