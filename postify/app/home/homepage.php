@@ -51,7 +51,7 @@
 		  </div>
 		</li>
           <li class="item">
-		  <div href="/notification.html" class="nav_link submenu_item" data-page="notification.html">
+		  <div href="notification.html" class="nav_link submenu_item" data-page="notification.html">
 			<span class="navlink_icon">
 			  <i class="bx bx-bell icon"></i>
 			</span>
@@ -90,10 +90,10 @@
 			  </div>
 
 			  <ul class="menu_items submenu">
-				<a href="#" class="nav_link sublink">Sublink 1</a>
-				<a href="#" class="nav_link sublink">Sublink 2</a>
-				<a href="#" class="nav_link sublink">Sublink 3</a>
-				<a href="#" class="nav_link sublink">Sublink 4</a>
+				<a href="settings/terms_of_service.html" class="nav_link sublink" data-page="settings/terms_of_service.html">Terms of Service</a>
+				<a href="settings/privacy_policy.html" class="nav_link sublink">Privacy Policy</a>
+				<a href="settings/community_guidelines.html" class="nav_link sublink">Community Guidelines</a>
+				<!-- <a href="#" class="nav_link sublink">Sublink 4</a> -->
 			  </ul>
 			</li>
 			<!-- end -->
