@@ -44,7 +44,7 @@ function login() {
     const passwordValue = document.getElementById('password').value;
 
     if (usernameValue && passwordValue) {
-        window.location.href = './view/home/homepage.html';
+        window.location.href = 'home/homepage.php';
     } else {
         alert('Please fill in both username and password.');
     }
