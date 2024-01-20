@@ -31,10 +31,10 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $row = mysqli_fetch_assoc($result);
 
         // Use password_verify to check the hashed password
-        if (password_verify($input_password, $row['user_password'])) {
+        if (password_verify($input_password, $row['password_hash'])) {
             $_SESSION['email'] = $row['email'];
-            $_SESSION['id'] = $row['id'];
-            header("Location: ../home/home_page.html");
+            $_SESSION['user_id'] = $row['user_id'];
+            header("Location: ../home/homepage.php");
             // calling get_token_api function from get-token
             // get_token_api();
             exit();
