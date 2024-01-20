@@ -33,7 +33,6 @@ const handleFormData = (e) => {
     const password = passwordInput.value.trim();
     const confirmPassword = confirmPassInput.value.trim();
     const date = dateInput.value;
-    const gender = genderInput.value;
 
     // Regular expression pattern for email validation
     const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
@@ -72,9 +71,6 @@ const handleFormData = (e) => {
     if (date === "") {
         showError(dateInput, "Select your date of birth");
     }
-    if (gender === "") {
-        showError(genderInput, "Select your gender");
-    }
 
     // Checking for any remaining errors before form submission
     const errorInputs = document.querySelectorAll(".form-group .error");
@@ -86,9 +82,78 @@ const handleFormData = (e) => {
 
 // Toggling password visibility
 passToggleBtn.addEventListener('click', () => {
-    passToggleBtn.className = passwordInput.type === "password" ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
-    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+    const passwordInputType = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = passwordInputType;
+    passToggleBtn.className = passwordInputType === 'password' ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
 });
 
 // Handling form submission event
 form.addEventListener("submit", handleFormData);
+
+document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("randomImagesContainer");
+    const numImages = 15;
+    const minDistance = 20;
+  
+    for (let i = 1; i <= numImages; i++) {
+      const image = document.createElement("img");
+      image.src = `assets/images/white_star.png`; // Replace with the actual paths to your images
+      image.className = "random-image";
+      applyRandomStyles(image, container, minDistance);
+      container.appendChild(image);
+    }
+  });
+  
+  function applyRandomStyles(element, container, minDistance) {
+    const randRotate = Math.random() * 360;
+  
+    do {
+      const randX = Math.random() * (100 - element.width / window.innerWidth * 100);
+      const randY = Math.random() * (100 - element.height / window.innerHeight * 100);
+  
+      element.style.left = `${randX}%`;
+      element.style.top = `${randY}%`;
+  
+    } while (
+      isOverlapping(element, container) ||
+      isTooClose(element, container, minDistance)
+    );
+  
+    element.style.position = "absolute";
+    element.style.transform = `rotate(${randRotate}deg)`;
+  }
+  
+  function isOverlapping(element, container) {
+    const rect = element.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+  
+    return (
+      rect.right > containerRect.left &&
+      rect.left < containerRect.right &&
+      rect.bottom > containerRect.top &&
+      rect.top < containerRect.bottom
+    );
+  }
+  
+  function isTooClose(element, container, minDistance) {
+    const images = container.querySelectorAll(".random-image");
+    const rect = element.getBoundingClientRect();
+  
+    for (const image of images) {
+      if (image !== element) {
+        const imageRect = image.getBoundingClientRect();
+  
+        const distance = Math.sqrt(
+          Math.pow(rect.left - imageRect.left, 2) +
+          Math.pow(rect.top - imageRect.top, 2)
+        );
+  
+        if (distance < minDistance) {
+          return true;
+        }
+      }
+    }
+  
+    return false;
+  }
+  

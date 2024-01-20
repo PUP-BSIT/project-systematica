@@ -149,6 +149,10 @@ body.dark {
   transition: all 0.3s ease;
 }
 
+.sublink {
+  padding: 15px 15px 15px 52px;
+}
+
 .submenu_item .arrow-left {
   font-size: 20px;
   margin-right: 8px;
@@ -160,7 +164,6 @@ body.dark {
 .sublink i {
   font-size: 24px;
 }
-
 
 .navlink_icon {
   position: relative;
@@ -267,8 +270,19 @@ body.dark {
 }
 
 #content-container {
-  margin-top: 100px;
-  margin-left: 300px;
+  margin-top: 100px; /* Adjust the top margin as needed */
+  margin-left: 300px; /* Set the initial margin to the width of the sidebar */
+  transition: margin-left 0.5s ease, width 0.5s ease; /* Add transition for smooth animation */
+}
+
+.nav_link.clicked .navlink_icon,
+.nav_link.clicked .navlink {
+  color: var(--blue-color) !important;
+}
+
+.nav_link.clicked:hover .navlink_icon,
+.nav_link.clicked:hover .navlink {
+  color: var(--white-color) !important;
 }
 
 @media screen and (max-width: 768px) {
@@ -287,5 +301,14 @@ body.dark {
   }
   .sidebar.close .bottom_content {
     left: -100%;
+  }
+  #content-container {
+    margin-left: 0; /* Adjust the margin for smaller screens */
+    width: 100%; /* Full width for smaller screens */
+  }
+  
+  .sidebar.close #content-container {
+    margin-left: 0; /* Adjust the margin when the sidebar is collapsed on smaller screens */
+    width: 100%; /* Full width when the sidebar is collapsed on smaller screens */
   }
 }
