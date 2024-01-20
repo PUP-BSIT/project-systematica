@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+:root {
+  /* fonts */
+  --font-inter: Inter;
+  --font-open-sans: "Open Sans";
+  --font-secular-one: "Secular One";
+  --font-itf-devanagari-marathi: "ITF Devanagari Marathi";
+
+  /* font sizes */
+  --font-size-xl: 20px;
+  --font-size-base: 16px;
+  --font-size-sm: 14px;
+  --font-size-xs: 12px;
+  --font-size-6xl: 25px;
+  --font-size-lg: 18px;
+
+  /* Colors */
+  --color-black: #000;
+  --color-gainsboro-200: rgba(217, 217, 217, 0.1);
+  --color-gray-10: #fff;
+  --color-gray-100: #202020;
+  --color-darkslateblue: #264a8f;
+  --color-mediumslateblue: #1361f5;
+  --color-darkslategray: #223140;
+  --color-dimgray: #535558;
+  --color-goldenrod: rgba(236, 178, 45, 0.1);
+
+  /* Gaps */
+  --gap-4xs: 9px;
+
+  /* Paddings */
+  --padding-3xs: 10px;
+  --padding-8xl: 27px;
+  --padding-7xs: 6px;
+
+  /* Border radiuses */
+  --br-8xs: 5px;
+  --br-41xl: 60px;
+  --br-3xs: 10px;
+}

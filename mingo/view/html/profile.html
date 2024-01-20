@@ -4,56 +4,57 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="/view/styles/profile.css" />
+    <link rel="stylesheet" href="/view/styles/profile_global.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Open Sans:wght@700&display=swap"
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Secular One:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=ITF Devanagari Marathi:wght@400&display=swap"
     />
   </head>
   <body>
-    <div class="profile-page">
-      <div class="outer-frame-for-share-button">
-        <div class="rectangle-parent">
-          <div class="frame-child"></div>
-          <div class="frame-item"></div>
-          <b class="edit-profile">Edit Profile</b>
-          <div class="ed-judah-mingo">Ed Judah Mingo</div>
-          <img class="frame-inner" alt="" src="./images/icon-placeholder.png" />
-
-          <div class="my-posts">My Posts</div>
-        </div>
-        <div class="ed-judah-mingo-parent">
-          <div class="ed-judah-mingo1">Ed Judah Mingo</div>
-          <img class="ellipse-icon" alt="" src="./images/icon-placeholder.png" />
-
-          <img
-            class="rectangle-icon"
-            alt=""
-            src="./images/post-placeholder.png"
-          />
-
-          <div class="taguig-city">Taguig City</div>
-          <div class="forward-arrow-parent">
-            <img
-              class="forward-arrow-icon"
-              alt=""
-              src="./public/forward-arrow1@2x.png"
-            />
-
-            <img class="heart-icon" alt="" src="./images/Heart.svg" />
-          </div>
-          <div class="rectangle-div"></div>
-          <img
-            class="menu-vertical-icon"
-            alt=""
-            src="./images/Edit_Delete.svg"
-          />
-        </div>
+    <div class="my-posts-parent">
+      <div class="my-posts">My Posts</div>
+      <div class="rectangle-parent">
+        <label for="fileInput" class="edit-profile">Edit Profile</label>
+        <input type="file" id="fileInput" style="display: none" />
+        <div class="username">Username</div>
+        <div class="frame-item"></div>
       </div>
     </div>
+    <script>
+      const fileInput = document.getElementById('fileInput');
+    
+      fileInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const frameItem = document.querySelector('.frame-item');
+            frameItem.style.backgroundImage = `url(${e.target.result})`;
+          };
+          reader.readAsDataURL(file);
+        } else {
+          // If no file is selected, clear the background image
+          const frameItem = document.querySelector('.frame-item');
+          frameItem.style.backgroundImage = 'none';
+        }
+    
+        // Reset the file input value to allow selecting the same file again
+        fileInput.value = null;
+      });
+    </script>
+    
   </body>
 </html>
