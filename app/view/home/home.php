@@ -12,47 +12,32 @@ if (isset($_GET['authorization_token'])) {
 
     if (!empty($authToken)) {
         // Start a session if not already started
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Initialize $userData outside the loop
-        $userData = null;
 
         foreach ($apiUrls as $apiUrl) {
             $apiUrlWithToken = $apiUrl . urlencode($authToken);
             $response = file_get_contents($apiUrlWithToken);
-
-            // Corrected variable name from $detailsArray to $response
+            if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+            }
             if ($response !== false) {
                 $userData = json_decode($response, true);
 
                 if ($userData !== null) {
-                    // Store $userData in a session variable
-                    $_SESSION['userData'] = $userData;
+                    // Store the user data in the session
+                    $_SESSION['userData'][] = $userData;
 
-                    // Access the 'username' key from the 'userData' array
-                    //$username = $userData['username'];
-
-                    // Now $username contains the value of the 'username' key
-                    // Display username and email
-                    echo "Username: " . $userData[0]['username'] . "<br>";
-                    echo "Email: " . $userData[0]['email'];
+                    // Print the user data
+                    print_r($userData);
                 } else {
-                    echo "Failed to decode JSON response.";
+                    echo "Failed to decode JSON response for API: $apiUrlWithToken.";
                 }
-
-                // Break out of the loop once data is successfully retrieved
-                break;
             } else {
-                echo "Failed to retrieve user data. Check API URL or server configuration.";
+                echo "Failed to retrieve user data from API: $apiUrlWithToken. Check API URL or server configuration.";
             }
         }
 
-        // Print the user data after the loop if needed
-        if ($userData !== null) {
-            //print_r($userData);
-        }
+        // Now $username contains the value of the 'username' key from the last API response
+        echo "Username: " . $_SESSION['userData']['username'];
     } else {
         echo "Authorization token is empty.";
     }
