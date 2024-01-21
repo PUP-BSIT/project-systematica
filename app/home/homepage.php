@@ -11,7 +11,8 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 	<link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;800&display=swap"/>
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;800&display=swap"
+    />
     <title>Postify Home</title>
     <link rel="stylesheet" href="home-controllers/homepage.css" />
   </head>
@@ -59,14 +60,6 @@
 		  </div>
 		</li>
 		<li class="item">
-		  <div href="#" class="nav_link submenu_item" data-page="account.html">
-			<span class="navlink_icon">
-			  <i class="bx bx-user"></i>
-			</span>
-			<span class="navlink">Account</span>
-		  </div>
-		</li>
-		<li class="item">
 		  <div href="#" class="nav_link submenu_item" data-page="profile.html">
 			<span class="navlink_icon">
 			  <i class="bx bx-user-circle"></i>
@@ -75,8 +68,6 @@
 		  </div>
 		</li>
         </ul>
-
-		
         <ul class="menu_items">
           <div class="menu_title menu_setting"></div>
           <!-- start -->
@@ -93,19 +84,19 @@
 				<a href="settings/terms_of_service.html" class="nav_link sublink" data-page="settings/terms_of_service.html">Terms of Service</a>
 				<a href="settings/privacy_policy.html" class="nav_link sublink">Privacy Policy</a>
 				<a href="settings/community_guidelines.html" class="nav_link sublink">Community Guidelines</a>
-				<!-- <a href="#" class="nav_link sublink">Sublink 4</a> -->
+        <a href="settings/account.html" class="nav_link sublink">Account</a>
 			  </ul>
 			</li>
 			<!-- end -->
 
-          <li class="item">
-              <a href="home-controllers/logout.php" class="nav_link">
-                  <span class="navlink_icon">
-                      <i class='bx bx-log-out'></i>
-                  </span>
-                  <span class="navlink">Logout</span>
-              </a>
-          </li>
+      <li class="item">
+        <a href="home-controllers/logout.php" class="nav_link">
+          <span class="navlink_icon">
+            <i class='bx bx-log-out'></i>
+          </span>
+          <span class="navlink">Logout</span>
+        </a>
+      </li>      
         </ul>
 
         <!-- Sidebar Open / Close -->
@@ -121,7 +112,7 @@
         </div>
       </div>
     </nav>
-    
+
     <!-- JavaScript -->
     <script src="home-controllers/homepage.js"></script>
     <script src='home-controllers/home.php'></script>
