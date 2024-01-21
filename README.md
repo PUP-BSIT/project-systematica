@@ -16,7 +16,7 @@ Postify invites you to curate your online presence, express your individuality, 
 
 ### POSTIFY LINK:
 
-https://dev.postify.tech/
+https://test.postify.tech/
 
 ### SAMPLE CREDENTIAL:
 
