@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCreate Post Example</title>
+    <title>Create Post Example</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -244,186 +244,184 @@
         </div>
     </div>
 
-        <script>
-
+    <script>
         console.log("hello");
         showPost();
 
-function displayFilePreview() {
-        var fileInput = document.getElementById("fileInput");
-        var filePreview = document.getElementById("filePreview");
-        var fileNameElement = document.getElementById("fileName");
+        function displayFilePreview() {
+            var fileInput = document.getElementById("fileInput");
+            var filePreview = document.getElementById("filePreview");
+            var fileNameElement = document.getElementById("fileName");
 
-        if (fileInput.files && fileInput.files[0]) {
+            if (fileInput.files && fileInput.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
-                        filePreview.src = e.target.result;
-                        fileNameElement.textContent = fileInput.files[0].name;
+                    filePreview.src = e.target.result;
+                    fileNameElement.textContent = fileInput.files[0].name;
                 };
 
                 reader.readAsDataURL(fileInput.files[0]);
+            }
         }
-}
 
-async function showPost() {
-        let url, response, result;
+        async function showPost() {
+            let url, response, result;
 
-        url = "/app/home/php/post_get_all.php";
-        response = await fetch(url);
-        result = await response.json();
-        console.log(result);
-        for (let post of result.postList) {
+            url = "/app/home/php/post_get_all.php";
+            response = await fetch(url);
+            result = await response.json();
+            console.log(result);
+            for (let post of result.postList) {
                 putPost(post.username, post.userPost);
+            }
         }
-}
 
-async function putPost(username, postText, imageFile) {
-        var newPostContainer = document.createElement("div");
-        newPostContainer.classList.add("post-container");
+        async function putPost(username, postText, imageFile) {
+            var newPostContainer = document.createElement("div");
+            newPostContainer.classList.add("post-container");
 
-        var newPost = document.createElement("div");
-        newPost.classList.add("post");
-        var poster = document.createElement("div");
-        poster.innerHTML += `<p>${username}</p>`;
+            var newPost = document.createElement("div");
+            newPost.classList.add("post");
+            var poster = document.createElement("div");
+            poster.innerHTML += `<p>${username}</p>`;
 
-        console.log(postText);
-        if (postText.trim()) {
+            console.log(postText);
+            if (postText.trim()) {
                 newPost.innerHTML += `<p>${postText}</p>`;
-        }
+            }
 
-        if (imageFile) {
+            if (imageFile) {
                 newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
-        }
+            }
 
-        if (!postText.trim() && !imageFile) {
+            if (!postText.trim() && !imageFile) {
                 alert("Please enter text or select an image for your post.");
                 return;
-        }
+            }
 
-// Add like and share buttons
-        var postButtons = document.createElement("div");
-        postButtons.classList.add("post-buttons");
+            // Add like and share buttons
+            var postButtons = document.createElement("div");
+            postButtons.classList.add("post-buttons");
 
-        var likeButton = document.createElement("img");
-        likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
-        likeButton.alt = "Like";
-        likeButton.addEventListener("click", function() {
+            var likeButton = document.createElement("img");
+            likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
+            likeButton.alt = "Like";
+            likeButton.addEventListener("click", function() {
                 // Handle like button click
                 alert("Liked!");
-        });
+            });
 
-        var shareButton = document.createElement("img");
-        shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
-        shareButton.alt = "Share";
-        shareButton.addEventListener("click", function() {
-        // Handle share button click
+            var shareButton = document.createElement("img");
+            shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
+            shareButton.alt = "Share";
+            shareButton.addEventListener("click", function() {
+                // Handle share button click
                 alert("Shared!");
-        });
+            });
 
-        postButtons.appendChild(likeButton);
-        postButtons.appendChild(shareButton);
+            postButtons.appendChild(likeButton);
+            postButtons.appendChild(shareButton);
 
-        newPost.appendChild(postButtons);
+            newPost.appendChild(postButtons);
 
-        newPostContainer.appendChild(poster);
-        newPostContainer.appendChild(newPost);
+            newPostContainer.appendChild(poster);
+            newPostContainer.appendChild(newPost);
 
-        var postsContainer = document.getElementById("postsContainer");
-        postsContainer.prepend(newPostContainer);
+            var postsContainer = document.getElementById("postsContainer");
+            postsContainer.prepend(newPostContainer);
 
-        document.getElementById("postText").value = "";
-        fileInput.value = "";
-        document.getElementById("filePreview").src = "";
-        document.getElementById("fileName").textContent = "Choose File";
+            document.getElementById("postText").value = "";
+            fileInput.value = "";
+            document.getElementById("filePreview").src = "";
+            document.getElementById("fileName").textContent = "Choose File";
 
-}
-async function createPost() {
-        let url, response, data, requestBody;
+        }
+        async function createPost() {
+            let url, response, data, requestBody;
 
-        var postText = document.getElementById("postText").value;
-        var fileInput = document.getElementById("fileInput");
-        var postImage = fileInput.files[0];
-        url = "/app/home/php/post_create.php";
-        requestBody = new FormData();
-        requestBody.append('post_text', postText);
-        requestBody.append('post_image', postImage);
-        response = await fetch(url, {
+            var postText = document.getElementById("postText").value;
+            var fileInput = document.getElementById("fileInput");
+            var postImage = fileInput.files[0];
+            url = "/app/home/php/post_create.php";
+            requestBody = new FormData();
+            requestBody.append('post_text', postText);
+            requestBody.append('post_image', postImage);
+            response = await fetch(url, {
                 method: 'POST',
                 body: requestBody
-        });
-        data = await response.json();
-        console.log(data);
-        putPost(data.username, postText);
-        toggleOverlay();
+            });
+            data = await response.json();
+            console.log(data);
+            putPost(data.username, postText);
+            toggleOverlay();
 
-        return;
-        var fileInput = document.getElementById("fileInput");
-        var imageFile = fileInput.files[0];
+            return;
+            var fileInput = document.getElementById("fileInput");
+            var imageFile = fileInput.files[0];
 
-        var newPostContainer = document.createElement("div");
-        newPostContainer.classList.add("post-container");
+            var newPostContainer = document.createElement("div");
+            newPostContainer.classList.add("post-container");
 
-        var newPost = document.createElement("div");
-        newPost.classList.add("post");
+            var newPost = document.createElement("div");
+            newPost.classList.add("post");
 
-        if (postText.trim()) {
+            if (postText.trim()) {
                 newPost.innerHTML += `<p>${postText}</p>`;
-        }
+            }
 
-        if (imageFile) {
+            if (imageFile) {
                 newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
-        }
+            }
 
-        if (!postText.trim() && !imageFile) {
+            if (!postText.trim() && !imageFile) {
                 alert("Please enter text or select an image for your post.");
                 return;
-        }
+            }
 
-// Add like and share buttons
-        var postButtons = document.createElement("div");
-        postButtons.classList.add("post-buttons");
+            // Add like and share buttons
+            var postButtons = document.createElement("div");
+            postButtons.classList.add("post-buttons");
 
-        var likeButton = document.createElement("img");
-        likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
-        likeButton.alt = "Like";
-        likeButton.addEventListener("click", function() {
+            var likeButton = document.createElement("img");
+            likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
+            likeButton.alt = "Like";
+            likeButton.addEventListener("click", function() {
                 // Handle like button click
                 alert("Liked!");
-        });
+            });
 
-        var shareButton = document.createElement("img");
-        shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
-        shareButton.alt = "Share";
-        shareButton.addEventListener("click", function() {
-        // Handle share button click
+            var shareButton = document.createElement("img");
+            shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
+            shareButton.alt = "Share";
+            shareButton.addEventListener("click", function() {
+                // Handle share button click
                 alert("Shared!");
-        });
+            });
 
-        postButtons.appendChild(likeButton);
-        postButtons.appendChild(shareButton);
+            postButtons.appendChild(likeButton);
+            postButtons.appendChild(shareButton);
 
-        newPost.appendChild(postButtons);
+            newPost.appendChild(postButtons);
 
-        newPostContainer.appendChild(newPost);
+            newPostContainer.appendChild(newPost);
 
-        var postsContainer = document.getElementById("postsContainer");
-        postsContainer.prepend(newPostContainer);
+            var postsContainer = document.getElementById("postsContainer");
+            postsContainer.prepend(newPostContainer);
 
-        document.getElementById("postText").value = "";
-        fileInput.value = "";
-        document.getElementById("filePreview").src = "";
-        document.getElementById("fileName").textContent = "Choose File";
+            document.getElementById("postText").value = "";
+            fileInput.value = "";
+            document.getElementById("filePreview").src = "";
+            document.getElementById("fileName").textContent = "Choose File";
 
-        toggleOverlay();
-}
+            toggleOverlay();
+        }
 
-function toggleOverlay() {
-        var overlay = document.getElementById("overlay");
-        overlay.style.display = (overlay.style.display === "none" || overlay.style.display === "") ? "block" : "none";
-}
-
-        </script>
+        function toggleOverlay() {
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = (overlay.style.display === "none" || overlay.style.display === "") ? "block" : "none";
+        }
+    </script>
 
 </body>
 
