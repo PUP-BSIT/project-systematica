@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/test/app/view/thank_you.css" />
+    <title>Thank You for Signing Up - Postify</title>
+    <link rel="icon" href="/app/assets/images/logo.png" type="image/png" />
+</head>
+
+<body>
+    <div class="random-images-container" id="randomImagesContainer"></div>
+    <div class="thank-you-container">
+      <h2>Thank You for Signing Up to Postify!</h2>
+      <button onclick="window.location.href='../login.html'">Go to Login</button>
+    </div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("randomImagesContainer");
+    const numImages = 15;
+    const minDistance = 20;
+  
+    for (let i = 1; i <= numImages; i++) {
+      const image = document.createElement("img");
+      image.src = `../assets/images/white_star.png`; // Replace with the actual paths to your images
+      image.className = "random-image";
+      applyRandomStyles(image, container, minDistance);
+      container.appendChild(image);
+    }
+  });
+  
+  function applyRandomStyles(element, container, minDistance) {
+    const randRotate = Math.random() * 360;
+  
+    do {
+      const randX = Math.random() * (100 - element.width / window.innerWidth * 100);
+      const randY = Math.random() * (100 - element.height / window.innerHeight * 100);
+  
+      element.style.left = `${randX}%`;
+      element.style.top = `${randY}%`;
+  
+    } while (
+      isOverlapping(element, container) ||
+      isTooClose(element, container, minDistance)
+    );
+  
+    element.style.position = "absolute";
+    element.style.transform = `rotate(${randRotate}deg)`;
+  }
+  
+  function isOverlapping(element, container) {
+    const rect = element.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+  
+    return (
+      rect.right > containerRect.left &&
+      rect.left < containerRect.right &&
+      rect.bottom > containerRect.top &&
+      rect.top < containerRect.bottom
+    );
+  }
+  
+  function isTooClose(element, container, minDistance) {
+    const images = container.querySelectorAll(".random-image");
+    const rect = element.getBoundingClientRect();
+  
+    for (const image of images) {
+      if (image !== element) {
+        const imageRect = image.getBoundingClientRect();
+  
+        const distance = Math.sqrt(
+          Math.pow(rect.left - imageRect.left, 2) +
+          Math.pow(rect.top - imageRect.top, 2)
+        );
+  
+        if (distance < minDistance) {
+          return true;
+        }
+      }
+    }
+  
+    return false;
+  }
+  </script>
+
+</html>
