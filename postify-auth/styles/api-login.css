@@ -6,53 +6,43 @@ body {
     justify-content: center;
     height: 100vh;
     background: linear-gradient(180deg, #5c656a 0.01%, #d1d1d1 50.1%, #6981c0);
-    font-family: 'Inter', sans-serif;
-    /* Added Inter font */
+    font-family: 'Inter', sans-serif; /* Added Inter font */
 }
 
 .login-container {
     text-align: center;
     background-color: #fff;
-    padding: 40px;
-    /* Adjusted padding */
+    padding: 40px; /* Adjusted padding */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     width: 100%;
-    height: 470px;
-    /* Adjusted height */
+    height: 470px; /* Adjusted height */
     box-sizing: border-box;
 }
 
 .login-container button {
-    margin-top: 15px;
-    /* Adjusted margin-top */
+    margin-top: 15px; /* Adjusted margin-top */
 }
 
 .go-back-button {
-    margin-top: 20px;
-    /* Adjusted margin-top */
+    margin-top: 20px; /* Adjusted margin-top */
 }
 
 .login-container img {
-    width: 100px;
-    /* Adjust the width as needed */
-    height: auto;
-    /* Maintain aspect ratio */
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
 }
 
 .login-container h2 {
-    font-weight: 700;
-    /* Bold text */
-    margin-bottom: 30px;
-    /* Added margin */
+    font-weight: 700; /* Bold text */
+    margin-bottom: 30px; /* Added margin */
 }
 
 .login-container input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
-    /* Adjusted margin */
+    margin-bottom: 15px; /* Adjusted margin */
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -61,19 +51,16 @@ body {
 .login-container button {
     width: 100%;
     padding: 12px;
-    background-color: #3949ab;
-    /* Updated color */
+    background-color: #3949ab; /* Updated color */
     color: #fff;
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    /* Added transition effect */
+    transition: background-color 0.3s ease; /* Added transition effect */
 }
 
 .login-container button:hover {
-    background-color: #333B91;
-    /* Hover state color */
+    background-color: #333B91; /* Hover state color */
 }
 
 .password-container {
@@ -83,8 +70,7 @@ body {
 .password-container input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
-    /* Adjusted margin */
+    margin-bottom: 15px; /* Adjusted margin */
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -99,8 +85,6 @@ body {
 }
 
 .password-container img {
-    width: 20px;
-    /* Adjust the width as needed */
-    height: auto;
-    /* Maintain aspect ratio */
+    width: 20px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
 }

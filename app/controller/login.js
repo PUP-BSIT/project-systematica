@@ -64,5 +64,5 @@ function hypefive(event) {
 }
 
 function signUp() {
-    window.location.href = './view/registration/registration_page.html';
+    window.location.href = 'signup.html';
 }

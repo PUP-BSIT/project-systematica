@@ -23,7 +23,6 @@ const handleFormData = (e) => {
     const lastNameInput = document.getElementById("last-name");
     const emailInput = document.getElementById("email");
     const dateInput = document.getElementById("date");
-    const genderInput = document.getElementById("gender");
 
     // Getting trimmed values from input fields
     const firstName = firstNameInput.value.trim();
@@ -33,7 +32,6 @@ const handleFormData = (e) => {
     const password = passwordInput.value.trim();
     const confirmPassword = confirmPassInput.value.trim();
     const date = dateInput.value;
-    const gender = genderInput.value;
 
     // Regular expression pattern for email validation
     const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
@@ -72,9 +70,6 @@ const handleFormData = (e) => {
     if (date === "") {
         showError(dateInput, "Select your date of birth");
     }
-    if (gender === "") {
-        showError(genderInput, "Select your gender");
-    }
 
     // Checking for any remaining errors before form submission
     const errorInputs = document.querySelectorAll(".form-group .error");
@@ -86,9 +81,108 @@ const handleFormData = (e) => {
 
 // Toggling password visibility
 passToggleBtn.addEventListener('click', () => {
-    passToggleBtn.className = passwordInput.type === "password" ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
-    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+    const passwordInputType = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = passwordInputType;
+    passToggleBtn.className = passwordInputType === 'password' ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
 });
 
 // Handling form submission event
 form.addEventListener("submit", handleFormData);
+
+document.addEventListener("DOMContentLoaded", function() {
+    const container = document.getElementById("randomImagesContainer");
+    const numImages = 15;
+    const minDistance = 20;
+
+    for (let i = 1; i <= numImages; i++) {
+        const image = document.createElement("img");
+        image.src = `assets/images/white_star.png`; // Replace with the actual paths to your images
+        image.className = "random-image";
+        applyRandomStyles(image, container, minDistance);
+        container.appendChild(image);
+    }
+});
+
+function applyRandomStyles(element, container, minDistance) {
+    const randRotate = Math.random() * 360;
+
+    do {
+        const randX = Math.random() * (100 - element.width / window.innerWidth * 100);
+        const randY = Math.random() * (100 - element.height / window.innerHeight * 100);
+
+        element.style.left = `${randX}%`;
+        element.style.top = `${randY}%`;
+
+    } while (
+        isOverlapping(element, container) ||
+        isTooClose(element, container, minDistance)
+    );
+
+    element.style.position = "absolute";
+    element.style.transform = `rotate(${randRotate}deg)`;
+}
+
+function isOverlapping(element, container) {
+    const rect = element.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    return (
+        rect.right > containerRect.left &&
+        rect.left < containerRect.right &&
+        rect.bottom > containerRect.top &&
+        rect.top < containerRect.bottom
+    );
+}
+
+function isTooClose(element, container, minDistance) {
+    const images = container.querySelectorAll(".random-image");
+    const rect = element.getBoundingClientRect();
+
+    for (const image of images) {
+        if (image !== element) {
+            const imageRect = image.getBoundingClientRect();
+
+            const distance = Math.sqrt(
+                Math.pow(rect.left - imageRect.left, 2) +
+                Math.pow(rect.top - imageRect.top, 2)
+            );
+
+            if (distance < minDistance) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function checkExisting(field) {
+    const inputValue = document.getElementById(field).value.trim();
+    const errorElement = document.getElementById(`${field}-error`);
+
+    // Clear previous error messages
+    if (errorElement) {
+        errorElement.remove();
+    }
+
+    if (inputValue !== "") {
+        // AJAX request to check if the username or email already exists
+        $.ajax({
+            type: 'POST',
+            url: '../controller/signup.php',
+            data: { field: field, value: inputValue },
+            dataType: 'json',
+            success: function(response) {
+                if (response.exists) {
+                    // Display error message and change text field color to red
+                    showError(document.getElementById(field), `${field === 'username' ? 'Username' : 'Email'} already exists`);
+                    document.getElementById(field).classList.add('error');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                alert('An error occurred while processing your request. Please try again.');
+            }
+        });
+    }
+}
