@@ -235,9 +235,9 @@
         </div>
 
         <!-- "What's on your mind?" container -->
-        <div id="whatsOnYourMindContainer" onclick="toggleOverlay()">
+        <!--div id="whatsOnYourMindContainer" onclick="toggleOverlay()">
             <div id="whatsOnYourMind">What's on your mind?</div>
-        </div>
+        </div-->
 
         <div id="postsContainer">
             <!-- Existing posts and new posts will be displayed here -->
@@ -269,25 +269,41 @@ function displayFilePreview() {
 async function showPost() {
         let url, response, result;
 
-        url = "/app/home/php/post_get_all.php";
+        url = "/app/home/php/post_get.php";
         response = await fetch(url);
         result = await response.json();
         console.log(result);
         for (let post of result.postList) {
-                putPost(post.username, post.userPost);
+                putPost(post.postID, post.postContent);
         }
 }
 
-async function putPost(username, postText, imageFile) {
+async function putPost(postID, postText, imageFile) {
         var newPostContainer = document.createElement("div");
         newPostContainer.classList.add("post-container");
 
         var newPost = document.createElement("div");
         newPost.classList.add("post");
-        var poster = document.createElement("div");
-        poster.innerHTML += `<p>${username}</p>`;
 
-        console.log(postText);
+        var editButton = document.createElement("button");
+        editButton.innerHTML = "Edit";
+        editButton.addEventListener("click", () => {console.log("Hello")});
+        var deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Delete";
+        deleteButton.addEventListener("click", async () => {
+                let requestBody, url, response, data;
+        
+                requestBody = new FormData();
+                requestBody.append('post_id', postID);
+                url = "/app/home/php/post_delete.php";
+                response = await fetch(url, {
+                        method: 'POST',
+                        body: requestBody
+                });
+                data = await response.json();
+                newPost.remove();
+        });
+
         if (postText.trim()) {
                 newPost.innerHTML += `<p>${postText}</p>`;
         }
@@ -323,10 +339,11 @@ async function putPost(username, postText, imageFile) {
 
         postButtons.appendChild(likeButton);
         postButtons.appendChild(shareButton);
+        postButtons.appendChild(editButton);
+        postButtons.appendChild(deleteButton);
 
         newPost.appendChild(postButtons);
 
-        newPostContainer.appendChild(poster);
         newPostContainer.appendChild(newPost);
 
         var postsContainer = document.getElementById("postsContainer");
@@ -339,7 +356,7 @@ async function putPost(username, postText, imageFile) {
 
 }
 async function createPost() {
-        let url, response, data, requestBody;
+        let url, response, result, requestBody;
 
         var postText = document.getElementById("postText").value;
         var fileInput = document.getElementById("fileInput");
@@ -352,9 +369,9 @@ async function createPost() {
                 method: 'POST',
                 body: requestBody
         });
-        data = await response.json();
-        console.log(data);
-        putPost(data.username, postText);
+        result = await response.json();
+        console.log(result);
+        putPost(postText,postImage);
         toggleOverlay();
 
         return;
