@@ -22,8 +22,17 @@ function get_username($user_id) {
     // Use prepared statement to prevent SQL injection
     $sql = "SELECT username FROM user_register WHERE user_id=?";
     $stmt = $conn->prepare($sql);
+
+    if ($stmt === false) {
+        throw new Exception("Error preparing statement: " . $conn->error);
+    }
+
     $stmt->bind_param("i", $user_id);
-    $stmt->execute();
+
+    if (!$stmt->execute()) {
+        throw new Exception("Error executing statement: " . $stmt->error);
+    }
+
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
@@ -37,7 +46,7 @@ function get_username($user_id) {
 
     // Close the statement
     $stmt->close();
-    
+
     // Close the connection
     $conn->close();
 

@@ -328,7 +328,7 @@
             userProfileContainer.classList.add("user-profile-container-post");
 
             var userProfileImage = document.createElement("img");
-            userProfileImage.src = 'path/to/profile-pic.jpg'; // Replace with the actual path
+            userProfileImage.src = 'path/to/profile-pic.jpg';
             userProfileImage.alt = "Profile Picture";
 
             var userName = document.createElement("p");
@@ -340,85 +340,98 @@
             return userProfileContainer;
         }
 
-        async function putPost(postID, postText, imageFile) {
-            var newPostContainer = document.createElement("div");
-            newPostContainer.classList.add("post-container");
+        async function putPost(postID, postText, imageFile, username) {
+            try {
+                var newPostContainer = document.createElement("div");
+                newPostContainer.classList.add("post-container");
 
-            var userProfileContainer = createUserProfileContainer(username);
+                var userProfileContainer = createUserProfileContainer(username);
 
-            var newPost = document.createElement("div");
-            newPost.classList.add("post");
+                var newPost = document.createElement("div");
+                newPost.classList.add("post");
 
-            var editButton = document.createElement("button");
-            editButton.innerHTML = "Edit";
-            // Add your edit button functionality
+                var editButton = document.createElement("button");
+                editButton.innerHTML = "Edit";
+                // Add your edit button functionality
 
-            var deleteButton = document.createElement("button");
-            deleteButton.innerHTML = "Delete";
-            deleteButton.addEventListener("click", async() => {
-                let requestBody, url, response, data;
+                var deleteButton = document.createElement("button");
+                deleteButton.innerHTML = "Delete";
+                deleteButton.addEventListener("click", async() => {
+                    try {
+                        let requestBody, url, response, data;
 
-                requestBody = new FormData();
-                requestBody.append('post_id', postID);
-                url = "/app/home/php/post_delete.php";
-                response = await fetch(url, {
-                    method: 'POST',
-                    body: requestBody
+                        requestBody = new FormData();
+                        requestBody.append('post_id', postID);
+                        url = "/app/home/php/post_delete.php";
+                        response = await fetch(url, {
+                            method: 'POST',
+                            body: requestBody
+                        });
+
+                        if (response.ok) {
+                            data = await response.json();
+                            newPostContainer.remove();
+                        } else {
+                            console.error('Failed to delete post. Status:', response.status);
+                        }
+                    } catch (error) {
+                        console.error('Error deleting post:', error);
+                    }
                 });
-                data = await response.json();
-                newPostContainer.remove();
-            });
 
-            if (postText.trim()) {
-                newPost.innerHTML += `<p>${postText}</p>`;
+                if (postText.trim()) {
+                    newPost.innerHTML += `<p>${postText}</p>`;
+                }
+
+                if (imageFile) {
+                    newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
+                }
+
+                if (!postText.trim() && !imageFile) {
+                    alert("Please enter text or select an image for your post.");
+                    return;
+                }
+
+                // Add like and share buttons
+                var postButtons = document.createElement("div");
+                postButtons.classList.add("post-buttons");
+
+                var likeButton = document.createElement("img");
+                likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
+                likeButton.alt = "Like";
+                likeButton.addEventListener("click", function() {
+                    // Handle like button click
+                    alert("Liked!");
+                });
+
+                var shareButton = document.createElement("img");
+                shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
+                shareButton.alt = "Share";
+                shareButton.addEventListener("click", function() {
+                    // Handle share button click
+                    alert("Shared!");
+                });
+
+                postButtons.appendChild(likeButton);
+                postButtons.appendChild(shareButton);
+                postButtons.appendChild(editButton);
+                postButtons.appendChild(deleteButton);
+
+                newPost.appendChild(postButtons);
+
+                newPostContainer.appendChild(userProfileContainer);
+                newPostContainer.appendChild(newPost);
+
+                var postsContainer = document.getElementById("postsContainer");
+                postsContainer.prepend(newPostContainer);
+
+                document.getElementById("postText").value = "";
+                fileInput.value = "";
+                document.getElementById("filePreview").src = "";
+                document.getElementById("fileName").textContent = "Choose File";
+            } catch (error) {
+                console.error('Error creating post:', error);
             }
-
-            if (imageFile) {
-                newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
-            }
-
-            if (!postText.trim() && !imageFile) {
-                alert("Please enter text or select an image for your post.");
-                return;
-            }
-
-            // Add like and share buttons
-            var postButtons = document.createElement("div");
-            postButtons.classList.add("post-buttons");
-
-            var likeButton = document.createElement("img");
-            likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
-            likeButton.alt = "Like";
-            likeButton.addEventListener("click", function() {
-                // Handle like button click
-                alert("Liked!");
-            });
-
-            var shareButton = document.createElement("img");
-            shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
-            shareButton.alt = "Share";
-            shareButton.addEventListener("click", function() {
-                // Handle share button click
-                alert("Shared!");
-            });
-
-            postButtons.appendChild(likeButton);
-            postButtons.appendChild(shareButton);
-            postButtons.appendChild(editButton);
-            postButtons.appendChild(deleteButton);
-
-            newPost.appendChild(postButtons);
-
-            newPostContainer.appendChild(userProfileContainer);
-            newPostContainer.appendChild(newPost);
-
-            var postsContainer = document.getElementById("postsContainer");
-            postsContainer.prepend(newPostContainer);
-
-            document.getElementById("postText").value = "";
-            fileInput.value = "";
-            document.getElementById("filePreview").src = "";
-            document.getElementById("fileName").textContent = "Choose File";
         }
 
         async function createPost() {
