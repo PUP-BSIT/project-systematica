@@ -1,13 +1,7 @@
 <?php
 require "../../../db_conn.php";
 
-// Check if the user is logged in
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    echo get_username($user_id);
-} else {
-    echo 'User not logged in.';
-}
+$user_id = $_SESSION['user_id'];
 
 function get_username($user_id) {
     global $servername, $username, $password, $database;
@@ -39,6 +33,7 @@ function get_username($user_id) {
         // Fetch the row
         $row = $result->fetch_assoc();
         $username = $row['username'];
+        echo $username;
     } else {
         // No rows found, handle the situation accordingly
         $username = "User not found";
