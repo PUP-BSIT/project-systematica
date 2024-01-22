@@ -250,50 +250,6 @@
         button:hover {
             background-color: #45a049;
         }
-        
-        .profile-container {
-            max-width: 1100px;
-            margin: auto;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 10px auto;
-        }
-        
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .profile-username {
-            color: #657786;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-        }
-        
-        .profile-actions {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .edit-profile-button {
-            padding: 10px 20px;
-            background-color: #ffffff;
-            color: #1da1f2;
-            border: 1px solid #1da1f2;
-            border-radius: 5px;
-            cursor: pointer;
-        }
     </style>
 </head>
 
@@ -528,6 +484,26 @@
             var newPost = document.createElement("div");
             newPost.classList.add("post");
 
+            var editButton = document.createElement("button");
+            editButton.innerHTML = "Edit";
+            // Add your edit button functionality
+
+            var deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete";
+            deleteButton.addEventListener("click", async() => {
+                let requestBody, url, response, data;
+
+                requestBody = new FormData();
+                requestBody.append('post_id', postID);
+                url = "/app/home/php/post_delete.php";
+                response = await fetch(url, {
+                    method: 'POST',
+                    body: requestBody
+                });
+                data = await response.json();
+                newPostContainer.remove();
+            });
+
             if (postText.trim()) {
                 newPost.innerHTML += `<p>${postText}</p>`;
             }
@@ -555,6 +531,86 @@
 
             var shareButton = document.createElement("img");
             shareButton.src = "../assets/images/Share.svg"; // Replace with your image
+            shareButton.alt = "Share";
+            shareButton.addEventListener("click", function() {
+                // Handle share button click
+                alert("Shared!");
+            });
+
+            postButtons.appendChild(likeButton);
+            postButtons.appendChild(shareButton);
+
+            newPost.appendChild(postButtons);
+
+            newPostContainer.appendChild(newPost);
+
+            var postsContainer = document.getElementById("postsContainer");
+            postsContainer.prepend(newPostContainer);
+
+            document.getElementById("postText").value = "";
+            fileInput.value = "";
+            document.getElementById("filePreview").src = "";
+            document.getElementById("fileName").textContent = "Choose File";
+
+            toggleOverlay();
+        }
+
+        async function createPost() {
+            let url, response, result, requestBody;
+
+            var postText = document.getElementById("postText").value;
+            var fileInput = document.getElementById("fileInput");
+            var postImage = fileInput.files[0];
+            url = "/app/home/php/post_create.php";
+            requestBody = new FormData();
+            requestBody.append('post_text', postText);
+            requestBody.append('post_image', postImage);
+            response = await fetch(url, {
+                method: 'POST',
+                body: requestBody
+            });
+            result = await response.json();
+            console.log(result);
+            putPost(postText, postImage);
+            toggleOverlay();
+
+            return;
+            var fileInput = document.getElementById("fileInput");
+            var imageFile = fileInput.files[0];
+
+            var newPostContainer = document.createElement("div");
+            newPostContainer.classList.add("post-container");
+
+            var newPost = document.createElement("div");
+            newPost.classList.add("post");
+
+            if (postText.trim()) {
+                newPost.innerHTML += `<p>${postText}</p>`;
+            }
+
+            if (imageFile) {
+                newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
+            }
+
+            if (!postText.trim() && !imageFile) {
+                alert("Please enter text or select an image for your post.");
+                return;
+            }
+
+            // Add like and share buttons
+            var postButtons = document.createElement("div");
+            postButtons.classList.add("post-buttons");
+
+            var likeButton = document.createElement("img");
+            likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
+            likeButton.alt = "Like";
+            likeButton.addEventListener("click", function() {
+                // Handle like button click
+                alert("Liked!");
+            });
+
+            var shareButton = document.createElement("img");
+            shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
             shareButton.alt = "Share";
             shareButton.addEventListener("click", function() {
                 // Handle share button click
