@@ -32,7 +32,7 @@ $sql = "INSERT INTO user_post (user_id, post_content) VALUES ($user_id, '$post_t
 $sql_result = $conn->query($sql);
 
 if ($sql_result) {
-    $response['username'] = get_username($user_id);
+    $response['username'] = get_username($user_id) || get_username_byToken($user_id);
     $response['postText'] = $post_text;
     $response['success'] = true;
     echo json_encode($response);
@@ -58,6 +58,16 @@ function get_username($user_id) {
     $sql_row = $sql_result->fetch_assoc();
     return $sql_row['username'];
 }
+
+function get_username_byToken($authorizationToken) {
+    global $conn;
+    $sql = "SELECT username FROM user_register WHERE authorization_token=$authorizationToken";
+    $sql_result = $conn->query($sql);
+    $sql_row = $sql_result->fetch_assoc();
+    return $sql_row['username'];
+}
+
+
 
 // require "../../../db_conn.php";
 
