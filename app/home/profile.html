@@ -4,10 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCreate Post Example</title>
+    <title>Create Post Example</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        
+        .user-profile-container-post {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            border: 1px solid #eee;
+        }
+        
+        .user-profile-container-post img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        
+        .user-profile-container-post p {
+            font-weight: bold;
             margin: 0;
         }
         
@@ -128,13 +150,36 @@
         
         #postsContainer {
             position: relative;
-            width: 540px;
-            max-height: 400px;
+            width: 600px;
+            max-height: 440px;
             overflow-y: auto;
-            margin-top: 10px;
+            margin-top: 10px !important;
             margin-bottom: 20px;
             z-index: 1;
             margin: 0 auto;
+            overflow-y: auto;
+            /* Add this line to enable vertical scrollbar */
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
+            direction: ltr;
+            /* Set direction to left-to-right */
+        }
+        
+        #postsContainer::-webkit-scrollbar {
+            width: 10px;
+            /* Set the width of the scrollbar */
+        }
+        
+        #postsContainer::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            /* Set the color of the scrollbar thumb to grey */
+            border-radius: 5px;
+            /* Set the radius of the scrollbar thumb */
+        }
+        
+        #postsContainer::-webkit-scrollbar-track {
+            background-color: transparent;
+            /* Set the color of the scrollbar track to transparent */
         }
         
         .post-container {
@@ -148,8 +193,9 @@
             border: 1px solid #eee;
             background-color: #fff;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
             box-sizing: border-box;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
         }
         
         .post img {
@@ -207,7 +253,6 @@
 </head>
 
 <body>
-
     <div id="container">
         <!-- Overlay -->
         <div id="overlay">
@@ -244,203 +289,223 @@
         </div>
     </div>
 
-        <script>
-
+    <script>
         console.log("hello");
         showPost();
 
-function displayFilePreview() {
-        var fileInput = document.getElementById("fileInput");
-        var filePreview = document.getElementById("filePreview");
-        var fileNameElement = document.getElementById("fileName");
+        function displayFilePreview() {
+            var fileInput = document.getElementById("fileInput");
+            var filePreview = document.getElementById("filePreview");
+            var fileNameElement = document.getElementById("fileName");
 
-        if (fileInput.files && fileInput.files[0]) {
+            if (fileInput.files && fileInput.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
-                        filePreview.src = e.target.result;
-                        fileNameElement.textContent = fileInput.files[0].name;
+                    filePreview.src = e.target.result;
+                    fileNameElement.textContent = fileInput.files[0].name;
                 };
 
                 reader.readAsDataURL(fileInput.files[0]);
+            }
         }
-}
 
-async function showPost() {
-        let url, response, result;
+        async function showPost() {
+            let url, response, result;
 
-        url = "/app/home/php/post_get.php";
-        response = await fetch(url);
-        result = await response.json();
-        console.log(result);
-        for (let post of result.postList) {
+            url = "/app/home/php/post_get.php";
+            response = await fetch(url);
+            result = await response.json();
+            console.log(result);
+
+            for (let post of result.postList) {
                 putPost(post.postID, post.postContent);
+            }
         }
-}
 
-async function putPost(postID, postText, imageFile) {
-        var newPostContainer = document.createElement("div");
-        newPostContainer.classList.add("post-container");
+        function createUserProfileContainer(username) {
+            var userProfileContainer = document.createElement("div");
+            userProfileContainer.classList.add("user-profile-container-post");
 
-        var newPost = document.createElement("div");
-        newPost.classList.add("post");
+            var userProfileImage = document.createElement("img");
+            userProfileImage.src = 'path/to/profile-pic.jpg'; // Replace with the actual path
+            userProfileImage.alt = "Profile Picture";
 
-        var editButton = document.createElement("button");
-        editButton.innerHTML = "Edit";
-        editButton.addEventListener("click", () => {console.log("Hello")});
-        var deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "Delete";
-        deleteButton.addEventListener("click", async () => {
+            var userName = document.createElement("p");
+            userName.textContent = username;
+
+            userProfileContainer.appendChild(userProfileImage);
+            userProfileContainer.appendChild(userName);
+
+            return userProfileContainer;
+        }
+
+        async function putPost(postID, postText, imageFile) {
+            var newPostContainer = document.createElement("div");
+            newPostContainer.classList.add("post-container");
+
+            var userProfileContainer = createUserProfileContainer("Username"); // Pass the actual username here
+
+            var newPost = document.createElement("div");
+            newPost.classList.add("post");
+
+            var editButton = document.createElement("button");
+            editButton.innerHTML = "Edit";
+            // Add your edit button functionality
+
+            var deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete";
+            deleteButton.addEventListener("click", async() => {
                 let requestBody, url, response, data;
-        
+
                 requestBody = new FormData();
                 requestBody.append('post_id', postID);
                 url = "/app/home/php/post_delete.php";
                 response = await fetch(url, {
-                        method: 'POST',
-                        body: requestBody
+                    method: 'POST',
+                    body: requestBody
                 });
                 data = await response.json();
-                newPost.remove();
-        });
+                newPostContainer.remove();
+            });
 
-        if (postText.trim()) {
+            if (postText.trim()) {
                 newPost.innerHTML += `<p>${postText}</p>`;
-        }
+            }
 
-        if (imageFile) {
+            if (imageFile) {
                 newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
-        }
+            }
 
-        if (!postText.trim() && !imageFile) {
+            if (!postText.trim() && !imageFile) {
                 alert("Please enter text or select an image for your post.");
                 return;
-        }
+            }
 
-// Add like and share buttons
-        var postButtons = document.createElement("div");
-        postButtons.classList.add("post-buttons");
+            // Add like and share buttons
+            var postButtons = document.createElement("div");
+            postButtons.classList.add("post-buttons");
 
-        var likeButton = document.createElement("img");
-        likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
-        likeButton.alt = "Like";
-        likeButton.addEventListener("click", function() {
+            var likeButton = document.createElement("img");
+            likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
+            likeButton.alt = "Like";
+            likeButton.addEventListener("click", function() {
                 // Handle like button click
                 alert("Liked!");
-        });
+            });
 
-        var shareButton = document.createElement("img");
-        shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
-        shareButton.alt = "Share";
-        shareButton.addEventListener("click", function() {
-        // Handle share button click
+            var shareButton = document.createElement("img");
+            shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
+            shareButton.alt = "Share";
+            shareButton.addEventListener("click", function() {
+                // Handle share button click
                 alert("Shared!");
-        });
+            });
 
-        postButtons.appendChild(likeButton);
-        postButtons.appendChild(shareButton);
-        postButtons.appendChild(editButton);
-        postButtons.appendChild(deleteButton);
+            postButtons.appendChild(likeButton);
+            postButtons.appendChild(shareButton);
+            postButtons.appendChild(editButton);
+            postButtons.appendChild(deleteButton);
 
-        newPost.appendChild(postButtons);
+            newPost.appendChild(postButtons);
 
-        newPostContainer.appendChild(newPost);
+            newPostContainer.appendChild(userProfileContainer);
+            newPostContainer.appendChild(newPost);
 
-        var postsContainer = document.getElementById("postsContainer");
-        postsContainer.prepend(newPostContainer);
+            var postsContainer = document.getElementById("postsContainer");
+            postsContainer.prepend(newPostContainer);
 
-        document.getElementById("postText").value = "";
-        fileInput.value = "";
-        document.getElementById("filePreview").src = "";
-        document.getElementById("fileName").textContent = "Choose File";
+            document.getElementById("postText").value = "";
+            fileInput.value = "";
+            document.getElementById("filePreview").src = "";
+            document.getElementById("fileName").textContent = "Choose File";
+        }
 
-}
-async function createPost() {
-        let url, response, result, requestBody;
+        async function createPost() {
+            let url, response, result, requestBody;
 
-        var postText = document.getElementById("postText").value;
-        var fileInput = document.getElementById("fileInput");
-        var postImage = fileInput.files[0];
-        url = "/app/home/php/post_create.php";
-        requestBody = new FormData();
-        requestBody.append('post_text', postText);
-        requestBody.append('post_image', postImage);
-        response = await fetch(url, {
+            var postText = document.getElementById("postText").value;
+            var fileInput = document.getElementById("fileInput");
+            var postImage = fileInput.files[0];
+            url = "/app/home/php/post_create.php";
+            requestBody = new FormData();
+            requestBody.append('post_text', postText);
+            requestBody.append('post_image', postImage);
+            response = await fetch(url, {
                 method: 'POST',
                 body: requestBody
-        });
-        result = await response.json();
-        console.log(result);
-        putPost(postText,postImage);
-        toggleOverlay();
+            });
+            result = await response.json();
+            console.log(result);
+            putPost(postText, postImage);
+            toggleOverlay();
 
-        return;
-        var fileInput = document.getElementById("fileInput");
-        var imageFile = fileInput.files[0];
+            return;
+            var fileInput = document.getElementById("fileInput");
+            var imageFile = fileInput.files[0];
 
-        var newPostContainer = document.createElement("div");
-        newPostContainer.classList.add("post-container");
+            var newPostContainer = document.createElement("div");
+            newPostContainer.classList.add("post-container");
 
-        var newPost = document.createElement("div");
-        newPost.classList.add("post");
+            var newPost = document.createElement("div");
+            newPost.classList.add("post");
 
-        if (postText.trim()) {
+            if (postText.trim()) {
                 newPost.innerHTML += `<p>${postText}</p>`;
-        }
+            }
 
-        if (imageFile) {
+            if (imageFile) {
                 newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
-        }
+            }
 
-        if (!postText.trim() && !imageFile) {
+            if (!postText.trim() && !imageFile) {
                 alert("Please enter text or select an image for your post.");
                 return;
-        }
+            }
 
-// Add like and share buttons
-        var postButtons = document.createElement("div");
-        postButtons.classList.add("post-buttons");
+            // Add like and share buttons
+            var postButtons = document.createElement("div");
+            postButtons.classList.add("post-buttons");
 
-        var likeButton = document.createElement("img");
-        likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
-        likeButton.alt = "Like";
-        likeButton.addEventListener("click", function() {
+            var likeButton = document.createElement("img");
+            likeButton.src = "../assets/images/Heart.svg"; // Replace with your image
+            likeButton.alt = "Like";
+            likeButton.addEventListener("click", function() {
                 // Handle like button click
                 alert("Liked!");
-        });
+            });
 
-        var shareButton = document.createElement("img");
-        shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
-        shareButton.alt = "Share";
-        shareButton.addEventListener("click", function() {
-        // Handle share button click
+            var shareButton = document.createElement("img");
+            shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
+            shareButton.alt = "Share";
+            shareButton.addEventListener("click", function() {
+                // Handle share button click
                 alert("Shared!");
-        });
+            });
 
-        postButtons.appendChild(likeButton);
-        postButtons.appendChild(shareButton);
+            postButtons.appendChild(likeButton);
+            postButtons.appendChild(shareButton);
 
-        newPost.appendChild(postButtons);
+            newPost.appendChild(postButtons);
 
-        newPostContainer.appendChild(newPost);
+            newPostContainer.appendChild(newPost);
 
-        var postsContainer = document.getElementById("postsContainer");
-        postsContainer.prepend(newPostContainer);
+            var postsContainer = document.getElementById("postsContainer");
+            postsContainer.prepend(newPostContainer);
 
-        document.getElementById("postText").value = "";
-        fileInput.value = "";
-        document.getElementById("filePreview").src = "";
-        document.getElementById("fileName").textContent = "Choose File";
+            document.getElementById("postText").value = "";
+            fileInput.value = "";
+            document.getElementById("filePreview").src = "";
+            document.getElementById("fileName").textContent = "Choose File";
 
-        toggleOverlay();
-}
+            toggleOverlay();
+        }
 
-function toggleOverlay() {
-        var overlay = document.getElementById("overlay");
-        overlay.style.display = (overlay.style.display === "none" || overlay.style.display === "") ? "block" : "none";
-}
-
-        </script>
+        function toggleOverlay() {
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = (overlay.style.display === "none" || overlay.style.display === "") ? "block" : "none";
+        }
+    </script>
 
 </body>
 
