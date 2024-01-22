@@ -11,7 +11,7 @@
         <img src="resources/logo.png" alt="Logo Placeholder">
         <h2>Login as Postify</h2>
         <form>
-            <input type="text" id="email_field" placeholder="Username" required>
+            <input type="text" id="email_field" placeholder="Email" required>
             <div class="password-container">
                 <input type="password" placeholder="Password" id="password_field" required>
                 <span class="visibility-toggle" onclick="togglePasswordVisibility()">

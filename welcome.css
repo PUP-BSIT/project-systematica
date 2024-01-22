@@ -1,9 +1,3 @@
-.logo-child {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  display: none;
-}
 .logo {
   border-radius: var(--br-41xl);
   width: 78px;
@@ -12,7 +6,7 @@
   justify-content: center;
   padding: var(--padding-7xs);
   box-sizing: border-box;
-  background-image: url('...//app/assets/images/logo.svg');
+  background-image: url('app/assets/images/logo.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
@@ -92,19 +86,20 @@
 .button2 {
   cursor: pointer;
   border: 0;
-  padding: var(--padding-3xs) var(--padding-4xl) var(--padding-3xs)
-    var(--padding-8xl);
+  padding: var(--padding-3xs) var(--padding-4xl) var(--padding-3xs) var(--padding-8xl);
   background-color: var(--color-mediumslateblue);
   border-radius: var(--br-8xs);
-  width: 101px;
+  width: 90px;
   overflow: hidden;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+  transition: background-color 0.3s ease; /* Add transition property */
 }
+
 .button2:hover {
-  background-color: #3887ff;
+  background-color: #333B91; /* Dark blue color on hover */
 }
 .button-frame,
 .navigation-bar {
@@ -189,23 +184,30 @@
   color: var(--color-gray-10);
   text-align: center;
 }
+
+.button3:hover {
+  background-color: var(--color-dodgerblue-100);
+}
+
 .buttonvariant4 {
-  cursor: pointer;
-  border: 0;
-  padding: var(--padding-3xs) var(--padding-4xl) var(--padding-3xs)
-    var(--padding-8xl);
   background-color: var(--color-mediumslateblue);
   border-radius: var(--br-8xs);
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
+  border: #1361f5;;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
 }
-.button3:hover,
+
+.buttonvariant4 a {
+  text-decoration: none;
+}
+
 .buttonvariant4:hover {
-  background-color: var(--color-dodgerblue-100);
+  background-color: #333B91; /* Change background color on hover */
+}
+
+.buttonvariant4:hover a {
+  color: #fff; /* Change text color on hover */
 }
 .frame-h,
 .frame-i {

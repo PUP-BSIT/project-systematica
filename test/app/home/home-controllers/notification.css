@@ -1,0 +1,32 @@
+body {
+    font-family: 'Arial', 'Roboto', 'Comic sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.frame-child {
+    position: absolute;
+    left: 0;
+    width: 360px;
+    height: 61px;
+}
+
+.notifications {
+    position: absolute;
+    top: 15px;
+    left: 19px;
+    font-weight: 500;
+    display: inline-block;
+    width: 323px;
+    height: 29px;
+}
+
+.rectangle-parent {
+    position: relative;
+    width: 360px;
+    height: 762px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 25px;
+    font-family: Inter;
+}
