@@ -20,8 +20,8 @@ https://test.postify.tech/
 
 ### SAMPLE CREDENTIAL:
 
-Email: james.nabayra029@gmail.com                     
+Email: user_test@gmail.com                     
 
-Password: james@29
+Password: test@1234
 
 
