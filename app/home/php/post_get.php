@@ -15,26 +15,32 @@ $stmt->bind_param("s", $user_id);
 $stmt->execute();
 $sql_result = $stmt->get_result();
 
-$post_list;
-$username = get_username($sql_row['user_id']);
-for ($i = 0; $sql_row = $sql_result->fetch_assoc(); $i++) {
-        $post_list[$i] = array(
-                'username' => $username, 
-                'postID' => $sql_row['post_id'],
-                'postContent' => $sql_row['post_content'],
-                'imagePath' => $sql_row['image_path']
-        );
+$post_list = array(); // Initialize $post_list as an array
+$response = array(); // Initialize $response as an array
+$username = get_username($user_id); // Corrected placement
+
+while ($sql_row = $sql_result->fetch_assoc()) {
+    $post_list[] = array(
+        'username' => $username,
+        'postID' => $sql_row['post_id'],
+        'postContent' => $sql_row['post_content'],
+        'imagePath' => $sql_row['image_path']
+    );
 }
+
 $response['username'] = $username;
 $response['postList'] = $post_list;
 $response['success'] = true;
 echo json_encode($response);
 
 function get_username($user_id) {
-        global $conn;
-        $sql = "SELECT username FROM user_register WHERE user_id=$user_id";
-        $sql_result = $conn->query($sql);
-        $sql_row = $sql_result->fetch_assoc();
-        return $sql_row['username'];
+    global $conn;
+    $sql = "SELECT username FROM user_register WHERE user_id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $sql_row = $result->fetch_assoc();
+    return $sql_row['username'];
 }
 ?>
