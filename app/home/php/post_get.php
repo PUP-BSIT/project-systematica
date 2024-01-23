@@ -16,14 +16,16 @@ $stmt->execute();
 $sql_result = $stmt->get_result();
 
 $post_list;
+$username = get_username($sql_row['user_id']);
 for ($i = 0; $sql_row = $sql_result->fetch_assoc(); $i++) {
         $post_list[$i] = array(
-                'username' => get_username($sql_row['user_id']), 
+                'username' => $username, 
                 'postID' => $sql_row['post_id'],
                 'postContent' => $sql_row['post_content'],
                 'imagePath' => $sql_row['image_path']
         );
 }
+$response['username'] = $username;
 $response['postList'] = $post_list;
 $response['success'] = true;
 echo json_encode($response);
