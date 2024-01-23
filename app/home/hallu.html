@@ -378,16 +378,16 @@
             console.log(result);
 
             // Check if there are posts to display
+            // Check if there are posts to display
             if (result.success && result.postList && result.postList.length > 0) {
                 for (let post of result.postList) {
-                    // Assuming you have a function putPost that takes username, userPost, imagePath as arguments
-                    putPost(post.username, post.userPost, post.imagePath);
+                    putPost(post.username, post.userPost, post.imagePath, post.post_id, post.like_count);
                 }
             } else {
                 console.log("No posts to display");
             }
-        }
 
+        }
 
         async function putPost(username, postText, imageFile, post_id, like_count) {
             var newPostContainer = document.createElement("div");
