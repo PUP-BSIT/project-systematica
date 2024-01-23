@@ -417,12 +417,12 @@
                 }
 
                 if (imageFile) {
-                    // Trim the first 3 characters from imageFile
-                    var trimmedImageFile = imageFile.substring(3);
+                    // Add "../" before the imageFile path
+                    var imagePathWithParent = "../" + imageFile;
 
                     var imgElement = document.createElement("img");
-                    imgElement.src = trimmedImageFile; // Assuming imageFile is the actual path
-                    imgElement.alt = "Posted Image";
+                    imgElement.src = imagePathWithParent; // Assuming imagePathWithParent is the actual path
+                    imgElement.alt = imagePathWithParent;
                     newPost.appendChild(imgElement);
                 }
 
@@ -536,8 +536,6 @@
             // Create and append new post to the posts container
             putPost(data.username, postText, postImage);
 
-            console.log(imageFile);
-
             // Clear input fields and close overlay
             document.getElementById("postText").value = "";
             fileInput.value = "";
@@ -578,9 +576,12 @@
                 }
 
                 if (imageFile) {
+                    // Add "../" before the imageFile path
+                    var imagePathWithParent = "../" + imageFile;
+
                     var imgElement = document.createElement("img");
-                    imgElement.src = imageFile;
-                    imgElement.alt = "Posted Image";
+                    imgElement.src = imagePathWithParent; // Assuming imagePathWithParent is the actual path
+                    imgElement.alt = imagePathWithParent;
                     newPost.appendChild(imgElement);
                 }
 
