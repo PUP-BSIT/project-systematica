@@ -9,7 +9,7 @@ session_start();
 // Authorization token not required or valid, proceed with post creation
 $user_id = $_SESSION['user_id'];
 $imageFile = $_FILES['post_image'];
-//$fileName = $imageFile['name'];
+$fileName = $imageFile['name'];  // Uncomment this line
 
 var_dump($imageFile);
 
@@ -30,13 +30,17 @@ $stmt ->bind_param("is", $user_id, $post_text);
 if ($stmt->execute()) {
     $post_id = $stmt->insert_id;
 
-    $stmt2 = $conn->prepare("INSERT INTO image_table (user_id, post_id, image_path, upload_date) VALUES (?, ?, ?, ?)");
-    $stmt2->bind_param("iis", $user_id, $post_id, $fileName);
+    $stmt2 = $conn->prepare("INSERT INTO image_table (user_id, post_id, image_path, upload_date) VALUES (?, ?, ?, NOW())");
+    $stmt2->bind_param("iss", $user_id, $post_id, $fileName);  // Updated bind_param
     if($stmt2->execute()){
         $response['username'] = get_username($user_id);
         $response['postText'] = $post_text;
 
         $response['success'] = true;
+        echo json_encode($response);
+    } else {
+        http_response_code(500); // Internal Server Error
+        $response['error_message'] = "Failed to insert image record: " . $stmt2->error;
         echo json_encode($response);
     }
 } else {
@@ -46,6 +50,7 @@ if ($stmt->execute()) {
 }
 
 $stmt->close();
+$stmt2->close();
 
 // Function to validate authorization token
 function validateAuthorizationToken($token) {
