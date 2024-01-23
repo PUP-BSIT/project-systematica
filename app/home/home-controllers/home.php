@@ -1,5 +1,5 @@
 <?php
-// homepage.php
+// home.php
 
 session_start();
 
