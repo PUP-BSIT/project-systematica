@@ -499,6 +499,7 @@
             var postText = document.getElementById("postText").value;
             var fileInput = document.getElementById("fileInput");
             var postImage = fileInput.files[0];
+            console.log(postImage);
 
             // Check if both post text and image are empty
             if (!postText.trim() && !postImage) {
