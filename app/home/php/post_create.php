@@ -59,12 +59,12 @@ if ($stmt->execute()) {
         if ($stmt2->execute()) {
             $response['username'] = get_username($user_id);
             $response['postText'] = $post_text;
-            $response['imagePath'] = get_image_path($post_id); // Fix here
+            $response['imagePath'] = get_image_path($post_id);
             $response['success'] = true;
             echo json_encode($response);
         
             // Debug statements
-            echo "Image uploaded successfully. Path: " . $uploadPath;
+            echo "Image uploaded successfully. Path: " . get_image_path($post_id);
         } else {
             http_response_code(500); // Internal Server Error
             $response['error_message'] = "Failed to insert image record: " . $stmt2->error;
