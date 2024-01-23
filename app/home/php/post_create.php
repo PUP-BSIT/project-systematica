@@ -9,7 +9,7 @@ session_start();
 // Authorization token not required or valid, proceed with post creation
 $user_id = $_SESSION['user_id'];
 $imageFile = $_FILES['post_image'];
-$fileName = $imageFile['name'];
+//$fileName = $imageFile['name'];
 
 var_dump($imageFile);
 
