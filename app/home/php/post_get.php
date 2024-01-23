@@ -18,4 +18,12 @@ for ($i = 0; $sql_row = $sql_result->fetch_assoc(); $i++) {
 $response['postList'] = $post_list;
 $response['success'] = true;
 echo json_encode($response);
+
+function get_username($user_id) {
+        global $conn;
+        $sql = "SELECT username FROM user_register WHERE user_id=$user_id";
+        $sql_result = $conn->query($sql);
+        $sql_row = $sql_result->fetch_assoc();
+        return $sql_row['username'];
+}
 ?>
