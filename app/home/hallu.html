@@ -575,14 +575,8 @@
                 }
 
                 if (imageFile) {
-                    console.log("Image File:", imageFile);
-
-                    // Debug statements
-                    var imageUrl = URL.createObjectURL(imageFile);
-                    console.log("Image Source:", imageUrl);
-
                     var imgElement = document.createElement("img");
-                    imgElement.src = imageUrl;
+                    imgElement.src = URL.createObjectURL(imageFile); // Use createObjectURL directly
                     imgElement.alt = "Posted Image";
                     newPost.appendChild(imgElement);
                 }
