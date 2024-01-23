@@ -43,7 +43,7 @@ if (isset($_FILES['post_image'])) {
         }
 
         // Move the uploaded file to a suitable location
-        $uploadDirectory = 'https//postify.tech/app/assets/uploads';
+        $uploadDirectory = './app/assets/uploads';
         $uploadPath = $uploadDirectory . $fileName;
 
         if (move_uploaded_file($imageFile['tmp_name'], $uploadPath)) {
