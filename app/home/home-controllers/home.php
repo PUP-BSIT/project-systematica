@@ -113,6 +113,7 @@ try {
             $sql_row = $sql_result->fetch_assoc();
             $user_id = $sql_row['user_id'];
             var_dump($user_id);
+            $_SESSION['user_id'] = $user_id;
 
         } else {
             echo "Failed to update authorization token. Error: " . $stmt->error;
