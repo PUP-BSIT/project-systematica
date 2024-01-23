@@ -576,7 +576,7 @@
 
                 if (imageFile) {
                     var imgElement = document.createElement("img");
-                    imgElement.src = URL.createObjectURL(imageFile); // Use createObjectURL directly
+                    imgElement.src = imageFile; // Use the file path directly
                     imgElement.alt = "Posted Image";
                     newPost.appendChild(imgElement);
                 }
