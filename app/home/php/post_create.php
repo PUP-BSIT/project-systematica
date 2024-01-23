@@ -1,6 +1,9 @@
 <?php
 require "../../../db_conn.php";
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 
 // Authorization token not required or valid, proceed with post creation
