@@ -11,6 +11,8 @@ $user_id = $_SESSION['user_id'];
 $imageFile = $_FILES['post_image'];
 $fileName = $imageFile['name'];
 
+var_dump($imageFile);
+
 $post_text = isset($_POST['post_text']) ? $_POST['post_text'] : '';
 
 // Check if post content is provided
