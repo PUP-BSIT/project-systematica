@@ -59,11 +59,10 @@ if ($stmt->execute()) {
         if ($stmt2->execute()) {
             $response['username'] = get_username($user_id);
             $response['postText'] = $post_text;
-            $response['imagePath'] = get_image_path($postId);
-            echo $response;
+            $response['imagePath'] = get_image_path($post_id); // Fix here
             $response['success'] = true;
             echo json_encode($response);
-
+        
             // Debug statements
             echo "Image uploaded successfully. Path: " . $uploadPath;
         } else {
