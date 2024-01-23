@@ -28,14 +28,34 @@ $stmt->bind_param("is", $user_id, $post_text);
 if ($stmt->execute()) {
     $post_id = $stmt->insert_id;
 
-    // Move the uploaded file to a suitable location (replace 'uploads/' with your desired directory)
-    $uploadDirectory = '../../assets/uploads';
+    // Validate if the uploaded file is an image
+    $image_info = getimagesize($imageFile['tmp_name']);
+    if (!$image_info) {
+        http_response_code(400); // Bad Request
+        $response['error_message'] = "Uploaded file is not a valid image.";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Limitations on image size and type
+    $allowed_types = ['image/jpeg', 'image/png'];
+    $max_size = 5 * 1024 * 1024; // 5 MB
+
+    if (!in_array($image_info['mime'], $allowed_types) || $imageFile['size'] > $max_size) {
+        http_response_code(400); // Bad Request
+        $response['error_message'] = "Invalid image type or size exceeded.";
+        echo json_encode($response);
+        exit;
+    }
+
+    // Move the uploaded file to a suitable location
+    $uploadDirectory = '../../assets/uploads/';
     $uploadPath = $uploadDirectory . $fileName;
 
     if (move_uploaded_file($imageFile['tmp_name'], $uploadPath)) {
         $stmt2 = $conn->prepare("INSERT INTO image_table (user_id, post_id, image_path, upload_date) VALUES (?, ?, ?, NOW())");
         $stmt2->bind_param("iss", $user_id, $post_id, $uploadPath);
-        
+
         if ($stmt2->execute()) {
             $response['username'] = get_username($user_id);
             $response['postText'] = $post_text;
@@ -73,9 +93,12 @@ function validateAuthorizationToken($token) {
 // Function to get username by user_id
 function get_username($user_id) {
     global $conn;
-    $sql = "SELECT username FROM user_register WHERE user_id=$user_id";
-    $sql_result = $conn->query($sql);
-    $sql_row = $sql_result->fetch_assoc();
-    return $sql_row['username'];
+    $stmt = $conn->prepare("SELECT username FROM user_register WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->bind_result($username);
+    $stmt->fetch();
+    $stmt->close();
+    return $username;
 }
 ?>
