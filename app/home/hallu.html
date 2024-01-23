@@ -417,8 +417,11 @@
                 }
 
                 if (imageFile) {
+                    // Trim the first 3 characters from imageFile
+                    var trimmedImageFile = imageFile.substring(3);
+
                     var imgElement = document.createElement("img");
-                    imgElement.src = imageFile; // Assuming imageFile is the actual path
+                    imgElement.src = trimmedImageFile; // Assuming imageFile is the actual path
                     imgElement.alt = "Posted Image";
                     newPost.appendChild(imgElement);
                 }
