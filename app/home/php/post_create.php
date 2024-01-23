@@ -59,7 +59,7 @@ if ($stmt->execute()) {
         if ($stmt2->execute()) {
             $response['username'] = get_username($user_id);
             $response['postText'] = $post_text;
-            $response['imagePath'] = $uploadPath; // Provide the image path in the response
+            $response['imagePath'] = get_image_path($postId); // Provide the image path in the response
 
             $response['success'] = true;
             echo json_encode($response);
@@ -112,5 +112,16 @@ function get_username($user_id) {
     $stmt->fetch();
     $stmt->close();
     return $username;
+}
+
+function get_image_path($postId){
+    global $conn;
+    $stmt = $conn->prepare("SELECT image_path FROM image_table WHERE post_id = ?");
+    $stmt->bind_param("i", $postId);
+    $stmt->execute();
+    $stmt->bind_result($imagePath);
+    $stmt->fetch();
+    $stmt->close();
+    return $imagePath;
 }
 ?>

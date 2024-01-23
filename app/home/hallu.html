@@ -561,6 +561,7 @@
             newPost.classList.add("post");
 
             console.log(postText);
+
             if (postText.trim()) {
                 newPost.innerHTML += `<p>${postText}</p>`;
             }
@@ -609,7 +610,6 @@
             document.getElementById("filePreview").src = "";
             document.getElementById("fileName").textContent = "Choose File";
         }
-
 
         // Function to handle editing a post
         async function editPost(postID, postElement) {
