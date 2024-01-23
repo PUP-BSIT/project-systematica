@@ -5,9 +5,9 @@ session_start();
 
 // Authorization token not required or valid, proceed with post creation
 $user_id = $_SESSION['user_id'];
+$imageFile = $_FILES['post_image'];
+$fileName = $imageFile['name'];
 
-$imageFile = $_FILES['postImage'];
-var_dump($imageFile);
 $post_text = isset($_POST['post_text']) ? $_POST['post_text'] : '';
 
 // Check if post content is provided
@@ -20,13 +20,20 @@ if (empty($post_text)) {
 
 // Use prepared statement to prevent SQL injection
 $stmt = $conn->prepare("INSERT INTO user_post (user_id, post_content) VALUES (?, ?)");
-$stmt->bind_param("is", $user_id, $post_text);
+$stmt ->bind_param("is", $user_id, $post_text);
 
 if ($stmt->execute()) {
-    $response['username'] = get_username($user_id);
-    $response['postText'] = $post_text;
-    $response['success'] = true;
-    echo json_encode($response);
+    $post_id = $stmt->insert_id;
+
+    $stmt2 = $conn->prepare("INSERT INTO image_table (user_id, post_id, image_path, upload_date) VALUES (?, ?, ?, ?)");
+    $stmt2->bind_param("iis", $user_id, $post_id, $fileName);
+    if($stmt2->execute()){
+        $response['username'] = get_username($user_id);
+        $response['postText'] = $post_text;
+
+        $response['success'] = true;
+        echo json_encode($response);
+    }
 } else {
     http_response_code(500); // Internal Server Error
     $response['error_message'] = "Failed to create post. Please try again later.";
