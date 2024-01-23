@@ -9,9 +9,7 @@ session_start();
 // Authorization token not required or valid, proceed with post creation
 $user_id = $_SESSION['user_id'];
 $imageFile = $_FILES['post_image'];
-$fileName = $imageFile['name'];  // Uncomment this line
-
-var_dump($imageFile);
+$fileName = $imageFile['name'];
 
 $post_text = isset($_POST['post_text']) ? $_POST['post_text'] : '';
 
@@ -25,22 +23,34 @@ if (empty($post_text)) {
 
 // Use prepared statement to prevent SQL injection
 $stmt = $conn->prepare("INSERT INTO user_post (user_id, post_content) VALUES (?, ?)");
-$stmt ->bind_param("is", $user_id, $post_text);
+$stmt->bind_param("is", $user_id, $post_text);
 
 if ($stmt->execute()) {
     $post_id = $stmt->insert_id;
 
-    $stmt2 = $conn->prepare("INSERT INTO image_table (user_id, post_id, image_path, upload_date) VALUES (?, ?, ?, NOW())");
-    $stmt2->bind_param("iss", $user_id, $post_id, $fileName);  // Updated bind_param
-    if($stmt2->execute()){
-        $response['username'] = get_username($user_id);
-        $response['postText'] = $post_text;
+    // Move the uploaded file to a suitable location (replace 'uploads/' with your desired directory)
+    $uploadDirectory = '../assets/uploads/';
+    $uploadPath = $uploadDirectory . $fileName;
 
-        $response['success'] = true;
-        echo json_encode($response);
+    if (move_uploaded_file($imageFile['tmp_name'], $uploadPath)) {
+        $stmt2 = $conn->prepare("INSERT INTO image_table (user_id, post_id, image_path, upload_date) VALUES (?, ?, ?, NOW())");
+        $stmt2->bind_param("iss", $user_id, $post_id, $uploadPath);
+        
+        if ($stmt2->execute()) {
+            $response['username'] = get_username($user_id);
+            $response['postText'] = $post_text;
+            $response['imagePath'] = $uploadPath; // Provide the image path in the response
+
+            $response['success'] = true;
+            echo json_encode($response);
+        } else {
+            http_response_code(500); // Internal Server Error
+            $response['error_message'] = "Failed to insert image record: " . $stmt2->error;
+            echo json_encode($response);
+        }
     } else {
         http_response_code(500); // Internal Server Error
-        $response['error_message'] = "Failed to insert image record: " . $stmt2->error;
+        $response['error_message'] = "Failed to move uploaded file.";
         echo json_encode($response);
     }
 } else {
