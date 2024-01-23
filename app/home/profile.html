@@ -440,7 +440,10 @@
                 }
 
                 if (imageFile) {
-                    newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
+                    var imgElement = document.createElement("img");
+                    imgElement.src = imageFile;
+                    imgElement.alt = "Posted Image";
+                    newPost.appendChild(imgElement);
                 }
 
                 if (!postText.trim() && !imageFile) {
