@@ -20,7 +20,8 @@ for ($i = 0; $sql_row = $sql_result->fetch_assoc(); $i++) {
         $post_list[$i] = array(
                 'username' => get_username($sql_row['user_id']), 
                 'postID' => $sql_row['post_id'],
-                'postContent' => $sql_row['post_content']
+                'postContent' => $sql_row['post_content'],
+                'imagePath' => $sql_row['image_path']
         );
 }
 $response['postList'] = $post_list;

@@ -375,7 +375,7 @@
             console.log(result);
 
             for (let post of result.postList) {
-                putPost(post.username, post.postID, post.postContent);
+                putPost(post.postID, post.postContent, post.username, post.imagePath);
             }
         }
 
@@ -396,7 +396,7 @@
             return userProfileContainer;
         }
 
-        async function putPost(postID, postText, imageFile, username) {
+        async function putPost(postID, postText, username, imageFile) {
             try {
                 var newPostContainer = document.createElement("div");
                 newPostContainer.classList.add("post-container");
