@@ -29,7 +29,7 @@ if ($stmt->execute()) {
     $post_id = $stmt->insert_id;
 
     // Move the uploaded file to a suitable location (replace 'uploads/' with your desired directory)
-    $uploadDirectory = '../assets/uploads/';
+    $uploadDirectory = '../../assets/uploads';
     $uploadPath = $uploadDirectory . $fileName;
 
     if (move_uploaded_file($imageFile['tmp_name'], $uploadPath)) {
