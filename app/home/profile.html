@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Post Example</title>
+    <script src="php/profile.php"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -328,7 +329,7 @@
             userProfileContainer.classList.add("user-profile-container-post");
 
             var userProfileImage = document.createElement("img");
-            userProfileImage.src = 'path/to/profile-pic.jpg';
+            userProfileImage.src = '../assets/images/profile-default.jpg';
             userProfileImage.alt = "Profile Picture";
 
             var userName = document.createElement("p");
@@ -345,7 +346,7 @@
                 var newPostContainer = document.createElement("div");
                 newPostContainer.classList.add("post-container");
 
-                var userProfileContainer = createUserProfileContainer(username);
+                var userProfileContainer = createUserProfileContainer("Username");
 
                 var newPost = document.createElement("div");
                 newPost.classList.add("post");
@@ -405,7 +406,7 @@
                 });
 
                 var shareButton = document.createElement("img");
-                shareButton.src = "../assets/images/Forward_Arrow.svg"; // Replace with your image
+                shareButton.src = "../assets/images/Share.svg"; // Replace with your image
                 shareButton.alt = "Share";
                 shareButton.addEventListener("click", function() {
                     // Handle share button click
