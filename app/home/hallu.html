@@ -544,77 +544,89 @@
             toggleOverlay();
         }
 
-        async function putPost(username, postText, imageFile) {
-            var newPostContainer = document.createElement("div");
-            newPostContainer.classList.add("post-container");
+        aasync
 
-            // User profile container
-            var userProfileContainer = document.createElement("div");
-            userProfileContainer.classList.add("user-profile-container");
+        function putPost(username, postText, imageFile) {
+            try {
+                var newPostContainer = document.createElement("div");
+                newPostContainer.classList.add("post-container");
 
-            // User profile image
-            var userProfileImage = document.createElement("img");
-            userProfileImage.src = '../assets/images/profile-default.jpg'; // Replace with the actual path
-            userProfileImage.alt = "Profile Picture";
+                // User profile container
+                var userProfileContainer = document.createElement("div");
+                userProfileContainer.classList.add("user-profile-container");
 
-            // User name
-            var userName = document.createElement("p");
-            userName.textContent = username;
+                // User profile image
+                var userProfileImage = document.createElement("img");
+                userProfileImage.src = '../assets/images/profile-default.jpg'; // Replace with the actual path
+                userProfileImage.alt = "Profile Picture";
 
-            userProfileContainer.appendChild(userProfileImage);
-            userProfileContainer.appendChild(userName);
+                // User name
+                var userName = document.createElement("p");
+                userName.textContent = username;
 
-            var newPost = document.createElement("div");
-            newPost.classList.add("post");
+                userProfileContainer.appendChild(userProfileImage);
+                userProfileContainer.appendChild(userName);
 
-            if (postText.trim()) {
-                newPost.innerHTML += `<p>${postText}</p>`;
+                var newPost = document.createElement("div");
+                newPost.classList.add("post");
+
+                if (postText.trim()) {
+                    newPost.innerHTML += `<p>${postText}</p>`;
+                }
+
+                if (imageFile) {
+                    console.log("Image File:", imageFile);
+
+                    // Debug statements
+                    var imageUrl = URL.createObjectURL(imageFile);
+                    console.log("Image Source:", imageUrl);
+
+                    var imgElement = document.createElement("img");
+                    imgElement.src = imageUrl;
+                    imgElement.alt = "Posted Image";
+                    newPost.appendChild(imgElement);
+                }
+
+                var postButtons = document.createElement("div");
+                postButtons.classList.add("post-buttons");
+
+                var likeButton = document.createElement("img");
+                likeButton.src = "../assets/images/Heart.svg";
+                likeButton.alt = "Like";
+                likeButton.addEventListener("click", function() {
+                    // Handle like button click
+                    alert("Liked!");
+                });
+
+                var shareButton = document.createElement("img");
+                shareButton.src = "../assets/images/Share.svg";
+                shareButton.alt = "Share";
+                shareButton.addEventListener("click", function() {
+                    // Handle share button click
+                    alert("Shared!");
+                });
+
+                postButtons.appendChild(likeButton);
+                postButtons.appendChild(shareButton);
+
+                newPost.appendChild(postButtons);
+
+                newPostContainer.appendChild(userProfileContainer); // Add the user profile container
+                newPostContainer.appendChild(newPost);
+
+                var postsContainer = document.getElementById("postsContainer");
+                postsContainer.prepend(newPostContainer);
+
+                // Clear input fields and preview after posting
+                document.getElementById("postText").value = "";
+                fileInput.value = "";
+                document.getElementById("filePreview").src = "";
+                document.getElementById("fileName").textContent = "Choose File";
+            } catch (error) {
+                console.error("Error creating post:", error);
             }
-
-            if (imageFile) {
-                console.log("Image File:", imageFile);
-
-                // Debug statements
-                console.log("Image Source:", URL.createObjectURL(imageFile));
-
-                newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
-            }
-
-            var postButtons = document.createElement("div");
-            postButtons.classList.add("post-buttons");
-
-            var likeButton = document.createElement("img");
-            likeButton.src = "../assets/images/Heart.svg";
-            likeButton.alt = "Like";
-            likeButton.addEventListener("click", function() {
-                // Handle like button click
-                alert("Liked!");
-            });
-
-            var shareButton = document.createElement("img");
-            shareButton.src = "../assets/images/Share.svg";
-            shareButton.alt = "Share";
-            shareButton.addEventListener("click", function() {
-                // Handle share button click
-                alert("Shared!");
-            });
-
-            postButtons.appendChild(likeButton);
-            postButtons.appendChild(shareButton);
-
-            newPost.appendChild(postButtons);
-
-            newPostContainer.appendChild(userProfileContainer); // Add the user profile container
-            newPostContainer.appendChild(newPost);
-
-            var postsContainer = document.getElementById("postsContainer");
-            postsContainer.prepend(newPostContainer);
-
-            document.getElementById("postText").value = "";
-            fileInput.value = "";
-            document.getElementById("filePreview").src = "";
-            document.getElementById("fileName").textContent = "Choose File";
         }
+
 
         // Function to handle editing a post
         async function editPost(postID, postElement) {
