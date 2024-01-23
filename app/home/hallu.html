@@ -417,12 +417,14 @@
                 }
 
                 if (imageFile) {
-                    // Add "../" before the imageFile path
-                    var imagePathWithParent = "../" + imageFile;
+                    // Trim the first 6 characters from imageFile and add "app/assets/"
+                    var trimmedImageFile = "../../app/" + imageFile.substring(6);
+
+                    console.log(trimmedImageFile);
 
                     var imgElement = document.createElement("img");
-                    imgElement.src = imagePathWithParent; // Assuming imagePathWithParent is the actual path
-                    imgElement.alt = imagePathWithParent;
+                    imgElement.src = trimmedImageFile; // Assuming trimmedImageFile is the actual path
+                    imgElement.alt = trimmedImageFile;
                     newPost.appendChild(imgElement);
                 }
 
@@ -576,12 +578,14 @@
                 }
 
                 if (imageFile) {
-                    // Add "../" before the imageFile path
-                    var imagePathWithParent = "../" + imageFile;
+                    // Trim the first 6 characters from imageFile and add "app/assets/"
+                    var trimmedImageFile = "../../app/" + imageFile.substring(6);
+
+                    console.log(trimmedImageFile);
 
                     var imgElement = document.createElement("img");
-                    imgElement.src = imagePathWithParent; // Assuming imagePathWithParent is the actual path
-                    imgElement.alt = imagePathWithParent;
+                    imgElement.src = trimmedImageFile; // Assuming trimmedImageFile is the actual path
+                    imgElement.alt = trimmedImageFile;
                     newPost.appendChild(imgElement);
                 }
 
