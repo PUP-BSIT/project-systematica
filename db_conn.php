@@ -1,10 +1,10 @@
 <?php
 
 //Hostinger Database
-$servername = "127.0.0.1:3306";
-$username = "u722605549_admin";
-$password = "VUbu4Zhkp7=o";
-$database = "u722605549_postify_db";
+//$servername = "127.0.0.1:3306";
+//$username = "u722605549_admin";
+//$password = "VUbu4Zhkp7=o";
+//$database = "u722605549_postify_db";
 
 //Localhost Database
 // $servername = "localhost";
