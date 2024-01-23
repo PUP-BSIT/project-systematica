@@ -333,7 +333,7 @@
             <div class="profile-avatar">
                 <img src="profile.png" alt="Profile Picture">
             </div>
-            <div class="profile-username">@</div>
+            <div class="profile-username" id="profile-username">@</div>
 
             <div class="profile-actions">
                 <button class="edit-profile-button">Edit Profile</button>
@@ -367,12 +367,15 @@
         }
 
         async function showPost() {
-            let url, response, result;
+            let url, response, result, username;
 
             url = "/app/home/php/post_get.php";
             response = await fetch(url);
             result = await response.json();
             console.log(result);
+
+            username = document.querySelector("#profile_username");
+            username.innerHTML = result.username;
 
             for (let post of result.postList) {
                 putPost(post.postID, post.postContent, post.username, post.imagePath);

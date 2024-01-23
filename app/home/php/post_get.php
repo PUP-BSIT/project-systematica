@@ -24,6 +24,9 @@ for ($i = 0; $sql_row = $sql_result->fetch_assoc(); $i++) {
                 'imagePath' => $sql_row['image_path']
         );
 }
+
+$username = get_username($sql_row['user_id']);
+$response['username'] = $username;
 $response['postList'] = $post_list;
 $response['success'] = true;
 echo json_encode($response);
