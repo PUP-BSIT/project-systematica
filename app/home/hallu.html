@@ -399,7 +399,7 @@
 
                 // User profile image
                 var userProfileImage = document.createElement("img");
-                userProfileImage.src = 'path/to/profile-pic.jpg';
+                userProfileImage.src = 'path/to/profile-pic.jpg'; // Replace with the actual path
                 userProfileImage.alt = "Profile Picture";
 
                 // User name
@@ -462,75 +462,6 @@
             }
         }
 
-        var newPostContainer = document.createElement("div");
-        newPostContainer.classList.add("post-container");
-
-        // User profile container
-        var userProfileContainer = document.createElement("div");
-        userProfileContainer.classList.add("user-profile-container");
-
-        // User profile image
-        var userProfileImage = document.createElement("img");
-        userProfileImage.src = 'path/to/profile-pic.jpg'; // Replace with the actual path
-        userProfileImage.alt = "Profile Picture";
-
-        // User name
-        var userName = document.createElement("p");
-        userName.textContent = username;
-
-        userProfileContainer.appendChild(userProfileImage);
-        userProfileContainer.appendChild(userName);
-
-        var newPost = document.createElement("div");
-        newPost.classList.add("post");
-
-        console.log(postText);
-        if (postText.trim()) {
-            newPost.innerHTML += `<p>${postText}</p>`;
-        }
-
-        if (imageFile) {
-            var imgElement = document.createElement("img");
-            imgElement.src = imageFile; // Assuming imageFile is the actual path
-            imgElement.alt = "Posted Image";
-            newPost.appendChild(imgElement);
-        }
-
-        // Create a container to display the like count
-        var likeCountContainer = document.createElement("div");
-        likeCountContainer.classList.add("like-count-container");
-        likeCountContainer.textContent = `Likes: ${like_count}`;
-        newPost.appendChild(likeCountContainer);
-
-        var postButtons = document.createElement("div");
-        postButtons.classList.add("post-buttons");
-
-        var likeButton = document.createElement("img");
-        likeButton.src = "../assets/images/Heart.svg";
-        likeButton.alt = "Like";
-        likeButton.addEventListener("click", function() {
-            likePost(post_id, likeCountContainer); // Pass the post_id and likeCountContainer
-        });
-
-        var shareButton = document.createElement("img");
-        shareButton.src = "../assets/images/Share.svg";
-        shareButton.alt = "Share";
-        shareButton.addEventListener("click", function() {
-            // Handle share button click
-            alert("Shared!");
-        });
-
-        postButtons.appendChild(likeButton);
-        postButtons.appendChild(shareButton);
-
-        newPost.appendChild(postButtons);
-
-        newPostContainer.appendChild(userProfileContainer); // Add the user profile container
-        newPostContainer.appendChild(newPost);
-
-        var postsContainer = document.getElementById("postsContainer");
-        postsContainer.prepend(newPostContainer);
-        }
 
         async function likePost(post_id, likeCountContainer) {
             try {
