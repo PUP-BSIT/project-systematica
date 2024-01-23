@@ -63,20 +63,32 @@ if ($stmt->execute()) {
 
             $response['success'] = true;
             echo json_encode($response);
+
+            // Debug statements
+            echo "Image uploaded successfully. Path: " . $uploadPath;
         } else {
             http_response_code(500); // Internal Server Error
             $response['error_message'] = "Failed to insert image record: " . $stmt2->error;
             echo json_encode($response);
+
+            // Debug statements
+            echo "Failed to insert image record: " . $stmt2->error;
         }
     } else {
         http_response_code(500); // Internal Server Error
         $response['error_message'] = "Failed to move uploaded file.";
         echo json_encode($response);
+
+        // Debug statements
+        echo "Failed to move uploaded file.";
     }
 } else {
     http_response_code(500); // Internal Server Error
     $response['error_message'] = "Failed to create post. Please try again later.";
     echo json_encode($response);
+
+    // Debug statements
+    echo "Failed to create post. Please try again later.";
 }
 
 $stmt->close();
