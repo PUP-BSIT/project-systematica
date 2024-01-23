@@ -250,6 +250,51 @@
         button:hover {
             background-color: #45a049;
         }
+
+        .profile-container {
+            max-width: 1100px;
+            margin: auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 10px auto;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-username {
+            color: #657786;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .profile-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .edit-profile-button {
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #1da1f2;
+            border: 1px solid #1da1f2;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 
@@ -284,6 +329,17 @@
         <!--div id="whatsOnYourMindContainer" onclick="toggleOverlay()">
             <div id="whatsOnYourMind">What's on your mind?</div>
         </div-->
+
+        <div class="profile-container">
+            <div class="profile-avatar">
+                <img src="profile.png" alt="Profile Picture">
+            </div>
+            <div class="profile-username">@</div>
+        
+            <div class="profile-actions">
+                <button class="edit-profile-button">Edit Profile</button>
+            </div>
+        </div>
 
         <div id="postsContainer">
             <!-- Existing posts and new posts will be displayed here -->
