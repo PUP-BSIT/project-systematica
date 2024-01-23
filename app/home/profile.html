@@ -440,9 +440,14 @@
                 }
 
                 if (imageFile) {
+                    // Trim the first 6 characters from imageFile and add "app/assets/"
+                    var trimmedImageFile = "../../app/" + imageFile.substring(6);
+
+                    console.log(trimmedImageFile);
+
                     var imgElement = document.createElement("img");
-                    imgElement.src = imageFile;
-                    imgElement.alt = "Posted Image";
+                    imgElement.src = trimmedImageFile; // Assuming trimmedImageFile is the actual path
+                    imgElement.alt = trimmedImageFile;
                     newPost.appendChild(imgElement);
                 }
 
