@@ -59,7 +59,7 @@ if ($stmt->execute()) {
         if ($stmt2->execute()) {
             $response['username'] = get_username($user_id);
             $response['postText'] = $post_text;
-            $response['imagePath'] = get_image_path($postId); // Provide the image path in the response
+            $response['imagePath'] = get_image_path($postId);
 
             $response['success'] = true;
             echo json_encode($response);

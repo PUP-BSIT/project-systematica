@@ -528,6 +528,8 @@
             // Create and append new post to the posts container
             putPost(data.username, postText, postImage);
 
+            console.log(imageFile);
+
             // Clear input fields and close overlay
             document.getElementById("postText").value = "";
             fileInput.value = "";
@@ -559,8 +561,6 @@
 
             var newPost = document.createElement("div");
             newPost.classList.add("post");
-
-            console.log(postText);
 
             if (postText.trim()) {
                 newPost.innerHTML += `<p>${postText}</p>`;
