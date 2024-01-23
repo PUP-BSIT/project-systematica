@@ -537,7 +537,6 @@
             toggleOverlay();
         }
 
-
         async function putPost(username, postText, imageFile) {
             var newPostContainer = document.createElement("div");
             newPostContainer.classList.add("post-container");
@@ -567,6 +566,11 @@
             }
 
             if (imageFile) {
+                console.log("Image File:", imageFile);
+
+                // Debug statements
+                console.log("Image Source:", URL.createObjectURL(imageFile));
+
                 newPost.innerHTML += `<img src="${URL.createObjectURL(imageFile)}" alt="Posted Image">`;
             }
 
@@ -605,6 +609,7 @@
             document.getElementById("filePreview").src = "";
             document.getElementById("fileName").textContent = "Choose File";
         }
+
 
         // Function to handle editing a post
         async function editPost(postID, postElement) {
