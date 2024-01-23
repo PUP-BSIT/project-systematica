@@ -108,6 +108,12 @@ try {
 
         if ($stmt->execute()) {
             //echo "Authorization token updated for existing user.";
+            $sql = "SELECT * FROM user_register WHERE email = '$email'";
+            $sql_result = $dbConnection->query($sql);
+            $sql_row = $sql_result->fetch_assoc();
+            $user_id = $sql_row['user_id'];
+            var_dump($user_id);
+
         } else {
             echo "Failed to update authorization token. Error: " . $stmt->error;
         }
