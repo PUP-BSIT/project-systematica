@@ -5,7 +5,9 @@ session_start();
 
 // Authorization token not required or valid, proceed with post creation
 $user_id = $_SESSION['user_id'];
+
 var_dump($user_id);
+
 $post_text = isset($_POST['post_text']) ? $_POST['post_text'] : '';
 
 // Check if post content is provided

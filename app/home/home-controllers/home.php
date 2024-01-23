@@ -1,6 +1,8 @@
 <?php
 // homepage.php
 
+session_start();
+
 // Database connection parameters for Hostinger
 $servername = "127.0.0.1:3306";
 $username = "u722605549_admin";
@@ -129,6 +131,12 @@ try {
 
         if ($stmt->execute()) {
             echo "New user data saved to the database.";
+            $sql = "SELECT * FROM user_register WHERE email = '$email'";
+            $sql_result = $dbConnection->query($sql);
+            $sql_row = $sql_result->fetch_assoc();
+            $user_id = $sql_row['user_id'];
+            var_dump($user_id);
+            $_SESSION['user_id'] = $user_id;
         } else {
             echo "Failed to save new user data. Error: " . $stmt->error;
         }
