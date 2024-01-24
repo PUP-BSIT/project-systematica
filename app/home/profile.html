@@ -399,7 +399,7 @@
         async function putPost(postID, postText, username, imageFile) {
             try {
                 var newPostContainer = document.createElement("div");
-                newPostContainer.classList.add("post-container");
+                newPostContainer.classList.add("pos t-container");
 
                 var userProfileContainer = createUserProfileContainer(username);
 
@@ -444,7 +444,7 @@
                     var trimmedImageFile = "../app/assets/uploads/" + imageFile;
 
                     console.log(trimmedImageFile);
-                    console.log("zzs");
+                    console.log("hello");
 
                     var imgElement = document.createElement("img");
                     imgElement.src = trimmedImageFile; // Assuming trimmedImageFile is the actual path
