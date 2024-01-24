@@ -441,9 +441,10 @@
 
                 if (imageFile) {
                     // Trim the first 6 characters from imageFile and add "app/assets/"
-                    var trimmedImageFile = "../../app/assets/uploads/" + imageFile;
+                    var trimmedImageFile = "../app/assets/uploads/" + imageFile;
 
                     console.log(trimmedImageFile);
+                    console.log("zzs");
 
                     var imgElement = document.createElement("img");
                     imgElement.src = trimmedImageFile; // Assuming trimmedImageFile is the actual path
