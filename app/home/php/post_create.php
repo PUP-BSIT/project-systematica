@@ -43,12 +43,12 @@ if (isset($_FILES['post_image'])) {
         }
 
         // Move the uploaded file to a suitable location
-        $uploadDirectory = '../../assets/uploads';
+        $uploadDirectory = '../../assets/uploads/';
         $uploadPath = $uploadDirectory . $fileName;
 
         if (move_uploaded_file($imageFile['tmp_name'], $uploadPath)) {
             $stmt2 = $conn->prepare("INSERT INTO image_table (user_id, post_id, image_path, upload_date) VALUES (?, ?, ?, NOW())");
-            $stmt2->bind_param("iss", $user_id, $post_id, $uploadPath);
+            $stmt2->bind_param("iss", $user_id, $post_id, $fileName);
 
             if ($stmt2->execute()) {
                 $response['username'] = get_username($user_id);
