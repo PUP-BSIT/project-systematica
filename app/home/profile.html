@@ -331,9 +331,9 @@
 
         <div class="profile-container">
             <div class="profile-avatar">
-                <img src="profile.png" alt="Profile Picture">
+                <img src="../assets/images/profile-default.jpg" alt="Profile Picture">
             </div>
-            <div class="profile-username">@</div>
+            <div class="profile-username">@<span id="actual-username"></span></div>
 
             <div class="profile-actions">
                 <button class="edit-profile-button">Edit Profile</button>
@@ -374,6 +374,9 @@
             result = await response.json();
             console.log(result);
 
+            // Update the profile-username div with the actual username
+            document.getElementById("actual-username").textContent = result.username;
+
             for (let post of result.postList) {
                 putPost(post.postID, post.postContent, post.username, post.imagePath);
             }
@@ -399,7 +402,7 @@
         async function putPost(postID, postText, username, imageFile) {
             try {
                 var newPostContainer = document.createElement("div");
-                newPostContainer.classList.add("pos t-container");
+                newPostContainer.classList.add("post-container");
 
                 var userProfileContainer = createUserProfileContainer(username);
 
@@ -441,11 +444,8 @@
 
                 if (imageFile) {
                     // Trim the first 6 characters from imageFile and add "app/assets/"
-                    var trimmedImageFile = "../app/assets/uploads/" + imageFile;
-
-                    console.log(trimmedImageFile);
-                    console.log("hello");
-
+                    var trimmedImageFile = "../../app/assets/uploads/" + imageFile;
+                    console.log('dsad');
                     var imgElement = document.createElement("img");
                     imgElement.src = trimmedImageFile; // Assuming trimmedImageFile is the actual path
                     imgElement.alt = trimmedImageFile;

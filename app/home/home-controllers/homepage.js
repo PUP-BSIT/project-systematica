@@ -13,144 +13,144 @@ let lastClickedContent = null;
 
 // Event listener for sidebar links
 sidebarLinks.forEach(link => {
-  link.addEventListener('click', function (event) {
-    event.preventDefault();
-    const pageUrl = link.getAttribute('data-page') || link.getAttribute('href');
-    loadLocalContent(pageUrl);
-    lastClickedContent = pageUrl;
-  });
+    link.addEventListener('click', function(event) {
+        event.preventDefault();
+        const pageUrl = link.getAttribute('data-page') || link.getAttribute('href');
+        loadLocalContent(pageUrl);
+        lastClickedContent = pageUrl;
+    });
 });
 
 sidebarClose.addEventListener("click", () => {
-  sidebar.classList.add("close", "hoverable");
+    sidebar.classList.add("close", "hoverable");
 });
 
 sidebarExpand.addEventListener("click", () => {
-  sidebar.classList.remove("close", "hoverable");
+    sidebar.classList.remove("close", "hoverable");
 });
 
 sidebar.addEventListener("mouseenter", () => {
-  if (sidebar.classList.contains("hoverable")) {
-    sidebar.classList.remove("close");
-  }
+    if (sidebar.classList.contains("hoverable")) {
+        sidebar.classList.remove("close");
+    }
 });
 
 sidebar.addEventListener("mouseleave", () => {
-  if (sidebar.classList.contains("hoverable")) {
-    sidebar.classList.add("close");
-  }
+    if (sidebar.classList.contains("hoverable")) {
+        sidebar.classList.add("close");
+    }
 });
 
 function loadLocalContent(pageUrl) {
-  console.log('Loading content for pageUrl:', pageUrl);
+    console.log('Loading content for pageUrl:', pageUrl);
 
-  if (pageUrl === null || pageUrl === undefined) {
-    console.error('Invalid pageUrl:', pageUrl);
-    return;
-  }
+    if (pageUrl === null || pageUrl === undefined) {
+        console.error('Invalid pageUrl:', pageUrl);
+        return;
+    }
 
-  if (pageUrl.includes("setting")) {
-    // Handle Settings link differently (show/hide submenu)
-    const submenu = document.querySelector('.submenu');
-    submenu.classList.toggle('show_submenu');
-  } else {
-    // Load content for other links
-    fetch(pageUrl)
-      .then(response => response.text())
-      .then(html => {
-        contentContainer.innerHTML = html;
+    if (pageUrl.includes("setting")) {
+        // Handle Settings link differently (show/hide submenu)
+        const submenu = document.querySelector('.submenu');
+        submenu.classList.toggle('show_submenu');
+    } else {
+        // Load content for other links
+        fetch(pageUrl)
+            .then(response => response.text())
+            .then(html => {
+                contentContainer.innerHTML = html;
 
-        // Apply inlined styles
-        const styleTags = contentContainer.querySelectorAll('style');
-        styleTags.forEach(styleTag => {
-          const newStyle = document.createElement('style');
-          newStyle.innerHTML = styleTag.innerHTML;
-          styleTag.parentNode.replaceChild(newStyle, styleTag);
-        });
+                // Apply inlined styles
+                const styleTags = contentContainer.querySelectorAll('style');
+                styleTags.forEach(styleTag => {
+                    const newStyle = document.createElement('style');
+                    newStyle.innerHTML = styleTag.innerHTML;
+                    styleTag.parentNode.replaceChild(newStyle, styleTag);
+                });
 
-        contentContainer.scrollIntoView();
+                contentContainer.scrollIntoView();
 
-        // If the fetched page contains scripts, re-run them
-        const scripts = contentContainer.querySelectorAll('script');
-        scripts.forEach(script => {
-          const newScript = document.createElement('script');
-          newScript.innerHTML = script.innerHTML;
-          script.parentNode.replaceChild(newScript, script);
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching page:', error);
-      });
-  }
+                // If the fetched page contains scripts, re-run them
+                const scripts = contentContainer.querySelectorAll('script');
+                scripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    newScript.innerHTML = script.innerHTML;
+                    script.parentNode.replaceChild(newScript, script);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching page:', error);
+            });
+    }
 }
 
 
 
 darkLight.addEventListener("click", () => {
-  body.classList.toggle("dark");
-  contentContainer.classList.toggle("dark", body.classList.contains("dark"));
+    body.classList.toggle("dark");
+    contentContainer.classList.toggle("dark", body.classList.contains("dark"));
 
-  if (body.classList.contains("dark")) {
-    darkLight.classList.replace("bx-sun", "bx-moon");
-  } else {
-    darkLight.classList.replace("bx-moon", "bx-sun");
-  }
+    if (body.classList.contains("dark")) {
+        darkLight.classList.replace("bx-sun", "bx-moon");
+    } else {
+        darkLight.classList.replace("bx-moon", "bx-sun");
+    }
 });
 
 submenuItems.forEach((item, index) => {
-  item.addEventListener("click", () => {
-    item.classList.toggle("show_submenu");
-    submenuItems.forEach((item2, index2) => {
-      if (index !== index2) {
-        item2.classList.remove("show_submenu");
-      }
+    item.addEventListener("click", () => {
+        item.classList.toggle("show_submenu");
+        submenuItems.forEach((item2, index2) => {
+            if (index !== index2) {
+                item2.classList.remove("show_submenu");
+            }
+        });
     });
-  });
 });
 
-settingLink.addEventListener('click', function (event) {
-  event.preventDefault(); // Prevent the default behavior of the link
-  submenu.classList.toggle('show_submenu');
+settingLink.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default behavior of the link
+    submenu.classList.toggle('show_submenu');
 });
 
 sidebarLinks.forEach(link => {
-  link.addEventListener('click', function (event) {
-    // Remove the 'clicked' class from all links
-    sidebarLinks.forEach(link => {
-      link.classList.remove('clicked');
+    link.addEventListener('click', function(event) {
+        // Remove the 'clicked' class from all links
+        sidebarLinks.forEach(link => {
+            link.classList.remove('clicked');
+        });
+
+        // Add the 'clicked' class to the clicked link
+        link.classList.add('clicked');
+
+        // Continue with the default link behavior
     });
-
-    // Add the 'clicked' class to the clicked link
-    link.classList.add('clicked');
-
-    // Continue with the default link behavior
-  });
 });
 
 const homeButton = document.querySelector('.nav_link[data-page="hallu.html"]');
 if (homeButton) {
-  homeButton.click();
+    homeButton.click();
 }
 
-logoutLink.addEventListener('click', function (event) {
-  event.preventDefault();
+logoutLink.addEventListener('click', function(event) {
+    event.preventDefault();
 
-  // Perform logout actions here, such as clearing user authentication status
+    // Perform logout actions here, such as clearing user authentication status
 
-  // Redirect to the login page
-  window.location.href = './login.html';
+    // Redirect to the login page
+    window.location.href = './login.html';
 });
 
 if (window.innerWidth < 768) {
-  sidebar.classList.add("close");
+    sidebar.classList.add("close");
 } else {
-  sidebar.classList.remove("close");
+    sidebar.classList.remove("close");
 }
 
 // Initial load of last clicked content
-if (lastClickedContent) {
-  loadLocalContent(lastClickedContent);
-}
+// if (lastClickedContent) {
+//   loadLocalContent(lastClickedContent);
+// }
 
 
 // Function to extract token from URL
