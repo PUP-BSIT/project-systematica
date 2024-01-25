@@ -108,14 +108,6 @@ if (isset($_FILES['post_image'])) {
     $stmt->close();
 }
 
-// Function to validate authorization token
-function validateAuthorizationToken($token) {
-    // Implement your validation logic here
-    // Return true if the token is valid, false otherwise
-    // Example: return $token === 'valid_token';
-    return true;
-}
-
 // Function to get username by user_id
 function get_username($user_id) {
     global $conn;
