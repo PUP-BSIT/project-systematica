@@ -49,7 +49,7 @@ function login() {
     formData.append('password', passwordInput);
 
     // Use the fetch API to make a POST request to your login.php script
-    fetch('controller/login=controller.php', {
+    fetch('controller/login-controller.php', {
             method: 'POST',
             body: formData
         })
