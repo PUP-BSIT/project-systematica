@@ -49,20 +49,20 @@ function login() {
     formData.append('password', passwordInput);
 
     // Use the fetch API to make a POST request to your login.php script
-    fetch('controller/login.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle the response from the server
-        console.log(data);
-        window.location.href = "home/homepage.php";
-    })
-    .catch(error => {
-        // Handle errors
-        console.error('Error:', error);
-    });
+    fetch('controller/login=controller.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response from the server
+            console.log(data);
+            window.location.href = "home/homepage.php";
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('Error:', error);
+        });
 }
 
 
