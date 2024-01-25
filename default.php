@@ -28,7 +28,7 @@
                 <div class="button1" onclick="window.location.href = '#'">
                     <div class="text">About</div>
                 </div>
-                <button class="button2" onclick="window.location.href = 'app/login.html'">
+                <button class="button2" onclick="window.location.href = 'app/login.php'">
                 <div class="text1">Log in</div>
               </button>
             </div>
