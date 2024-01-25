@@ -84,10 +84,10 @@
             <i class="bx bx-chevron-right arrow-left"></i>
           </a>
           <ul class="menu_items submenu">
-            <a href="./settings/terms_of_service.html" class="nav_link sublink">Terms of Service</a>
-            <a href="./settings/privacy_policy.html" class="nav_link sublink">Privacy Policy</a>
-            <a href="./settings/community_guidelines.html" class="nav_link sublink">Community Guidelines</a>
-            <a href="./settings/account.html" class="nav_link sublink">Account</a>
+            <a href="terms_of_service.html" class="nav_link sublink">Terms of Service</a>
+            <a href="./privacy_policy.html" class="nav_link sublink">Privacy Policy</a>
+            <a href="./community_guidelines.html" class="nav_link sublink">Community Guidelines</a>
+            <a href="./account.html" class="nav_link sublink">Account</a>
           </ul>
         </li>
         <!-- end -->

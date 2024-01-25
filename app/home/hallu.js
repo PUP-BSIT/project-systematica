@@ -37,84 +37,93 @@ async function showPost() {
     }
 }
 
-async function putPost(username, postText, imageFile, post_id, like_count) {
-    try {
-        var newPostContainer = document.createElement("div");
-        newPostContainer.classList.add("post-container");
+// async function putPost(username, postText, imageFile, post_id, like_count) {
+//     try {
+//         var newPostContainer = document.createElement("div");
+//         newPostContainer.classList.add("post-container");
 
-        // User profile container
-        var userProfileContainer = document.createElement("div");
-        userProfileContainer.classList.add("user-profile-container");
+//         // User profile container
+//         var userProfileContainer = document.createElement("div");
+//         userProfileContainer.classList.add("user-profile-container");
 
-        // User profile image
-        var userProfileImage = document.createElement("img");
-        userProfileImage.src = 'path/to/profile-pic.jpg'; // Replace with the actual path
-        userProfileImage.alt = "Profile Picture";
+//         // User profile image
+//         var userProfileImage = document.createElement("img");
+//         userProfileImage.src = 'path/to/profile-pic.jpg'; // Replace with the actual path
+//         userProfileImage.alt = "Profile Picture";
 
-        // User name
-        var userName = document.createElement("p");
-        userName.textContent = username;
+//         // User name
+//         var userName = document.createElement("p");
+//         userName.textContent = username;
 
-        userProfileContainer.appendChild(userProfileImage);
-        userProfileContainer.appendChild(userName);
+//         userProfileContainer.appendChild(userProfileImage);
+//         userProfileContainer.appendChild(userName);
 
-        var newPost = document.createElement("div");
-        newPost.classList.add("post");
+//         var newPost = document.createElement("div");
+//         newPost.classList.add("post");
 
-        if (postText.trim()) {
-            newPost.innerHTML += `<p>${postText}</p>`;
-        }
+//         if (postText.trim()) {
+//             newPost.innerHTML += `<p>${postText}</p>`;
+//         }
 
-        if (imageFile) {
-            // Trim the first 6 characters from imageFile and add "app/assets/"
-            var trimmedImageFile = "../../app/assets/uploads/" + imageFile;
+//         if (imageFile) {
+//             // Trim the first 6 characters from imageFile and add "app/assets/"
+//             var trimmedImageFile = "../../app/assets/uploads/" + imageFile;
 
-            console.log(trimmedImageFile);
+//             console.log(trimmedImageFile);
 
-            var imgElement = document.createElement("img");
-            imgElement.src = trimmedImageFile; // Assuming trimmedImageFile is the actual path
-            imgElement.alt = trimmedImageFile;
-            newPost.appendChild(imgElement);
-        }
+//             var imgElement = document.createElement("img");
+//             imgElement.src = trimmedImageFile; // Assuming trimmedImageFile is the actual path
+//             imgElement.alt = trimmedImageFile;
+//             newPost.appendChild(imgElement);
+//         }
 
-        // Create a container to display the like count
-        var likeCountContainer = document.createElement("div");
-        likeCountContainer.classList.add("like-count-container");
-        likeCountContainer.textContent = `Likes: ${like_count}`;
-        newPost.appendChild(likeCountContainer);
+//         // Create a container to display the like count
+//         var likeCountContainer = document.createElement("div");
+//         likeCountContainer.classList.add("like-count-container");
+//         // likeCountContainer.textContent = `Likes: ${like_count}`;
+//         // Check if like_count is defined before displaying it
+//         if (typeof like_count !== 'undefined') {
+//             likeCountContainer.textContent = `Likes: ${like_count}`;
+//         } else {
+//             likeCountContainer.textContent = 'Likes: 0';
+//         }
+//         newPost.appendChild(likeCountContainer);
 
-        var postButtons = document.createElement("div");
-        postButtons.classList.add("post-buttons");
+//         var postButtons = document.createElement("div");
+//         postButtons.classList.add("post-buttons");
 
-        var likeButton = document.createElement("img");
-        likeButton.src = "../assets/images/Heart.svg";
-        likeButton.alt = "Like";
-        likeButton.addEventListener("click", function() {
-            likePost(post_id, likeCountContainer); // Pass the post_id and likeCountContainer
-        });
+//         var likeButton = document.createElement("img");
+//         likeButton.src = "../assets/images/Heart.svg";
+//         likeButton.alt = "Like";
+//         likeButton.addEventListener("click", function() {
+//             likePost(post_id, likeCountContainer); // Pass the post_id and likeCountContainer
+//         });
 
-        var shareButton = document.createElement("img");
-        shareButton.src = "../assets/images/Share.svg";
-        shareButton.alt = "Share";
-        shareButton.addEventListener("click", function() {
-            // Handle share button click
-            alert("Shared!");
-        });
+//         var shareButton = document.createElement("img");
+//         shareButton.src = "../assets/images/Share.svg";
+//         shareButton.alt = "Share";
+//         shareButton.addEventListener("click", function() {
+//             // Handle share button click
+//             alert("Shared!");
+//         });
 
-        postButtons.appendChild(likeButton);
-        postButtons.appendChild(shareButton);
+//         postButtons.appendChild(likeButton);
+//         postButtons.appendChild(shareButton);
 
-        newPost.appendChild(postButtons);
+//         newPost.appendChild(postButtons);
 
-        newPostContainer.appendChild(userProfileContainer); // Add the user profile container
-        newPostContainer.appendChild(newPost);
+//         newPostContainer.appendChild(userProfileContainer); // Add the user profile container
+//         newPostContainer.appendChild(newPost);
 
-        var postsContainer = document.getElementById("postsContainer");
-        postsContainer.prepend(newPostContainer);
-    } catch (error) {
-        console.error("Error creating post:", error);
-    }
-}
+//         var postsContainer = document.getElementById("postsContainer");
+//         postsContainer.prepend(newPostContainer);
+        
+        // let container = document.querySelector(".posts");
+        // container.append(newPostContainer);
+//     } catch (error) {
+//         console.error("Error creating post:", error);
+//     }
+// }
 
 async function likePost(post_id, likeCountContainer) {
     try {
@@ -196,9 +205,7 @@ async function createPost() {
     toggleOverlay();
 }
 
-aasync
-
-function putPost(username, postText, imageFile) {
+async function putPost(username, postText, imageFile, post_id, like_count) {
     try {
         var newPostContainer = document.createElement("div");
         newPostContainer.classList.add("post-container");
