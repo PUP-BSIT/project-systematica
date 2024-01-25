@@ -1,7 +1,6 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-// include "https://postify.tech/db_conn.php";
 include "../../db_conn.php";
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -37,8 +36,15 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['user_id'] = $row['user_id'];
         
+            $cookie_name = "email";
+            $cookie_value =  $_SESSION['email'];
+            if (!isset($_COOKIE[$cookie_name])) {
+                setcookie($cookie_name, $cookie_value, time() + 3600, '/');
+            }
+            
             $response['success'] = true;
             echo json_encode($response);
+            
             exit();
         } else {
             // Incorrect password
