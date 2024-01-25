@@ -109,11 +109,15 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             width: 500px;
-            height: 430px;
+            height: 500px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             z-index: 4;
             padding: 20px;
             text-align: center;
+        }
+        
+        #overlay input {
+            width: calc(100%);
         }
         
         #overlayHeader {
@@ -268,7 +272,6 @@
             /* Increased margin for the input and button */
             padding: 15px;
             /* Increased padding for the input and button */
-            width: calc(100%);
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -280,31 +283,113 @@
         }
         
         button {
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        
-        button:hover {
-            background-color: #45a049;
-        }
-        
-        #overlayContent #postCreateButton {
             background-color: #007BFF;
+            width: calc(100%);
             /* Change to blue color code */
             color: #fff;
-            border: 1px solid #007BFF;
             /* Match the border color */
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
         
-        #overlayContent #postCreateButton:hover {
+        button:hover {
             background-color: #0056b3;
             /* Darker blue color on hover */
             transform: scale(1.02);
-            /* Zoom in effect on hover */
+        }
+        
+        #overlayShareTo {
+            position: fixed;
+            top: 50%;
+            /* Adjust the percentage to move it up or down */
+            left: 50%;
+            /* Adjust the percentage to move it left or right */
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 5;
+            /* Make sure it appears above the Create Post overlay */
+        }
+        
+        #overlayContentShareTo {
+            /* Styles for the Share To overlay content */
+            position: absolute;
+            top: 50%;
+            /* Adjust the percentage to move it up or down */
+            left: 50%;
+            /* Adjust the percentage to move it left or right */
+            transform: translate(-50%, -40%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 200px;
+            /* Adjust the width as needed */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 6;
+            /* Make sure it appears above the Create Post overlay content */
+            padding-top: 15px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #overlayHeaderShareTo {
+            position: relative;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            /* Center the text */
+            margin-bottom: 10px;
+        }
+        
+        #lineUnderHeaderShareTo {
+            width: 200px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            /* Increased margin-bottom */
+        }
+        
+        #shareToOptions {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .shareToOption {
+            display: flex;
+            align-items: left;
+            margin-bottom: 10px;
+        }
+        
+        .shareToOption input {
+            margin-right: 8px;
+            margin-top: 5px;
+        }
+        
+        #cancelButton {
+            margin-bottom: none;
+            /* Add margin-top to adjust spacing */
+            cursor: pointer;
+            background-color: #e74c3c;
+        }
+        
+        #cancelButton:hover {
+            background-color: #e74c3c;
+            /* Darker red color on hover */
+        }
+        
+        .shareToOption img {
+            width: 20px;
+            /* Adjust the width as needed */
+            height: 20px;
+            /* Adjust the height as needed */
+            margin-left: 8px;
+            /* Adjust the margin as needed */
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -333,13 +418,40 @@
                         <span id="fileName">Choose File</span>
                     </div>
                     <button id="postCreateButton" onclick="createPost()">Create Post</button>
+                    <button id="shareToButton" onclick="showShareToOverlay()">Share To...</button>
                 </div>
             </div>
         </div>
 
         <!-- "What's on your mind?" container -->
-        <div id="whatsOnYourMindContainer" onclick="toggleOverlay()">
+        <div id="whatsOnYourMindContainer" onclick="toggleOverlay('overlay')">
             <div id="whatsOnYourMind">What's on your mind?</div>
+        </div>
+
+        <div id="overlayShareTo">
+            <div id="overlayContentShareTo">
+                <!-- Share To overlay content -->
+                <div id="overlayHeaderShareTo">
+                    <span>Share To...</span>
+                </div>
+                <div id="lineUnderHeaderShareTo"></div>
+                <!-- Share To options -->
+                <div id="shareToOptions">
+                    <div class="shareToOption" onclick="selectShareTo('Hypehive')">
+                        <input type="checkbox" id="hypehiveCheckbox">
+                        <img src="/app/assets/images/hypehive.png" alt="Image Description"> Hypehive
+                    </div>
+                    <div class="shareToOption" onclick="selectShareTo('Likha')">
+                        <input type="checkbox" id="likhaCheckbox">
+                        <img src="/app/assets/images/likha.png" alt="Image Description"> Likha
+                    </div>
+                </div>
+                <!-- Ok and Cancel buttons -->
+                <div id="shareToButtons">
+                    <button id="okButton" onclick="confirmShareTo()">Share</button>
+                    <button id="cancelButton" onclick="toggleShareToOverlay()">Cancel</button>
+                </div>
+            </div>
         </div>
 
         <div id="newsFeedContainer">
@@ -353,6 +465,95 @@
 
     <script>
         showPost();
+
+        function toggleOverlay(overlayId) {
+            var overlay = document.getElementById(overlayId);
+
+            function closeOverlay(overlayElement) {
+                overlayElement.style.display = "none";
+            }
+
+            function openOverlay(overlayElement) {
+                overlayElement.style.display = "block";
+            }
+
+            function resetOverlayPosition(overlayElement) {
+                overlayElement.style.transition = "none";
+                overlayElement.style.transform = "translate(-50%, -50%)";
+                setTimeout(function() {
+                    overlayElement.style.transition = "transform 0.3s";
+                }, 10);
+            }
+
+            if (overlayId === 'whatsOnYourMindContainer') {
+                // Close both the "What's on your mind?" and "Share To..." overlays
+                closeOverlay(document.getElementById("overlayShareTo"));
+                openOverlay(document.getElementById("overlay"));
+
+                // Reset "Share To..." overlay position
+                resetOverlayPosition(document.getElementById("overlayShareTo"));
+            } else if (overlayId === 'overlayShareTo') {
+                // Close only the "Share To..." overlay
+                closeOverlay(overlay);
+            } else {
+                // Close both the "What's on your mind?" and "Share To..." overlays
+                closeOverlay(document.getElementById("overlayShareTo"));
+                openOverlay(overlay);
+
+                // Reset "Share To..." overlay position
+                resetOverlayPosition(document.getElementById("overlayShareTo"));
+            }
+        }
+
+        // JavaScript function to toggle the visibility of the overlay
+        function toggleShareToOverlay() {
+            var overlay = document.getElementById("overlayShareTo");
+            overlay.style.display = (overlay.style.display === "none" || overlay.style.display === "") ? "block" : "none";
+        }
+
+        function showShareToOverlay() {
+            // Hide "What's on your mind?" overlay
+            var whatsOnYourMindOverlay = document.getElementById("overlay");
+            whatsOnYourMindOverlay.style.display = "none";
+
+            // Show "Share To..." overlay with a slide effect
+            var shareToOverlay = document.getElementById("overlayShareTo");
+            shareToOverlay.style.display = "block";
+            setTimeout(function() {
+                shareToOverlay.style.transform = "translate(-40%, -50%)";
+            }, 10);
+        }
+
+        function selectShareTo(option) {
+            // Add your logic for selecting a share option here
+            // For now, let's just toggle the checkbox
+            console.log('Selected Share To:', option);
+            var checkbox = document.getElementById(option.toLowerCase() + "Checkbox");
+            checkbox.checked = !checkbox.checked;
+        }
+
+        function getSelectedAppName() {
+            var selectedAppName = '';
+
+            // Loop through the checkboxes to find the selected one
+            var checkboxes = document.querySelectorAll('.shareToCheckbox');
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    selectedAppName = checkbox.value;
+                }
+            });
+
+            return selectedAppName;
+        }
+
+        function confirmShareTo() {
+            // Add your logic for share confirmation here
+            // For now, let's just hide the overlay
+            toggleOverlay('overlayShareTo');
+            toggleOverlay(); // Close the "What's on your mind?" overlay as well
+            console.log('Share To confirmed');
+            document.getElementById("overlayShareTo").style.display = "none";
+        }
 
         function displayFilePreview() {
             var fileInput = document.getElementById("fileInput");
@@ -567,6 +768,7 @@
 
             var postText = document.getElementById("postText").value;
             var fileInput = document.getElementById("fileInput");
+            var selectedAppName = getSelectedAppName();
             var postImage = fileInput.files[0];
             console.log(postImage);
 
@@ -575,11 +777,15 @@
                 alert("Please enter text or select an image for your post.");
                 return;
             }
+            // Append the selected application name to the FormData
 
             url = "/app/home/php/post_create.php";
             requestBody = new FormData();
             requestBody.append('post_text', postText);
             requestBody.append('post_image', postImage);
+            requestBody.append('selected_app', selectedAppName);
+
+            console.log(requestBody);
 
             console.log("FormData content:");
             for (const pair of requestBody.entries()) {
@@ -603,6 +809,7 @@
             document.getElementById("filePreview").src = "";
             document.getElementById("fileName").textContent = "Choose File";
 
+            // Close the overlay
             toggleOverlay();
         }
 
@@ -813,11 +1020,6 @@
                     // Handle fetch error appropriately
                 }
             }
-        }
-
-        function toggleOverlay() {
-            var overlay = document.getElementById("overlay");
-            overlay.style.display = (overlay.style.display === "none" || overlay.style.display === "") ? "block" : "none";
         }
     </script>
 
