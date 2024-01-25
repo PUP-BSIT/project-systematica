@@ -135,7 +135,6 @@ try {
             $sql_result = $dbConnection->query($sql);
             $sql_row = $sql_result->fetch_assoc();
             $user_id = $sql_row['user_id'];
-            var_dump($user_id);
             $_SESSION['user_id'] = $user_id;
         } else {
             echo "Failed to save new user data. Error: " . $stmt->error;
