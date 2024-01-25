@@ -138,7 +138,7 @@ logoutLink.addEventListener('click', function(event) {
     // Perform logout actions here, such as clearing user authentication status
 
     // Redirect to the login page
-    window.location.href = './login.html';
+    window.location.href = 'home-controllers/logout.php';
 });
 
 if (window.innerWidth < 768) {

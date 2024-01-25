@@ -39,7 +39,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             $cookie_name = "email";
             $cookie_value =  $_SESSION['email'];
             if (!isset($_COOKIE[$cookie_name])) {
-                setcookie($cookie_name, $cookie_value, time() + 3600, '/');
+                setcookie($cookie_name, $cookie_value, time() + 3600, '/', '', true, true);
             }
             
             $response['success'] = true;
