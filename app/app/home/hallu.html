@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post Example</title>
+    <script src="php/post_controller.php"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        
+        .liked {
+            filter: brightness(0) saturate(100%) invert(56%) sepia(96%) saturate(261%) hue-rotate(133deg) brightness(92%) contrast(92%);
+            /* Add other styles to represent the liked state */
+        }
+        
+        #newsFeedContainer {
+            text-align: left;
+            padding: 10px;
+            margin: 0 auto;
+            width: 600px;
+            /* Adjust the width as needed */
+        }
+        
+        #newsFeedContainer h1 {
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            /* Adjust the shadow values as needed */
+        }
+        
+        #container {
+            text-align: center;
+            position: relative;
+        }
+        
+        .user-profile-container {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            /* Updated border-radius */
+            border: 1px solid #eee;
+        }
+        
+        .user-profile-container img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        
+        .user-profile-container p {
+            font-weight: bold;
+            margin: 0;
+            /* Add this line to remove default margin */
+        }
+        
+        #whatsOnYourMindContainer {
+            width: 600px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 95px auto 30px;
+            padding: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 2;
+        }
+        
+        #whatsOnYourMind {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        #whatsOnYourMindContainer:hover {
+            background-color: #C0F5F1;
+            /* Blue background on hover */
+            transform: scale(1.05);
+            /* Zoom in effect on hover */
+        }
+        
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 3;
+        }
+        
+        #overlayContent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-20%, -40%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 500px;
+            height: 500px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 4;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        #overlay input {
+            width: calc(100%);
+        }
+        
+        #overlayHeader {
+            position: relative;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        #closeButton {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        
+        #closeButton img {
+            width: 30px;
+            height: 30px;
+        }
+        
+        #lineUnderHeader {
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            /* Increased margin-bottom */
+        }
+        
+        #chooseFileContainer {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        #fileInput {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            border: none;
+            /* Make the border invisible */
+        }
+        
+        #filePreview {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        #fileName {
+            position: absolute;
+            bottom: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+        
+        #postsContainer {
+            position: relative;
+            width: 600px;
+            max-height: 440px;
+            overflow-y: auto;
+            margin-top: 10px !important;
+            margin-bottom: 20px;
+            z-index: 1;
+            margin: 0 auto;
+            overflow-y: auto;
+            /* Add this line to enable vertical scrollbar */
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
+            direction: ltr;
+            /* Set direction to left-to-right */
+        }
+        
+        #postsContainer::-webkit-scrollbar {
+            width: 10px;
+            /* Set the width of the scrollbar */
+        }
+        
+        #postsContainer::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            /* Set the color of the scrollbar thumb to grey */
+            border-radius: 5px;
+            /* Set the radius of the scrollbar thumb */
+        }
+        
+        #postsContainer::-webkit-scrollbar-track {
+            background-color: transparent;
+            /* Set the color of the scrollbar track to transparent */
+        }
+        
+        .post-container {
+            width: 100%;
+            margin-bottom: 30px;
+            position: relative;
+            border-radius: 8px;
+            /* Apply rounded corners to the container */
+            overflow: hidden;
+            /* Ensure overflow is hidden to make rounded corners work */
+        }
+        
+        .post {
+            padding: 20px;
+            border: 1px solid #eee;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            border-top: none;
+        }
+        
+        .post img {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
+            margin-top: 10px;
+        }
+        
+        .post-content {
+            margin-bottom: 10px;
+            /* Adjust margin as needed */
+        }
+        
+        .post-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 100px;
+        }
+        
+        .post-buttons img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            margin-right: 5px;
+            /* Adjusted margin */
+        }
+        
+        input,
+        button {
+            margin-bottom: 15px;
+            /* Increased margin for the input and button */
+            padding: 15px;
+            /* Increased padding for the input and button */
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        #postText {
+            border: none;
+            /* Make the border invisible */
+        }
+        
+        button {
+            background-color: #007BFF;
+            width: calc(100%);
+            /* Change to blue color code */
+            color: #fff;
+            /* Match the border color */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+            /* Darker blue color on hover */
+            transform: scale(1.02);
+        }
+        
+        #overlayShareTo {
+            position: fixed;
+            top: 50%;
+            /* Adjust the percentage to move it up or down */
+            left: 50%;
+            /* Adjust the percentage to move it left or right */
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 5;
+            /* Make sure it appears above the Create Post overlay */
+        }
+        
+        #overlayContentShareTo {
+            /* Styles for the Share To overlay content */
+            position: absolute;
+            top: 50%;
+            /* Adjust the percentage to move it up or down */
+            left: 50%;
+            /* Adjust the percentage to move it left or right */
+            transform: translate(-50%, -40%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 200px;
+            /* Adjust the width as needed */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 6;
+            /* Make sure it appears above the Create Post overlay content */
+            padding-top: 15px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        #overlayHeaderShareTo {
+            position: relative;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            /* Center the text */
+            margin-bottom: 10px;
+        }
+        
+        #lineUnderHeaderShareTo {
+            width: 200px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            /* Increased margin-bottom */
+        }
+        
+        #shareToOptions {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .shareToOption {
+            display: flex;
+            align-items: left;
+            margin-bottom: 10px;
+        }
+        
+        .shareToOption input {
+            margin-right: 8px;
+            margin-top: 5px;
+        }
+        
+        #cancelButton {
+            margin-bottom: none;
+            /* Add margin-top to adjust spacing */
+            cursor: pointer;
+            background-color: #e74c3c;
+        }
+        
+        #cancelButton:hover {
+            background-color: #e74c3c;
+            /* Darker red color on hover */
+        }
+        
+        .shareToOption img {
+            width: 20px;
+            /* Adjust the width as needed */
+            height: 20px;
+            /* Adjust the height as needed */
+            margin-left: 8px;
+            /* Adjust the margin as needed */
+            margin-right: 10px;
+        }
+        
+        .custom-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;  /* Adjust the width as needed */
+            height: 24px; /* Adjust the height as needed */
+        }
+
+        .custom-switch input {
+            display: none;
+        }
+
+        .custom-switch .custom-control-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ddd;
+            border-radius: 12px; /* Adjust the border-radius for a rounded appearance */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .custom-switch .custom-control-indicator:before {
+            content: '';
+            position: absolute;
+            height: 18px; /* Adjust the size of the inner circle */
+            width: 18px;  /* Adjust the size of the inner circle */
+            left: 3px;
+            bottom: 3px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .custom-switch input:checked + .custom-control-indicator {
+            background-color: #28a745;
+        }
+
+        .custom-switch input:checked + .custom-control-indicator:before {
+            transform: translateX(16px); /* Adjust the distance the inner circle moves */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <!-- Overlay -->
+        <div id="overlay">
+            <div id="overlayContent">
+                <!-- Close button image -->
+                <div id="overlayHeader">
+                    <!-- Close button image -->
+<div id="overlayHeader">
+    <span>Create Post</span>
+    <div id="closeButton">
+        <img src="../assets/images/cancel_button.svg" alt="Close" id="closeButtonImage">
+    </div>
+</div>
+
+<script>
+    document.getElementById("closeButtonImage").addEventListener("click", function() {
+        document.getElementById('overlay').style.display = 'none';
+    });
+</script>
+
+
+
+                </div>
+                <!-- Line under the header -->
+                <div id="lineUnderHeader"></div>
+                <!-- Post Container inside the Overlay -->
+                <div id="postContainer">
+                    <input type="text" id="postText" placeholder="Enter your post text">
+                    <div id="chooseFileContainer">
+                        <input type="file" id="fileInput" accept="image/*" onchange="displayFilePreview()">
+                        <img id="filePreview" alt="File Preview">
+                        <span id="fileName">Choose File</span>
+                    </div>
+                    <button id="postCreateButton" onclick="createPost()">Create Post</button>
+                    <button id="shareToButton" onclick="showShareToOverlay()">Share To...</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- "What's on your mind?" container -->
+        <div id="whatsOnYourMindContainer" onclick="toggleOverlayVisibility('overlay')">
+            <div id="whatsOnYourMind">What's on your mind?</div>
+        </div>
+
+        <div id="overlayShareTo">
+            <div id="overlayContentShareTo">
+                <!-- Share To overlay content -->
+                <div id="overlayHeaderShareTo">
+                    <span>Share To...</span>
+                </div>
+                <div id="lineUnderHeaderShareTo"></div>
+                <!-- Share To options -->
+                <!-- Share To options with custom switch -->
+                <!-- Share To options with custom switch -->
+                <div id="shareToOptions">
+                    <div class="shareToOption">
+                        <label class="custom-switch">
+                            <input type="checkbox" id="hypehiveCheckbox" class="custom-control-input" onClick="selectShareToHypeHive()">
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                        <img src="/app/assets/images/hypehive.png" alt="Image Description"> Hypehive
+                    </div>
+                    <div class="shareToOption">
+                        <label class="custom-switch">
+                            <input type="checkbox" id="likhaCheckbox" class="custom-control-input" onClick="selectShareToLikha()">
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                        <img src="/app/assets/images/likha.png" alt="Image Description"> Likha
+                    </div>
+                </div>
+
+                <!-- Ok and Cancel buttons -->
+                <div id="shareToButtons">
+                    <button id="okButton" onclick="confirmShareTo()">OK</button>
+                    <button id="cancelButton" onclick="toggleOverlayVisibility('overlayShareTo')">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="newsFeedContainer">
+            <h1>NEWS FEED</h1>
+        </div>
+
+        <div id="postsContainer">
+            <!-- Existing posts and new posts will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        showPost();
+
+    function closeWhatsOnYourMind() {
+        var whatsOnYourMindOverlay = document.getElementById("whatsOnYourMindContainer");
+        whatsOnYourMindOverlay.style.display = "none";
+        console.log('Function called with overlayId:', overlayId);
+    }
+
+function toggleOverlayVisibility(overlayId) {
+    console.log('Toggle overlay called with id:', overlayId);
+    var overlay = document.getElementById(overlayId);
+
+    function closeOverlay(overlayElement) {
+        overlayElement.style.display = "none";
+    }
+
+    function openOverlay(overlayElement) {
+        overlayElement.style.display = "block";
+    }
+
+    function resetOverlayPosition(overlayElement) {
+        overlayElement.style.transition = "none";
+        overlayElement.style.transform = "translate(-50%, -50%)";
+        setTimeout(function () {
+            overlayElement.style.transition = "transform 0.3s";
+        }, 10);
+    }
+
+    if (overlayId === 'whatsOnYourMindContainer') {
+        // Close only the "What's on your mind?" overlay
+        closeOverlay(overlay);
+
+        // Reset "What's on your mind?" overlay position
+        resetOverlayPosition(overlay);
+    } else if (overlayId === 'overlayShareTo') {
+        // Close only the "Share To..." overlay
+        closeOverlay(overlay);
+
+        // Reset "Share To..." overlay position
+        resetOverlayPosition(overlay);
+        localStorage.removeItem('Likha');
+        localStorage.removeItem('Hypehive');
+    } else {
+        // Close both the "What's on your mind?" and "Share To..." overlays
+        closeOverlay(document.getElementById("overlayShareTo"));
+        openOverlay(overlay);
+
+        // Reset "Share To..." overlay position
+        resetOverlayPosition(document.getElementById("overlayShareTo"));
+    }
+}
+
+
+function toggleOverlay(overlayId) {
+    var overlay = document.getElementById(overlayId);
+
+    if (overlay.style.display === 'none' || overlay.style.display === '') {
+        // Show the overlay
+        overlay.style.display = 'block';
+    } else {
+        // Hide the overlay
+        overlay.style.display = 'none';
+    }
+}
+
+
+function toggleShareToOption(option) {
+    var checkbox = document.getElementById(option.toLowerCase() + "Checkbox");
+    checkbox.checked = !checkbox.checked;
+}
+
+function confirmShareTo() {
+    var hypehiveCheckbox = document.getElementById("hypehiveCheckbox");
+    var likhaCheckbox = document.getElementById("likhaCheckbox");
+
+    // Check if either toggle switch is on
+    if (hypehiveCheckbox.checked || likhaCheckbox.checked) {
+        // At least one toggle is on, return true
+        toggleOverlayVisibility(    );
+        toggleOverlayVisibility('whatsOnYourMindContainer'); // Close the "What's on your mind?" overlay as well
+        console.log('Share To confirmed');
+        return true;
+    } else {
+        // Neither toggle is on, show alert and return false
+        alert("Toggle To Share");
+        return false;
+    }
+}
+
+
+
+function showShareToOverlay() {
+    // Show "Share To..." overlay with a slide effect
+    var shareToOverlay = document.getElementById("overlayShareTo");
+    shareToOverlay.style.display = "block";
+    setTimeout(function () {
+        shareToOverlay.style.transform = "translate(-40%, -50%)";
+    }, 10);
+}
+
+
+function selectShareToLikha() {
+        var checkLikha = document.getElementById("likhaCheckbox");
+        if (checkLikha.checked) {
+            console.log('Selected Share To:', 'Likha');
+            localStorage.setItem('Likha', 'Likha');
+        } else {
+            console.log('Unselected Share To:', 'Likha');
+            localStorage.removeItem('Likha');
+        }
+    }
+
+    function selectShareToHypeHive() {
+        var checkHypehive = document.getElementById("hypehiveCheckbox");
+        if (checkHypehive.checked) {
+            console.log('Selected Share To:', 'Hypehive');
+            localStorage.setItem('Hypehive', 'Hypehive');
+        } else {
+            console.log('Unselected Share To:', 'Hypehive');
+            localStorage.removeItem('Hypehive');
+        }
+    }
+
+        function displayFilePreview() {
+            var fileInput = document.getElementById("fileInput");
+            var filePreview = document.getElementById("filePreview");
+            var fileNameElement = document.getElementById("fileName");
+
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    filePreview.src = e.target.result;
+                    fileNameElement.textContent = fileInput.files[0].name;
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        async function showPost() {
+            try {
+                let url = "/app/home/php/post_get_all.php";
+                let response = await fetch(url);
+                let result = await response.json();
+                //console.log(result);
+
+                if (result.success && result.postList && result.postList.length > 0) {
+                    for (let post of result.postList) {
+                        putPost(post.username, post.userPost, post.imagePath, post.post_id, post.like_count);
+                    }
+                } else {
+                    console.log("No posts to display");
+                }
+            } catch (error) {
+                console.error("Error fetching posts:", error);
+            }
+        }
+
+        function selectShareToHypehive() {
+            var checkHypehive = document.getElementById("hypehiveCheckbox");
+            if (checkHypehive.checked) {
+                console.log('Selected Share To:', 'Hypehive');
+                localStorage.setItem('Hypehive', 'Hypehive');
+            } else {
+                localStorage.removeItem('Hypehive');
+            }
+        }
+        
+        function selectShareToLikha() {
+            var checkLikha = document.getElementById("likhaCheckbox");
+            if (checkLikha.checked) {
+                console.log('Selected Share To:', 'Likha');
+                localStorage.setItem('Likha', 'Likha');
+            } else {
+                localStorage.removeItem('Likha');
+            }
+        }
+
+
+        async function likePost(post_id, likeCountContainer) {
+            try {
+                console.log('Like button clicked for post ID:', post_id);
+                const response = await fetch('/app/home/php/like_post.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'post_id=' + encodeURIComponent(post_id),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    console.log('Post liked successfully');
+                    const updatedLikeCount = parseInt(likeCountContainer.textContent.split(' ')[1]) + 1;
+                    likeCountContainer.textContent = `Likes: ${updatedLikeCount}`;
+
+                    const likeButton = likeCountContainer.parentElement.querySelector('.post-buttons img[alt="Like"]');
+                    likeButton.classList.toggle('liked');
+                } else {
+                    console.error('Error liking post:', data.error);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+
+        async function createPost() {
+            let url, response, data, requestBody;
+
+            var postText = document.getElementById("postText").value;
+            var fileInput = document.getElementById("fileInput");
+            // var selectedAppName = getSelectedAppName();
+            var postImage = fileInput.files[0];
+            var likha = localStorage.getItem('Likha');
+            var hypehive = localStorage.getItem('Hypehive');
+            
+            console.log("yoo" + likha);
+            console.log("yoo" + hypehive);
+            console.log(postImage);
+
+            // Check if both post text and image are empty
+            if (!postText.trim() && !postImage) {
+                alert("Please enter text or select an image for your post.");
+                return;
+            }
+
+            url = "/app/home/php/post_create.php";
+            requestBody = new FormData();
+            requestBody.append('post_text', postText);
+            requestBody.append('post_image', postImage);
+            // requestBody.append('selected_app', selectedAppName);
+            requestBody.append('shareToHypehive', hypehive);
+            requestBody.append('shareToLikha', likha);
+
+            console.log(requestBody);
+
+            console.log("FormData content:");
+            for (const pair of requestBody.entries()) {
+                console.log(pair[0], pair[1]);
+            }
+
+            response = await fetch(url, {
+                method: 'POST',
+                body: requestBody
+            });
+
+            data = await response.json();
+            console.log(data);
+
+            putPost(data.username, postText, postImage, data.post_id, data.like_count);
+
+            document.getElementById("postText").value = "";
+            fileInput.value = "";
+            document.getElementById("filePreview").src = "";
+            document.getElementById("fileName").textContent = "Choose File";
+
+            toggleOverlay();
+        }
+
+        async function putPost(username, postText, imageFile, post_id) {
+    try {
+        var newPostContainer = document.createElement("div");
+        newPostContainer.classList.add("post-container");
+        newPostContainer.dataset.postId = post_id;
+
+        var userProfileContainer = document.createElement("div");
+        userProfileContainer.classList.add("user-profile-container");
+
+        var userProfileImage = document.createElement("img");
+        userProfileImage.src = '../assets/images/profile-default.jpg'; // Replace with the actual path
+        userProfileImage.alt = "Profile Picture";
+
+        var userName = document.createElement("p");
+        userName.textContent = username;
+
+        userProfileContainer.appendChild(userProfileImage);
+        userProfileContainer.appendChild(userName);
+
+        var newPost = document.createElement("div");
+        newPost.classList.add("post");
+
+        if (postText.trim()) {
+            newPost.innerHTML += `<p>${postText}</p>`;
+        }
+
+        if (imageFile) {
+            var trimmedImageFile = "../../app/assets/uploads/" + imageFile;
+
+            //console.log(trimmedImageFile);
+
+            var imgElement = document.createElement("img");
+            imgElement.src = trimmedImageFile; // Assuming trimmedImageFile is the actual path
+            imgElement.alt = trimmedImageFile;
+            newPost.appendChild(imgElement);
+        }
+
+        var postButtons = document.createElement("div");
+        postButtons.classList.add("post-buttons");
+
+        var likeButton = document.createElement("img");
+        likeButton.src = "../assets/images/Heart.svg";
+        likeButton.alt = "Like";
+
+        postButtons.appendChild(likeButton);
+        newPost.appendChild(postButtons);
+
+        newPostContainer.appendChild(userProfileContainer); // Add the user profile container
+        newPostContainer.appendChild(newPost);
+
+        var postsContainer = document.getElementById("postsContainer");
+        postsContainer.prepend(newPostContainer);
+
+        document.getElementById("postText").value = "";
+        fileInput.value = "";
+        document.getElementById("filePreview").src = "";
+        document.getElementById("fileName").textContent = "Choose File";
+    } catch (error) {
+        console.error("Error creating post:", error);
+    }
+}
+
+        async function editPost(postID, postElement) {
+            var newPostText = prompt("Edit post:", postElement.querySelector("p").innerText);
+
+            if (newPostText !== null) {
+                try {
+                    const response = await fetch('/app/home/php/post_edit.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'post_id=' + encodeURIComponent(postID) + '&new_post_text=' + encodeURIComponent(newPostText),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        console.log('Post updated successfully');
+                        postElement.querySelector("p").innerText = newPostText;
+                    } else {
+                        console.error('Error updating post:', data.error);
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 900px;
+        }
+
+        .frame-48 {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 500px;
+            box-sizing: border-box;
+        }
+
+        .account {
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .input-field {
+            width: 100%; /* Adjust the width to 100% */
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .edit-button {
+            position: absolute;
+            top: 40%;
+            right: 5px;
+            transform: translateY(-50%);
+            background-color: #3949ab;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 8px 16px;
+        }
+
+        .edit-button:hover {
+            background-color: #333B91;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .eye-icon {
+            position: absolute;
+            top: 40%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .eye-open,
+        .eye-close {
+            width: 20px;
+            height: auto;
+        }
+
+        .save-button {
+            text-align: center;
+        }
+
+        .save-button .button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3949ab;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .save-button .button:hover {
+            background-color: #333B91;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="frame-48">
+        <div class="account">
+            <div class="title">Account</div>
+        </div>
+
+        <div class="profile">
+            <img class="profile-image" src="/assets/astronaut.png" alt="Ed Judah">
+            <div class="profile-name" id="profile_name">chuchu</div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-section">
+                <label class="input-label" for="full_name">Full Name</label>
+                <div class="input-wrapper">
+                    <input type="text" id="full_name" name="full_name" class="input-field" placeholder="Enter your full name">
+                    <button class="edit-button" onclick="toggle_edit()">Edit</button>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <label class="input-label" for="email">Email</label>
+                <div class="input-wrapper">
+                    <input type="text" id="email" name="email" class="input-field" placeholder="Enter your email address">
+                    <button class="edit-button" onclick="toggle_edit()">Edit</button>
+                </div>
+            </div>
+
+            <div class="input-section">
+				<label class="input-label" for="password">New Password</label>
+				<div class="input-wrapper">
+					<input type="password" id="password" name="new_password" class="input-field" placeholder="Enter your new password">
+					<div class="eye-icon" id="password_toggle_btn" onclick="toggle_password_visibility('password', 'password_toggle_btn')">
+						<img src="/assets/eye_open.svg" alt="Open Eye" class="eye-open">
+						<img src="/assets/eye_closed.svg" alt="Close Eye" class="eye-close" style="display: none;">
+					</div>
+				</div>
+			</div>
+			
+			<div class="input-section">
+				<label class="input-label" for="confirm_password">Confirm Password</label>
+				<div class="input-wrapper">
+					<input type="password" id="confirm_password" name="confirm_password" class="input-field" placeholder="Enter your confirm password">
+					<div class="eye-icon" id="confirm_password_toggle_btn" onclick="toggle_password_visibility('confirm_password', 'confirm_password_toggle_btn')">
+						<img src="/assets/eye_open.svg" alt="Open Eye" class="eye-open">
+						<img src="/assets/eye_closed.svg" alt="Close Eye" class="eye-close" style="display: none;">
+					</div>
+				</div>
+			</div>
+        </div>
+
+        <div class="save-button">
+            <button class="button save-button" type="button" onclick="save_data()">Save</button>
+        </div>
+    </div>
+
+    <script>
+        const PASSWORD_INPUT_ID = 'password';
+        const CONFIRM_PASSWORD_INPUT_ID = 'confirm_password';
+
+        function toggle_password_visibility(input_id, toggle_id) {
+            const password_input = document.getElementById(input_id);
+            const eye_open = document.getElementById(`${toggle_id}_open`);
+            const eye_close = document.getElementById(`${toggle_id}_close`);
+
+            if (password_input.getAttribute('type') === 'password') {
+                password_input.setAttribute('type', 'text');
+                eye_open.style.display = 'none';
+                eye_close.style.display = 'inline';
+            } else {
+                password_input.setAttribute('type', 'password');
+                eye_open.style.display = 'inline';
+                eye_close.style.display = 'none';
+            }
+        }
+        document.getElementById('password_toggle_btn').addEventListener('click', function () {
+            toggle_password_visibility(PASSWORD_INPUT_ID, 'password_toggle_btn');
+        });
+
+        document.getElementById('confirm_password_toggle_btn').addEventListener('click', function () {
+            toggle_password_visibility(CONFIRM_PASSWORD_INPUT_ID, 'confirm_password_toggle_btn');
+        });
+
+        document.getElementById('profile_name').textContent = 'chuchuchuchu';
+
+        function toggle_edit() {
+            const full_name_input = document.getElementById('full_name');
+            const profile_name = document.getElementById('profile_name');
+
+            if (full_name_input.value.trim() !== '') {
+                profile_name.textContent = full_name_input.value;
+            }
+        }
+    </script>
+</body>
+
+</html>
